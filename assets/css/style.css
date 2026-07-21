@@ -1,0 +1,247 @@
+/* assets/css/style.css */
+
+/* ນຳເຂົ້າຟອນລາວຈາກ Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Noto+Serif+Lao:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --burgundy-primary: #6A182F; /* Logo primary maroon */
+    --burgundy-dark: #6A182F;    /* Unified to primary burgundy */
+    --burgundy-light: #6A182F;   /* Unified to primary burgundy */
+    --burgundy-soft: #FFFFFF;    /* White background */
+    --burgundy-accent: #6A182F;  /* Logo primary maroon */
+    
+    --gold-light: #FFFFFF;
+    --gold-dark: #6A182F;
+    --logo-cream: #FFFFFF;
+}
+
+body {
+    font-family: 'Noto Sans Lao', 'Outfit', sans-serif;
+    scroll-behavior: smooth;
+    background-color: #ffffff;
+    color: #1a1a1a;
+}
+
+h1, h2, h3, h4, .font-serif-lao {
+    font-family: 'Noto Serif Lao', 'Outfit', serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--burgundy-light);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--burgundy-dark);
+}
+
+/* Glassmorphism Header */
+.glass-header {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(107, 29, 47, 0.1);
+}
+
+.text-burgundy {
+    color: var(--burgundy-primary);
+}
+.bg-burgundy {
+    background-color: var(--burgundy-primary);
+}
+.hover\:bg-burgundy-dark:hover {
+    background-color: var(--burgundy-dark);
+}
+.border-burgundy {
+    border-color: var(--burgundy-primary);
+}
+
+/* Infinite Loop Image Marquee (Our Story) */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+}
+
+.marquee-inner {
+    display: flex;
+    width: max-content;
+}
+
+.marquee-slide {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.marquee-slide img {
+    height: 250px;
+    width: auto;
+    object-fit: cover;
+    margin-right: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scroll-right {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-marquee-left {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+    display: flex;
+    width: max-content;
+    animation: scroll-right 35s linear infinite;
+}
+
+.marquee-container:hover .animate-marquee-left,
+.marquee-container:hover .animate-marquee-right {
+    animation-play-state: paused;
+}
+
+/* Hero Section Animations & Overlay */
+.hero-gradient-overlay {
+    background: linear-gradient(to top, rgba(106, 24, 47, 0.95) 0%, rgba(106, 24, 47, 0.4) 60%, rgba(106, 24, 47, 0.85) 100%);
+}
+
+.text-stroke {
+    -webkit-text-stroke: 1px var(--burgundy-primary);
+    color: transparent;
+}
+
+.text-gradient-gold {
+    color: var(--burgundy-primary);
+}
+
+.bg-gradient-gold {
+    background-color: var(--burgundy-primary);
+}
+
+/* Button & Card Micro-animations */
+.btn-premium {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-premium::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease-out;
+}
+.btn-premium:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.card-hover-effect {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover-effect:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(106, 24, 47, 0.12);
+}
+
+/* Category Filter Active Styling */
+.filter-active {
+    background-color: var(--burgundy-primary);
+    color: #ffffff;
+    border-color: var(--burgundy-primary);
+    box-shadow: 0 4px 14px rgba(106, 24, 47, 0.25);
+}
+
+/* Custom Swiper Branding Styles */
+.swiper-pagination-bullet-active {
+    background: var(--burgundy-primary) !important;
+    width: 24px !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease;
+}
+.swiper-button-next, .swiper-button-prev {
+    color: var(--burgundy-primary) !important;
+    background: rgba(255, 255, 255, 0.85);
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 18px !important;
+    font-weight: bold;
+}
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    background: var(--burgundy-primary);
+    color: #ffffff !important;
+}
+
+/* Video Section styling */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 65vh;
+    overflow: hidden;
+    background: #000;
+}
+.video-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+/* Parallax Background for Premium Feel */
+.parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Barista / Bartender Tab switching transitions */
+.barista-content-fade {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.barista-tab-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.barista-tab-btn.active {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(106, 24, 47, 0.15);
+}
+
