@@ -59,17 +59,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <script>
         function toggleMobileMenu(show) {
+            var overlay = document.getElementById('mobile-menu-overlay');
             var menu = document.getElementById('mobile-menu');
-            if (menu) {
-                if (show) {
-                    menu.classList.remove('hidden');
-                    menu.style.setProperty('display', 'flex', 'important');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    menu.classList.add('hidden');
-                    menu.style.setProperty('display', 'none', 'important');
-                    document.body.style.overflow = '';
+            if (!menu) return;
+            if (show) {
+                if (overlay) {
+                    overlay.classList.remove('hidden');
+                    overlay.style.setProperty('display', 'block', 'important');
                 }
+                menu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                if (overlay) {
+                    overlay.classList.add('hidden');
+                    overlay.style.setProperty('display', 'none', 'important');
+                }
+                menu.classList.add('translate-x-full');
+                document.body.style.overflow = '';
             }
         }
     </script>
@@ -150,62 +156,82 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </header>
 
-    <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu" style="display: none;" class="hidden fixed inset-0 z-[999] bg-white/98 backdrop-blur-xl flex flex-col justify-center items-center space-y-6 p-8 overflow-y-auto">
-        <button id="close-mobile-menu" onclick="toggleMobileMenu(false)" class="absolute top-6 right-6 p-3 text-gray-700 hover:text-burgundy-700 focus:outline-none bg-gray-100 rounded-full shadow-sm" aria-label="Close mobile menu">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
+    <!-- Luckin Style Mobile Menu Backdrop Overlay -->
+    <div id="mobile-menu-overlay" style="display: none;" onclick="toggleMobileMenu(false)" class="hidden fixed inset-0 z-[998] bg-black/60 backdrop-blur-sm transition-opacity duration-300"></div>
 
-        <a href="index.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'index.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_home'); ?>
-        </a>
-        <a href="our-story.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo ($current_page === 'our-story.php' || $current_page === 'about.php') ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_story'); ?>
-        </a>
-        <a href="menu.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'menu.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_menu'); ?>
-        </a>
-        <a href="locations.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'locations.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_locations'); ?>
-        </a>
-        <a href="news.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'news.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_news'); ?>
-        </a>
-        <a href="franchise.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'franchise.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_franchise'); ?>
-        </a>
-        <a href="contact.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'contact.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
-            <?php echo t('nav_contact'); ?>
-        </a>
+    <!-- Luckin Style Mobile Navigation Side Drawer -->
+    <div id="mobile-menu" class="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm z-[999] bg-burgundy-700 text-white p-8 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
+        <div>
+            <!-- Header with Brand Logo & Close Button -->
+            <div class="flex justify-between items-center mb-10 pb-4 border-b border-white/15">
+                <div class="flex items-center space-x-3">
+                    <img src="assets/images/logo.png" alt="LaoFe Logo" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 shadow">
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold tracking-wider font-serif-lao text-white leading-none">LaoFe</span>
+                        <span class="text-[9px] font-semibold text-white/70 tracking-widest mt-0.5">CAFE & BAR</span>
+                    </div>
+                </div>
+                <button onclick="toggleMobileMenu(false)" class="p-2 text-white hover:text-white/80 focus:outline-none rounded-full hover:bg-white/10 transition-colors" aria-label="Close menu">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
 
-        <!-- Mobile Language Switcher with Flag -->
-        <?php if ($current_lang === 'lo'): ?>
-            <a href="?lang=en" onclick="toggleMobileMenu(false)" class="inline-flex items-center gap-3 px-6 py-3 border-2 border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 font-bold text-lg bg-white shadow-md">
-                <svg class="w-7 h-5 rounded shadow-sm shrink-0" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
-                    <clipPath id="s_uk_m"><path d="M0 0v30h60V0z"/></clipPath>
-                    <clipPath id="t_uk_m"><path d="M30 15h30v15zM0 0h30v15zM30 15H0v15zM60 0H30v15z"/></clipPath>
-                    <g clip-path="url(#s_uk_m)">
-                        <path d="M0 0v30h60V0z" fill="#012169"/>
-                        <path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/>
-                        <path d="M0 0l60 30m0-30L0 30" clip-path="url(#t_uk_m)" stroke="#C8102E" stroke-width="4"/>
-                        <path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/>
-                        <path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/>
-                    </g>
-                </svg>
-                <span>English (EN)</span>
-            </a>
-        <?php else: ?>
-            <a href="?lang=lo" onclick="toggleMobileMenu(false)" class="inline-flex items-center gap-3 px-6 py-3 border-2 border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 font-bold text-lg bg-white shadow-md">
-                <svg class="w-7 h-5 rounded shadow-sm shrink-0" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="600" height="400" fill="#CE1126"/>
-                    <rect y="100" width="600" height="200" fill="#002868"/>
-                    <circle cx="300" cy="200" r="80" fill="#FFFFFF"/>
-                </svg>
-                <span>ພາສາລາວ (LAO)</span>
-            </a>
-        <?php endif; ?>
+            <!-- Navigation Links (Luckin Style Left-Aligned White Typography) -->
+            <nav class="flex flex-col space-y-6">
+                <a href="index.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'index.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_home'); ?>
+                </a>
+                <a href="our-story.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo ($current_page === 'our-story.php' || $current_page === 'about.php') ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_story'); ?>
+                </a>
+                <a href="menu.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'menu.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_menu'); ?>
+                </a>
+                <a href="locations.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'locations.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_locations'); ?>
+                </a>
+                <a href="news.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'news.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_news'); ?>
+                </a>
+                <a href="franchise.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'franchise.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_franchise'); ?>
+                </a>
+                <a href="contact.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'contact.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
+                    <?php echo t('nav_contact'); ?>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Language Switcher at Bottom -->
+        <div class="pt-6 border-t border-white/15 mt-8">
+            <?php if ($current_lang === 'lo'): ?>
+                <a href="?lang=en" onclick="toggleMobileMenu(false)" class="inline-flex items-center gap-3 px-5 py-2.5 bg-white text-burgundy-700 rounded-full font-bold text-sm shadow-md hover:bg-gray-100 transition-all">
+                    <svg class="w-6 h-4 rounded-sm shadow-sm shrink-0" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+                        <clipPath id="s_uk_drawer"><path d="M0 0v30h60V0z"/></clipPath>
+                        <clipPath id="t_uk_drawer"><path d="M30 15h30v15zM0 0h30v15zM30 15H0v15zM60 0H30v15z"/></clipPath>
+                        <g clip-path="url(#s_uk_drawer)">
+                            <path d="M0 0v30h60V0z" fill="#012169"/>
+                            <path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0 0l60 30m0-30L0 30" clip-path="url(#t_uk_drawer)" stroke="#C8102E" stroke-width="4"/>
+                            <path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/>
+                            <path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/>
+                        </g>
+                    </svg>
+                    <span>English (EN)</span>
+                </a>
+            <?php else: ?>
+                <a href="?lang=lo" onclick="toggleMobileMenu(false)" class="inline-flex items-center gap-3 px-5 py-2.5 bg-white text-burgundy-700 rounded-full font-bold text-sm shadow-md hover:bg-gray-100 transition-all">
+                    <svg class="w-6 h-4 rounded-sm shadow-sm shrink-0" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="400" fill="#CE1126"/>
+                        <rect y="100" width="600" height="200" fill="#002868"/>
+                        <circle cx="300" cy="200" r="80" fill="#FFFFFF"/>
+                    </svg>
+                    <span>ພາສາລາວ (LAO)</span>
+                </a>
+            <?php endif; ?>
+        </div>
     </div>
 
 
