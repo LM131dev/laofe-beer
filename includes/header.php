@@ -58,16 +58,28 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
 
     <script>
-        function toggleMobileMenu(show) {
+        var isMobileMenuOpen = false;
+        function toggleMobileMenu(show, event) {
+            if (event) {
+                if (event.stopPropagation) event.stopPropagation();
+            }
+            if (typeof show === 'undefined') {
+                show = !isMobileMenuOpen;
+            }
+            isMobileMenuOpen = show;
+
             var overlay = document.getElementById('mobile-menu-overlay');
             var menu = document.getElementById('mobile-menu');
             if (!menu) return;
+
             if (show) {
                 if (overlay) {
                     overlay.classList.remove('hidden');
                     overlay.style.display = 'block';
                 }
-                menu.style.transform = 'translateX(0%)';
+                menu.classList.remove('hidden');
+                menu.style.display = 'flex';
+                menu.style.transform = 'none';
                 document.body.style.overflow = 'hidden';
             } else {
                 if (overlay) {
@@ -148,7 +160,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <?php endif; ?>
 
             <!-- Mobile Menu Trigger -->
-            <button id="mobile-menu-btn" onclick="toggleMobileMenu(true)" class="lg:hidden p-2 text-gray-700 hover:text-burgundy-700 focus:outline-none" aria-label="Toggle mobile menu">
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu(true, event)" class="lg:hidden p-2 text-gray-700 hover:text-burgundy-700 focus:outline-none" aria-label="Toggle mobile menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
@@ -157,7 +169,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </header>
 
     <!-- Luckin Style Mobile Menu Backdrop Overlay -->
-    <div id="mobile-menu-overlay" style="display: none;" onclick="toggleMobileMenu(false)" class="hidden fixed inset-0 z-[998] bg-black/60 backdrop-blur-sm transition-opacity duration-300"></div>
+    <div id="mobile-menu-overlay" style="display: none;" onclick="toggleMobileMenu(false, event)" class="hidden fixed inset-0 z-[998] bg-black/60 backdrop-blur-sm transition-opacity duration-300"></div>
 
     <!-- Luckin Style Mobile Navigation Side Drawer -->
     <div id="mobile-menu" style="transform: translateX(100%); transition: transform 0.3s ease-in-out;" class="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm z-[999] bg-burgundy-700 text-white p-8 flex flex-col justify-between shadow-2xl overflow-y-auto">
