@@ -65,16 +65,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
             if (show) {
                 if (overlay) {
                     overlay.classList.remove('hidden');
-                    overlay.style.setProperty('display', 'block', 'important');
+                    overlay.style.display = 'block';
                 }
-                menu.classList.remove('translate-x-full');
+                menu.style.transform = 'translateX(0%)';
                 document.body.style.overflow = 'hidden';
             } else {
                 if (overlay) {
                     overlay.classList.add('hidden');
-                    overlay.style.setProperty('display', 'none', 'important');
+                    overlay.style.display = 'none';
                 }
-                menu.classList.add('translate-x-full');
+                menu.style.transform = 'translateX(100%)';
                 document.body.style.overflow = '';
             }
         }
@@ -160,7 +160,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div id="mobile-menu-overlay" style="display: none;" onclick="toggleMobileMenu(false)" class="hidden fixed inset-0 z-[998] bg-black/60 backdrop-blur-sm transition-opacity duration-300"></div>
 
     <!-- Luckin Style Mobile Navigation Side Drawer -->
-    <div id="mobile-menu" class="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm z-[999] bg-burgundy-700 text-white p-8 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
+    <div id="mobile-menu" style="transform: translateX(100%); transition: transform 0.3s ease-in-out;" class="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm z-[999] bg-burgundy-700 text-white p-8 flex flex-col justify-between shadow-2xl overflow-y-auto">
         <div>
             <!-- Header with Brand Logo & Close Button -->
             <div class="flex justify-between items-center mb-10 pb-4 border-b border-white/15">
