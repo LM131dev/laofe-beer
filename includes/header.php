@@ -56,6 +56,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+
+    <script>
+        function toggleMobileMenu(show) {
+            var menu = document.getElementById('mobile-menu');
+            if (menu) {
+                if (show) {
+                    menu.classList.remove('hidden');
+                    menu.style.setProperty('display', 'flex', 'important');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    menu.classList.add('hidden');
+                    menu.style.setProperty('display', 'none', 'important');
+                    document.body.style.overflow = '';
+                }
+            }
+        }
+    </script>
 </head>
 <body class="pt-20"> <!-- ປ້ອງກັນບໍ່ໃຫ້ເນື້ອຫາຖືກບັງໂດຍ Header ທີ່ເປັນ fixed -->
 
@@ -125,7 +142,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <?php endif; ?>
 
             <!-- Mobile Menu Trigger -->
-            <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-700 hover:text-burgundy-700 focus:outline-none" aria-label="Toggle mobile menu">
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu(true)" class="lg:hidden p-2 text-gray-700 hover:text-burgundy-700 focus:outline-none" aria-label="Toggle mobile menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
@@ -134,38 +151,38 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </header>
 
     <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-lg flex flex-col justify-center items-center space-y-6 pt-20">
-        <button id="close-mobile-menu" class="absolute top-6 right-6 p-2 text-gray-700 hover:text-burgundy-700 focus:outline-none">
+    <div id="mobile-menu" style="display: none;" class="hidden fixed inset-0 z-[999] bg-white/98 backdrop-blur-xl flex flex-col justify-center items-center space-y-6 p-8 overflow-y-auto">
+        <button id="close-mobile-menu" onclick="toggleMobileMenu(false)" class="absolute top-6 right-6 p-3 text-gray-700 hover:text-burgundy-700 focus:outline-none bg-gray-100 rounded-full shadow-sm" aria-label="Close mobile menu">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
         </button>
 
-        <a href="index.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo $current_page === 'index.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="index.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'index.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_home'); ?>
         </a>
-        <a href="our-story.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo ($current_page === 'our-story.php' || $current_page === 'about.php') ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="our-story.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo ($current_page === 'our-story.php' || $current_page === 'about.php') ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_story'); ?>
         </a>
-        <a href="menu.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo $current_page === 'menu.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="menu.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'menu.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_menu'); ?>
         </a>
-        <a href="locations.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo $current_page === 'locations.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="locations.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'locations.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_locations'); ?>
         </a>
-        <a href="news.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo $current_page === 'news.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="news.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'news.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_news'); ?>
         </a>
-        <a href="franchise.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo $current_page === 'franchise.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="franchise.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'franchise.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_franchise'); ?>
         </a>
-        <a href="contact.php" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 <?php echo $current_page === 'contact.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
+        <a href="contact.php" onclick="toggleMobileMenu(false)" class="text-2xl font-semibold text-gray-800 hover:text-burgundy-700 transition-colors <?php echo $current_page === 'contact.php' ? 'text-burgundy-700 font-bold' : ''; ?>">
             <?php echo t('nav_contact'); ?>
         </a>
 
         <!-- Mobile Language Switcher with Flag -->
         <?php if ($current_lang === 'lo'): ?>
-            <a href="?lang=en" class="inline-flex items-center gap-3 px-6 py-2.5 border border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 font-bold text-lg bg-white shadow-sm">
+            <a href="?lang=en" onclick="toggleMobileMenu(false)" class="inline-flex items-center gap-3 px-6 py-3 border-2 border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 font-bold text-lg bg-white shadow-md">
                 <svg class="w-7 h-5 rounded shadow-sm shrink-0" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
                     <clipPath id="s_uk_m"><path d="M0 0v30h60V0z"/></clipPath>
                     <clipPath id="t_uk_m"><path d="M30 15h30v15zM0 0h30v15zM30 15H0v15zM60 0H30v15z"/></clipPath>
@@ -180,7 +197,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <span>English (EN)</span>
             </a>
         <?php else: ?>
-            <a href="?lang=lo" class="inline-flex items-center gap-3 px-6 py-2.5 border border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 font-bold text-lg bg-white shadow-sm">
+            <a href="?lang=lo" onclick="toggleMobileMenu(false)" class="inline-flex items-center gap-3 px-6 py-3 border-2 border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 font-bold text-lg bg-white shadow-md">
                 <svg class="w-7 h-5 rounded shadow-sm shrink-0" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
                     <rect width="600" height="400" fill="#CE1126"/>
                     <rect y="100" width="600" height="200" fill="#002868"/>
@@ -191,19 +208,4 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <?php endif; ?>
     </div>
 
-    <!-- Script ມືຖືສຳລັບເປີດ/ປິດ Drawer -->
-    <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.remove('hidden');
-        });
-        document.getElementById('close-mobile-menu').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.add('hidden');
-        });
-        // ປິດເມື່ອຄລິກລິ້ງ
-        const mobileLinks = document.querySelectorAll('#mobile-menu a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
-    </script>
+

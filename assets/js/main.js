@@ -1,21 +1,7 @@
 // assets/js/main.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Menu Toggler
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const icon = mobileMenuBtn.querySelector('svg');
-            if (icon) {
-                // toggle icon states if needed
-            }
-        });
-    }
-
-    // 2. Change Header Background on Scroll
+    // 1. Change Header Background on Scroll
     const header = document.querySelector('header');
     if (header) {
         window.addEventListener('scroll', () => {
