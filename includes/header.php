@@ -125,9 +125,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <a href="franchise.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'franchise.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
                 <?php echo t('nav_franchise'); ?>
             </a>
+            <!-- Hidden for Phase 1 - Uncomment to show when App launches
             <a href="app.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'app.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
                 <?php echo t('nav_app'); ?>
             </a>
+            -->
             <a href="contact.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'contact.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
                 <?php echo t('nav_contact'); ?>
             </a>
@@ -213,9 +215,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <a href="franchise.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'franchise.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
                     <?php echo t('nav_franchise'); ?>
                 </a>
+                <!-- Hidden for Phase 1 - Uncomment to show when App launches
                 <a href="app.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'app.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
                     <?php echo t('nav_app'); ?>
                 </a>
+                -->
                 <a href="contact.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'contact.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
                     <?php echo t('nav_contact'); ?>
                 </a>
