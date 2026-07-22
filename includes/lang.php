@@ -171,6 +171,21 @@ $translations = [
         'contact_msg' => 'ຂໍ້ຄວາມຂອງທ່ານ',
         'contact_submit' => 'ສົ່ງຂໍ້ຄວາມ',
         'contact_success' => 'ສົ່ງຂໍ້ຄວາມສຳເລັດແລ້ວ! ຂອບໃຈສຳລັບການຕິດຕໍ່ຫາພວກເຮົາ.',
+        
+        // Mobile App Page
+        'nav_app' => 'ແອັບ LaoFe',
+        'app_title' => 'ແອັບມືຖື LaoFe',
+        'app_sub' => 'ປະສົບການກາເຟ ແລະ ບາທີ່ສະດວກສະບາຍໃນມືທ່ານ',
+        'app_coming_soon' => 'ພົບກັນໄວໆນີ້!',
+        'app_desc' => 'ກຽມພົບກັບແອັບພລິເຄຊັນ LaoFe ທີ່ຈະຊ່ວຍໃຫ້ການສັ່ງຊື້ ແລະ ຮັບບໍລິການຂອງທ່ານສະດວກສະບາຍກວ່າເກົ່າ. ບໍ່ວ່າຈະເປັນການສັ່ງກາເຟໄວ້ລ່ວງໜ້າ, ການສະສົມຄະແນນ ຫຼື ການຈອງໂຕະອອນໄລນ໌.',
+        'app_feature_1_title' => 'ສັ່ງຊື້ອອນໄລນ໌ & ຊຳລະເງິນສະດວກ',
+        'app_feature_1_desc' => 'ເລືອກເມນູກາເຟ ຫຼື ເຄື່ອງດື່ມທີ່ທ່ານມັກ ແລະ ຊຳລະເງິນລ່ວງໜ້າຜ່ານ OnePay ໄດ້ງ່າຍໆ ເພື່ອຮັບເຄື່ອງໂດຍບໍ່ຕ້ອງຖ້າຄິວ.',
+        'app_feature_2_title' => 'ລະບົບສະມາຊິກ & ສະສົມຄະແນນ',
+        'app_feature_2_desc' => 'ສະສົມຄະແນນໃນທຸກໆຈອກທີ່ທ່ານຊື້ ເພື່ອແລກຮັບເຄື່ອງດື່ມຟຣີ ຫຼື ສິດທິພິເສດສະເພາະສະມາຊິກ LaoFe.',
+        'app_feature_3_title' => 'ລະບົບຈອງໂຕະອອນໄລນ໌',
+        'app_feature_3_desc' => 'ຈອງໂຕະ ຫຼື ໂຊນນັ່ງຫຼິ້ນລະດັບພຣີມ່ຽມທີ່ສາຂາສີທອງ ຫຼື ວັງວຽງລ່ວງໜ້າ ເພື່ອຄວາມສະດວກສະບາຍໃນການພົບປະສັງສັນ.',
+        'app_feature_4_title' => 'ໂປຣໂມຊັນພິເສດສະເພາະແອັບ',
+        'app_feature_4_desc' => 'ຮັບຄູປອງສ່ວນຫຼຸດພິເສດ ແລະ ຂໍ້ສະເໜີດີໆ ທີ່ສະເໜີໃຫ້ສະເພາະຜູ້ໃຊ້ແອັບພລິເຄຊັນ LaoFe ເທົ່ານັ້ນ.',
     ],
     'en' => [
         'brand_name' => 'LaoFe & Beer',
@@ -307,6 +322,21 @@ $translations = [
         'about_enquiries_hours' => 'Monday to Sunday: 7:00 AM - 11:00 PM',
         'about_join_title' => 'Join Us / Franchise',
         'about_join_sub' => 'See business opportunities',
+        
+        // Mobile App Page
+        'nav_app' => 'Get the APP',
+        'app_title' => 'LaoFe Mobile Application',
+        'app_sub' => 'Specialty Coffee & Lounge Experience in Your Hands',
+        'app_coming_soon' => 'Coming Soon!',
+        'app_desc' => 'Get ready for the LaoFe App. Designed to bring convenience to your daily coffee run and lounge visits. Order ahead, collect rewards, and reserve tables seamlessly.',
+        'app_feature_1_title' => 'Easy Online Ordering & Payment',
+        'app_feature_1_desc' => 'Select your favorite coffee or lounge drinks, customize your cup, and pay securely via OnePay or card to skip the line.',
+        'app_feature_2_title' => 'LaoFe Loyalty & Rewards',
+        'app_feature_2_desc' => 'Earn reward points with every purchase to redeem free drinks, special merchandise, and exclusive members-only perks.',
+        'app_feature_3_title' => 'Online Table & Lounge Booking',
+        'app_feature_3_desc' => 'Reserve premium seating or private lounge tables at Sithong or Vangvieng branches in advance for your meetings and parties.',
+        'app_feature_4_title' => 'Exclusive In-App Promotions',
+        'app_feature_4_desc' => 'Unlock instant vouchers, buy-1-get-1 offers, and special discount codes available exclusively inside the LaoFe app.',
     ]
 ];
 

@@ -50,6 +50,7 @@
                     <li><a href="locations.php" class="hover:text-white transition-colors duration-200"><?php echo t('nav_locations'); ?></a></li>
                     <li><a href="news.php" class="hover:text-white transition-colors duration-200"><?php echo t('nav_news'); ?></a></li>
                     <li><a href="franchise.php" class="hover:text-white transition-colors duration-200"><?php echo t('nav_franchise'); ?></a></li>
+                    <li><a href="app.php" class="hover:text-white transition-colors duration-200"><?php echo t('nav_app'); ?></a></li>
                     <li><a href="contact.php" class="hover:text-white transition-colors duration-200"><?php echo t('nav_contact'); ?></a></li>
                 </ul>
             </div>
