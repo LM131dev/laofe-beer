@@ -46,10 +46,10 @@ require_once __DIR__ . '/includes/header.php';
         <!-- Left Side: Contact Information & Direct Buttons -->
         <div class="space-y-8">
             <div class="space-y-4">
-                <span class="text-xs font-bold text-burgundy-700 uppercase tracking-wider">ຕິດຕໍ່ພວກເຮົາ</span>
+                <span class="text-xs font-bold text-burgundy-700 uppercase tracking-wider"><?php echo t('contact_badge'); ?></span>
                 <h2 class="text-3xl font-bold text-gray-900 font-serif-lao"><?php echo t('contact_info'); ?></h2>
                 <p class="text-gray-600 font-light leading-relaxed">
-                    ພວກເຮົາຍິນດີຮັບຟັງທຸກຄຳຄິດເຫັນ, ຂໍ້ສະເໜີແນະ ຫຼື ຄຳຖາມຈາກທ່ານ. ທ່ານສາມາດຕິດຕໍ່ຫາພວກເຮົາໂດຍກົງຜ່ານຊ່ອງທາງຕິດຕໍ່ຫຼັກ ຫຼື ສົ່ງຂໍ້ຄວາມຜ່ານຟອມທາງຂ້າງໄດ້.
+                    <?php echo t('contact_desc'); ?>
                 </p>
             </div>
 
