@@ -170,8 +170,11 @@ require_once __DIR__ . '/includes/header.php';
 
                 <!-- Google Play -->
                 <a href="#" onclick="alert('LaoFe app will be available on the Google Play Store soon! ພົບກັນໄວໆນີ້!'); return false;" class="flex items-center space-x-3 px-6 py-3.5 bg-gray-900 text-white rounded-2xl hover:bg-burgundy-900 transition-all duration-300 shadow-lg group border border-white/5">
-                    <svg class="w-7 h-7 text-white fill-current group-hover:scale-105 transition-transform" viewBox="0 0 24 24">
-                        <path d="M5 3.007c0-.12.01-.24.03-.36L12.59 10.2l7.56-7.56c-.02.12-.03.24-.03.36v17.986c0 .12.01.24.03.36l-7.56-7.56-7.56 7.56c-.02-.12-.03-.24-.03-.36V3.007zm.81-.81l12.78 6.39L12.59 10.2 5.81 2.197zM20.19 2.197l-6.39 12.78 6.39-6.39V2.197zm.81.81v17.986L15 12 21 3.007z"/>
+                    <svg class="w-7 h-7 group-hover:scale-105 transition-transform" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
+                        <path d="M12.158 0C4.858 0 0 5.118 0 12.01v237.98c0 6.892 4.858 12.01 12.158 12.01.214 0 .438-.01.67-.03L128 131 12.828.03C12.596.01 12.372 0 12.158 0z" fill="#00A2FF"/>
+                        <path d="M166.72 90.72L128 131v.003l38.72 40.28 47.925-27.4c13.738-7.854 13.738-20.65 0-28.503L166.72 90.72z" fill="#FFC107"/>
+                        <path d="M12.828 261.97l153.892-87.973L128 131.003 12.828 261.97z" fill="#FF3C32"/>
+                        <path d="M12.828.03L128 131 166.72 40.72 12.828.03z" fill="#00E676"/>
                     </svg>
                     <div class="text-left">
                         <p class="text-[9px] uppercase text-white/50 tracking-wider">Get it on</p>
