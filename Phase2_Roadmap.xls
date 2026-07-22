@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+    <Author>LaoFe Developer</Author>
+    <Created>2026-07-22T06:31:54Z</Created>
+  </DocumentProperties>
+  <Styles>
+    <Style ss:ID="Default" ss:Name="Normal">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders/>
+      <Font ss:FontName="Calibri" x:CharSet="0" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+      <Interior/>
+      <NumberFormat/>
+      <Protection/>
+    </Style>
+    <Style ss:ID="Header">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+      </Borders>
+      <Font ss:FontName="Noto Sans Lao" ss:Bold="1" ss:Color="#FFFFFF" ss:Size="11"/>
+      <Interior ss:Color="#6A182F" ss:Pattern="Solid"/>
+    </Style>
+    <Style ss:ID="Data">
+      <Alignment ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+      </Borders>
+      <Font ss:FontName="Noto Sans Lao" ss:Size="10" ss:Color="#1A1A1A"/>
+    </Style>
+    <Style ss:ID="CenterData">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>
+      </Borders>
+      <Font ss:FontName="Noto Sans Lao" ss:Size="10" ss:Color="#1A1A1A"/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Phase 2 Roadmap">
+    <Table>
+      <Column ss:Width="80"/>
+      <Column ss:Width="250"/>
+      <Column ss:Width="400"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="150"/>
+      
+      <Row ss:Height="30">
+        <Cell ss:StyleID="Header"><Data ss:Type="String">ລຳດັບ (No.)</Data></Cell>
+        <Cell ss:StyleID="Header"><Data ss:Type="String">ໂມດູນ (Module)</Data></Cell>
+        <Cell ss:StyleID="Header"><Data ss:Type="String">ໜ້າວຽກລະອຽດ (Task Details)</Data></Cell>
+        <Cell ss:StyleID="Header"><Data ss:Type="String">ໄລຍະເວລາ (Duration)</Data></Cell>
+        <Cell ss:StyleID="Header"><Data ss:Type="String">ລະດັບຄວາມສຳຄັນ (Priority)</Data></Cell>
+        <Cell ss:StyleID="Header"><Data ss:Type="String">ສະຖານະ (Status)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">1</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">1. ລະບົບສັ່ງຊື້ ແລະ ຊຳລະເງິນ (Ordering &amp; Payment)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ອອກແບບ Database schema ສຳລັບ Orders, Order Items, Payments</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">3 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">2</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">1. ລະບົບສັ່ງຊື້ ແລະ ຊຳລະເງິນ (Ordering &amp; Payment)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ພັດທະນາ API Backend ສຳລັບການຈັດການ Orders &amp; Cart</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">5 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">3</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">1. ລະບົບສັ່ງຊື້ ແລະ ຊຳລະເງິນ (Ordering &amp; Payment)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ເຊື່ອມຕໍ່ກັບ API ຂອງ BCEL OnePay ( generates QR Code)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">7 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">4</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">1. ລະບົບສັ່ງຊື້ ແລະ ຊຳລະເງິນ (Ordering &amp; Payment)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ພັດທະນາໜ້າຕາເວັບ (Frontend UI) ສຳລັບສັ່ງຊື້ ແລະ ຕິດຕາມສະຖານະອໍເດີ້</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">5 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">5</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">2. ລະບົບສະມາຊິກ ແລະ ສະສົມຄະແນນ (Membership &amp; Points)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ອອກແບບ Database schema ສຳລັບ Members, Points, Redemptions</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">2 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ປານກາງ (Medium)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">6</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">2. ລະບົບສະມາຊິກ ແລະ ສະສົມຄະແນນ (Membership &amp; Points)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ພັດທະນາລະບົບລົງທະບຽນ, ລະບົບຄຳນວນຄະແນນອັດຕະໂນມັດ (10,000 Kip = 1 Point)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">4 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ປານກາງ (Medium)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">7</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">2. ລະບົບສະມາຊິກ ແລະ ສະສົມຄະແນນ (Membership &amp; Points)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ອອກແບບ ແລະ ພັດທະນາລະບົບແລກປ່ຽນຂອງລາງວັນ (Redeem rewards catalog)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">4 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ປານກາງ (Medium)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">8</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">3. ລະບົບຈອງໂຕະອອນໄລນ໌ (Table Booking)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ອອກແບບ Database schema ສຳລັບ Tables, Bookings, Time Slots</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">2 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ຕ່ຳ (Low)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">9</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">3. ລະບົບຈອງໂຕະອອນໄລນ໌ (Table Booking)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ພັດທະນາ UI ໃຫ້ລູກຄ້າເລືອກສາຂາ, ເລືອກໂຕະ, ແລະ ເວລາທີ່ຕ້ອງການຈອງ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">5 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ຕ່ຳ (Low)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">10</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">3. ລະບົບຈອງໂຕະອອນໄລນ໌ (Table Booking)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ພັດທະນາລະບົບແຈ້ງເຕືອນຜ່ານ Email / SMS ຢືນຢັນການຈອງໂຕະ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">3 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ຕ່ຳ (Low)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">11</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">4. ແອັບມືຖື iOS &amp; Android (Mobile App)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ອອກແບບ UI/UX ທັງໝົດຂອງແອັບ (Figma Mockups)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">10 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">12</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">4. ແອັບມືຖື iOS &amp; Android (Mobile App)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ພັດທະນາແອັບມືຖືດ້ວຍ Flutter ຫຼື React Native (Cross-platform)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">20 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">13</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">4. ແອັບມືຖື iOS &amp; Android (Mobile App)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ເຊື່ອມຕໍ່ແອັບມືຖືເຂົ້າກັບ API Backend ຂອງເວັບໄຊ້</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">10 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">14</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">4. ແອັບມືຖື iOS &amp; Android (Mobile App)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ທົດສອບລະບົບ (Beta Testing) ແລະ ແກ້ໄຂບັກ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">7 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+      <Row ss:Height="24">
+        <Cell ss:StyleID="CenterData"><Data ss:Type="Number">15</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">4. ແອັບມືຖື iOS &amp; Android (Mobile App)</Data></Cell>
+        <Cell ss:StyleID="Data"><Data ss:Type="String">ສົ່ງແອັບຂຶ້ນ Apple App Store ແລະ Google Play Store</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">7 ວັນ</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ສູງ (High)</Data></Cell>
+        <Cell ss:StyleID="CenterData"><Data ss:Type="String">ລໍຖ້າດຳເນີນການ (Pending)</Data></Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>
