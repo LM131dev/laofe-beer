@@ -32,10 +32,16 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Title Header Section -->
-<section class="py-16 bg-burgundy-700 text-white text-center">
-    <div class="max-w-4xl mx-auto px-6 space-y-2">
-        <h1 class="text-4xl md:text-5xl font-bold font-serif-lao"><?php echo t('fran_title'); ?></h1>
-        <p class="text-burgundy-200 font-light"><?php echo t('fran_sub'); ?></p>
+<section class="relative pt-32 pb-16 bg-gradient-to-r from-[#1C050B] via-[#4D0F1E] to-[#1C050B] text-white text-center overflow-hidden border-b border-amber-400/20 shadow-2xl">
+    <!-- Subtle Golden Glow Effect -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10 space-y-3">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-amber-300 text-xs font-bold tracking-widest uppercase font-serif-lao shadow-inner">
+            ✦ FRANCHISE & PARTNERSHIP ✦
+        </span>
+        <h1 class="text-4xl md:text-5xl font-extrabold font-serif-lao tracking-wide text-white leading-tight drop-shadow-md"><?php echo t('fran_title'); ?></h1>
+        <p class="text-amber-100/90 font-light text-sm md:text-base max-w-2xl mx-auto font-serif-lao leading-relaxed"><?php echo t('fran_sub'); ?></p>
+        <div class="w-16 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto pt-2 rounded-full"></div>
     </div>
 </section>
 
@@ -47,9 +53,9 @@ require_once __DIR__ . '/includes/header.php';
         <div class="space-y-8">
             <div class="space-y-4">
                 <span class="text-xs font-bold text-burgundy-700 uppercase tracking-wider">Business Opportunity</span>
-                <h2 class="text-3xl font-bold text-gray-900 font-serif-lao">ເປັນຫຍັງຕ້ອງເລືອກ LaoFe & Beer?</h2>
+                <h2 class="text-3xl font-bold text-gray-900 font-serif-lao"><?php echo t('fran_why_choose'); ?></h2>
                 <p class="text-gray-600 font-light leading-relaxed">
-                    LaoFe & Beer ແມ່ນແບຣນກາເຟ ແລະ ບາ ຍຸກໃໝ່ທີ່ໄດ້ຮັບຄວາມນິຍົມສູງ ແລະ ມີການເຕີບໂຕຢ່າງຕໍ່ເນື່ອງ. ພວກເຮົາສະເໜີໂອກາດທາງທຸລະກິດທີ່ໝັ້ນຄົງ ແລະ ລະບົບສະໜັບສະໜູນທີ່ຄົບວົງຈອນ.
+                    <?php echo t('fran_why_choose_desc'); ?>
                 </p>
             </div>
 
@@ -60,8 +66,8 @@ require_once __DIR__ . '/includes/header.php';
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-gray-900">ແນວຄິດຮ້ານແບບ 2-in-1 (ກາເຟ & ບາ)</h4>
-                        <p class="text-sm text-gray-500 font-light mt-1">ສ້າງລາຍຮັບໄດ້ທັງກາງເວັນ (ກາເຟ/ເຄື່ອງດື່ມ) ແລະ ກາງຄືນ (ບາ/ອາຫານປະຍຸກ).</p>
+                        <h4 class="font-bold text-gray-900"><?php echo t('fran_benefit_1_title'); ?></h4>
+                        <p class="text-sm text-gray-500 font-light mt-1"><?php echo t('fran_benefit_1_desc'); ?></p>
                     </div>
                 </div>
 
@@ -70,8 +76,8 @@ require_once __DIR__ . '/includes/header.php';
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-gray-900">ວັດຖຸດິບ ແລະ ສູດສະເພາະຕົວ</h4>
-                        <p class="text-sm text-gray-500 font-light mt-1">ການສະໜອງແກ່ນກາເຟ ແລະ ວັດຖຸດິບຄຸນນະພາບສູງ ພ້ອມສູດເຄື່ອງດື່ມທີ່ເປັນເອກະລັກ.</p>
+                        <h4 class="font-bold text-gray-900"><?php echo t('fran_benefit_2_title'); ?></h4>
+                        <p class="text-sm text-gray-500 font-light mt-1"><?php echo t('fran_benefit_2_desc'); ?></p>
                     </div>
                 </div>
 
@@ -80,8 +86,8 @@ require_once __DIR__ . '/includes/header.php';
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-gray-900">ລະບົບຫຼັງບ້ານ ແລະ ການຕະຫຼາດ</h4>
-                        <p class="text-sm text-gray-500 font-light mt-1">ມີລະບົບຈັດການຮ້ານທີ່ທັນສະໄໝ ແລະ ທີມງານການຕະຫຼາດມືອາຊີບຄອຍຊ່ວຍເຫຼືອ.</p>
+                        <h4 class="font-bold text-gray-900"><?php echo t('fran_benefit_3_title'); ?></h4>
+                        <p class="text-sm text-gray-500 font-light mt-1"><?php echo t('fran_benefit_3_desc'); ?></p>
                     </div>
                 </div>
             </div>
@@ -128,7 +134,7 @@ require_once __DIR__ . '/includes/header.php';
 
                 <div>
                     <label for="location_preference" class="block text-sm font-semibold text-gray-700 mb-1"><?php echo t('fran_loc'); ?> *</label>
-                    <input type="text" name="location_preference" id="location_preference" required placeholder="ເຊັ່ນ: ແຂວງສະຫວັນນະເຂດ, ວຽງຈັນ, ..." class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy-700 focus:border-burgundy-700">
+                    <input type="text" name="location_preference" id="location_preference" required placeholder="<?php echo t('fran_loc_placeholder'); ?>" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy-700 focus:border-burgundy-700">
                 </div>
 
                 <div>

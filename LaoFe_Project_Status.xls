@@ -1,0 +1,615 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>LaoFe Developer Team</Author>
+  <LastAuthor>LaoFe AI Assistant</LastAuthor>
+  <Created>2026-08-10T13:23:00Z</Created>
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9500</WindowHeight>
+  <WindowWidth>17000</WindowWidth>
+  <WindowTopX>0</WindowTopX>
+  <WindowTopY>0</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Phetsarath OT" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <!-- Main Title Style -->
+  <Style ss:ID="MainTitle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Phetsarath OT" ss:Size="16" ss:Color="#6A182F" ss:Bold="1"/>
+  </Style>
+  <!-- Subtitle Style -->
+  <Style ss:ID="SubTitle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#4B5563" ss:Italic="1"/>
+  </Style>
+  <!-- Section Title Style -->
+  <Style ss:ID="SectionTitle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Phetsarath OT" ss:Size="13" ss:Color="#6A182F" ss:Bold="1"/>
+  </Style>
+  <!-- Header Style: Primary Burgundy Background -->
+  <Style ss:ID="Header">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#4D0E1E"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#4D0E1E"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#4D0E1E"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#4D0E1E"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
+   <Interior ss:Color="#6A182F" ss:Pattern="Solid"/>
+  </Style>
+  <!-- Sub-Header Style: Dark Navy Background -->
+  <Style ss:ID="SubHeader">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1E293B"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1E293B"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1E293B"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#1E293B"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#FFFFFF" ss:Bold="1"/>
+   <Interior ss:Color="#1E293B" ss:Pattern="Solid"/>
+  </Style>
+  <!-- Cell Data Left -->
+  <Style ss:ID="CellLeft">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#374151"/>
+  </Style>
+  <!-- Cell Data Center -->
+  <Style ss:ID="CellCenter">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#374151"/>
+  </Style>
+  <!-- Cell Bold Center -->
+  <Style ss:ID="CellBoldCenter">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#111827" ss:Bold="1"/>
+  </Style>
+  <!-- Status Done Green -->
+  <Style ss:ID="StatusDone">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#A7F3D0"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#A7F3D0"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#A7F3D0"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#A7F3D0"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#065F46" ss:Bold="1"/>
+   <Interior ss:Color="#D1FAE5" ss:Pattern="Solid"/>
+  </Style>
+  <!-- Status Progress Amber -->
+  <Style ss:ID="StatusProgress">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#FDE68A"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#FDE68A"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#FDE68A"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#FDE68A"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#92400E" ss:Bold="1"/>
+   <Interior ss:Color="#FEF3C7" ss:Pattern="Solid"/>
+  </Style>
+  <!-- Status Pending Gray -->
+  <Style ss:ID="StatusPending">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="11" ss:Color="#4B5563" ss:Bold="1"/>
+   <Interior ss:Color="#F3F4F6" ss:Pattern="Solid"/>
+  </Style>
+  <!-- Total Summary Row -->
+  <Style ss:ID="TotalRow">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Double" ss:Weight="3" ss:Color="#6A182F"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#6A182F"/>
+   </Borders>
+   <Font ss:FontName="Phetsarath OT" ss:Size="12" ss:Color="#6A182F" ss:Bold="1"/>
+   <Interior ss:Color="#FDF2F8" ss:Pattern="Solid"/>
+  </Style>
+ </Styles>
+
+ <!-- ========================================== -->
+ <!-- WORKSHEET 1: Executive Summary            -->
+ <!-- ========================================== -->
+ <Worksheet ss:Name="1. ພາບລວມ (Summary)">
+  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="14" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="25">
+   <Column ss:Width="60"/>
+   <Column ss:Width="280"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="130"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="280"/>
+
+   <Row ss:AutoFitHeight="0" ss:Height="35">
+    <Cell ss:MergeAcross="5" ss:StyleID="MainTitle"><Data ss:Type="String">📊 ບົດສະຫຼຸບລາຍງານຄວາມຄືບໜ້າໂຄງການ LaoFe &amp; Beer Project</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="22">
+    <Cell ss:MergeAcross="5" ss:StyleID="SubTitle"><Data ss:Type="String">ວັນທີອັບເດດ: 10 ສິງຫາ 2026 | ສະຖານະພາບລວມ (Total Progress): ~67%</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="10"/>
+
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ລຳດັບ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ໝວດວຽກຫຼັກ (Main Task Scope)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ເຟສ (Phase)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ຄວາມຄືບໜ້າ (%)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ສະຖານະ (Status)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ໝາຍເຫດ (Remarks)</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="26">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Website Frontend (ໜ້າຫຼັກ, ເມນູ, ສະມາຊິກ, ຕະກ້າ, ຈອງໂຕະ)</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ພ້ອມໃຊ້ງານ, 2 ພາສາ (Lao/EN), Responsive UI</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="26">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Admin Backend Panel (Dashboard, ຈັດການເມນູ, ອໍເດີ້, ຫ້ອງຄົວ)</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ພ້ອມໃຊ້ງານ, Dashboard, CRUD メニュー, Orders &amp; Kitchen System</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="26">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Database Schemas &amp; System Workflows</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">80%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແຜນ</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ອອກແບບ DB Schema, Workflow diagrams ສຳເລັດ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="26">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">BCEL OnePay Real Payment API Integration</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">15%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ເຮັດ UI &amp; QR Mockup ແລ້ວ, ລໍ API Direct Callback ຈາກທະນາຄານ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="26">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Mobile Application (iOS &amp; Android App)</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">10%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ອອກແບບ Flow, UI Mockups ແລະ Structure Mapping</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="12"/>
+
+   <Row ss:AutoFitHeight="0" ss:Height="32">
+    <Cell ss:MergeAcross="2" ss:StyleID="TotalRow"><Data ss:Type="String">ລວມຄວາມຄືບໜ້າທັງໂຄງການ (Total Project Progress)</Data></Cell>
+    <Cell ss:StyleID="TotalRow"><Data ss:Type="String">67%</Data></Cell>
+    <Cell ss:StyleID="TotalRow"><Data ss:Type="String">🚀 ດຳເນີນຕາມແຜນ</Data></Cell>
+    <Cell ss:StyleID="TotalRow"><Data ss:Type="String">Phase 1 ພ້ອມໃຊ້ງານ, ກຳລັງດຳເນີນ Phase 2</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ========================================== -->
+ <!-- WORKSHEET 2: Frontend & Admin Features     -->
+ <!-- ========================================== -->
+ <Worksheet ss:Name="2. ເວັບໄຊ້ &amp; Admin Panel">
+  <Table ss:ExpandedColumnCount="5" ss:ExpandedRowCount="22" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="25">
+   <Column ss:Width="60"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="340"/>
+   <Column ss:Width="110"/>
+   <Column ss:Width="130"/>
+
+   <!-- Section A Header -->
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell ss:MergeAcross="4" ss:StyleID="SectionTitle"><Data ss:Type="String">🌐 PART 1: ລະບົບໜ້າເວັບໄຊ້ລູກຄ້າ (Frontend Website - Phase 1)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ລຳດັບ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ໜ້າເວັບໄຊ້ (Page)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ລາຍອຽດຟັງຊັນ (Features Detail)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">% ສຳເລັດ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ສະຖານະ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">index.php (ໜ້າຫຼັກ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Hero Swiper Banner, 3 Core Pillars, Baristas &amp; Mixologists, Swiss Machinery, Store Locations</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">menu.php (ໜ້າເມນູ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ສະແດງເມນູ, 4 ໝວດ (Coffee, Specialty, Tea, Beer/Bar), Search, Filter, Modal ເພີ່ມໃສ່ຕະກ້າ</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">account.php (ສະມາຊິກ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ບັດ Digital Member Tier (Bronze/Silver/Gold/Platinum), ຍອດຄະແນນສະສົມ, ປະຫວັດອໍເດີ້, Voucher Wallet</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">checkout.php &amp; payment.php</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຕະກ້າສັ່ງຊື້, ຄຳນວນລາຄາລວມ, ສະແດງ QR Code BCEL OnePay UI Mockup, ໜ້າຢືນຢັນບິນ</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">booking.php (ຈອງໂຕະ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຟອມຈອງໂຕະ/VIP Lounge, ເລືອກສາຂາ, ວັນທີ/ເວລາ, ຈຳນວນຄົນ, ອອກບັດ Booking Voucher</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">90%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">franchise.php (ແຟຣນໄຊສ໌)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຂໍ້ມູນໂອກາດທາງທຸລະກິດ LaoFe, ຟອມສະໝັກແຟຣນໄຊສ໌, ຄຸນຄ່າຫຼັກ</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">includes/lang.php (2 ພາສາ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ສະຫຼັບພາສາ ລາວ/ອັງກິດ (Lao / EN) Real-time ຜ່ານ Session/Cookie</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="15"/>
+
+   <!-- Section B Header -->
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell ss:MergeAcross="4" ss:StyleID="SectionTitle"><Data ss:Type="String">⚙️ PART 2: ລະບົບຈັດການຫຼັງຮ້ານ (Admin Panel - Phase 1)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="SubHeader"><Data ss:Type="String">ລຳດັບ</Data></Cell>
+    <Cell ss:StyleID="SubHeader"><Data ss:Type="String">ໂມດູນ (Admin Module)</Data></Cell>
+    <Cell ss:StyleID="SubHeader"><Data ss:Type="String">ລາຍອຽດຟັງຊັນ (Features Detail)</Data></Cell>
+    <Cell ss:StyleID="SubHeader"><Data ss:Type="String">% ສຳເລັດ</Data></Cell>
+    <Cell ss:StyleID="SubHeader"><Data ss:Type="String">ສະຖານະ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">dashboard.php (Dashboard)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ສະຫຼຸບຍອດຂາຍ, ຈຳນວນອໍເດີ້, ຈຳນວນສະມາຊິກ, ລາຍການຈອງໂຕະໃໝ່</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">menu_manage.php (ຈັດການເມນູ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ເພີ່ມ/ແກ້ໄຂ/ລົບ ເມນູ, ອັບໂຫຼດຮູບພາບ, ປ່ຽນໝວດໝູ່, ກຳນົດລາຄາ</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">orders.php &amp; kitchen.php</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ກວດສອບອໍເດີ້ເຂົ້າໃໝ່, ອັບເດດສະຖານະ ແລະ Kitchen Display System (KDS)</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">90%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">bookings.php (ຈັດການຈອງ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຈັດການຄິວຈອງໂຕະ, ຢືນຢັນ/ຍົກເລີກ ການຈອງ</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">90%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">members.php (ຈັດການສະມາຊິກ)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ດຶງຂໍ້ມູນສະມາຊິກ, ເພີ່ມ/ລົບ ຄະແນນ, ປັບລະດັບ Tier ສະມາຊິກ</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">90%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Banners, News, Applications</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຈັດການ Banner Slide, ຂ່າວໂປຣໂມຊັນ ແລະ ໃບສະໝັກແຟຣນໄຊສ໌</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ========================================== -->
+ <!-- WORKSHEET 3: Phase 2 Workflows & Architecture -->
+ <!-- ========================================== -->
+ <Worksheet ss:Name="3. ລະບົບ Phase 2 &amp; Workflows">
+  <Table ss:ExpandedColumnCount="5" ss:ExpandedRowCount="12" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="25">
+   <Column ss:Width="60"/>
+   <Column ss:Width="200"/>
+   <Column ss:Width="360"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="130"/>
+
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell ss:MergeAcross="4" ss:StyleID="SectionTitle"><Data ss:Type="String">🔄 Phase 2: System Workflows &amp; Architecture Overview</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ລຳດັບ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ລະບົບ Phase 2 (Module System)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ຂັ້ນຕອນການເຮັດວຽກ (Workflow Summary)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">% ວາງແຜນ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ສະຖານະ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">1. Ordering &amp; BCEL Payment Flow</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Customer Cart ➔ Order Pending ➔ BCEL OnePay QR Dynamic ➔ Webhook Callback ➔ Kitchen Ticket</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">85%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແຜນ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">2. Loyalty &amp; Points Calculation</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Order Paid ➔ Check Member ➔ Calc Points (10,000 Kip = 1 Point) ➔ Update Points DB ➔ Auto Tier Upgrade</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">80%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແຜນ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">3. Table &amp; Lounge Booking System</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Check Availability ➔ Reserve Table Slot ➔ Confirmed ➔ Generate QR Voucher ➔ Front Desk Verification</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">80%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແຜນ</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="28">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">4. Mobile App Pipeline (iOS/Android)</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Figma UI/UX ➔ Backend REST API ➔ Flutter/React Native App ➔ Beta Testing ➔ App Store Submit</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">75%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແຜນ</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ========================================== -->
+ <!-- WORKSHEET 4: Detailed Task Roadmap (15 Tasks) -->
+ <!-- ========================================== -->
+ <Worksheet ss:Name="4. ລາຍອຽດ 15 ໜ້າວຽກ (Roadmap)">
+  <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="20" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="24">
+   <Column ss:Width="50"/>
+   <Column ss:Width="80"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="300"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="140"/>
+
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ລຳດັບ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ເຟສ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ໂມດູນ (Module)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ໜ້າວຽກລະອຽດ (Task Details)</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ໄລຍະເວລາ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ຄວາມສຳຄັນ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ຄວາມຄືບໜ້າ</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">ສະຖານະ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">UI/UX &amp; Web Layout</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ອອກແບບ UI/UX ດ້ວຍ Tailwind CSS &amp; Burgundy Theme</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">10 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Multi-language System</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ລະບົບ 2 ພາສາ (Lao / English) ທົ່ວທັງເວັບໄຊ້</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">3 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Menu &amp; Digital Menu</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ໜ້າເມນູ, filtering, search, modal ຂໍ້ມູນເຄື່ອງດື່ມ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">5 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Cart &amp; Checkout System</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຕະກ້າສັ່ງຊື້, ຄຳນວນລາຄາ, ໜ້າຈ່າຍເງິນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">5 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Loyalty Points &amp; User UI</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ລະບົບສະມາຊິກ, ລະດັບ Tier (Silver/Gold/Platinum), ສະສົມຄະແນນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">4 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Medium</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Table &amp; Lounge Booking</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ຟອມຈອງໂຕະ, ເລືອກສາຂາ, ວັນທີ, ເວລາ, ບັດຈອງ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">4 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Medium</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">90%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 1</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Admin Backend Panel</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ລະບົບຫຼັງຮ້ານ, ຈັດການເມນູ, ອໍເດີ້, ຫ້ອງຄົວ, ສະມາຊິກ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">10 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">95%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Orders &amp; Payments DB Schema</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ອອກແບບ Database schema ສໍາລັບ Orders, Payments, Items</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">3 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">100%</Data></Cell>
+    <Cell ss:StyleID="StatusDone"><Data ss:Type="String">🟢 ສຳເລັດແລ້ວ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Backend Order API</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ພັດທະນາ API Backend ຈັດການ Orders &amp; Cart</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">5 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">40%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">BCEL OnePay API</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ເຊື່ອມຕໍ່ API BCEL OnePay ສ້າງ Dynamic QR Code</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">7 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">15%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Points Engine</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ລະບົບຄຳນວນຄະແນນອັດຕະໂນມັດ (10,000 Kip = 1 Point)</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">4 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Medium</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">30%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">12</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Notifications</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ລະບົບແຈ້ງເຕືອນ Email / SMS ຢືນຢັນການຈອງ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">3 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Low</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">10%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">13</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Mobile App UI/UX</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ອອກແບບ UI/UX ແອັບມືຖື (Figma &amp; Assets)</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">10 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">20%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">14</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">Mobile App Coding</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ພັດທະນາ Cross-platform App (Flutter / React Native)</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">20 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">10%</Data></Cell>
+    <Cell ss:StyleID="StatusProgress"><Data ss:Type="String">🟡 ດຳເນີນການ</Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="25">
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="Number">15</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">Phase 2</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">App Store Release</Data></Cell>
+    <Cell ss:StyleID="CellLeft"><Data ss:Type="String">ທົດສອບ Beta, ແກ້ໄຂບັກ, ປົດລັອກ App Store &amp; Play Store</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">14 ວັນ</Data></Cell>
+    <Cell ss:StyleID="CellCenter"><Data ss:Type="String">High</Data></Cell>
+    <Cell ss:StyleID="CellBoldCenter"><Data ss:Type="String">0%</Data></Cell>
+    <Cell ss:StyleID="StatusPending"><Data ss:Type="String">⚪ ລໍຖ້າດຳເນີນການ</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

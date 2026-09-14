@@ -4,6 +4,8 @@ require_once __DIR__ . '/lang.php';
 require_once __DIR__ . '/../config/db.php';
 
 $current_page = basename($_SERVER['PHP_SELF']);
+$standalone_pages = ['login.php', 'register.php', 'account.php', 'booking.php'];
+$is_standalone = in_array($current_page, $standalone_pages);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $current_lang; ?>">
@@ -18,31 +20,75 @@ $current_page = basename($_SERVER['PHP_SELF']);
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Noto Serif Lao', 'serif'],
+                        serif: ['Noto Serif Lao', 'serif'],
+                        'serif-lao': ['Noto Serif Lao', 'serif'],
+                        'sans-lao': ['Noto Serif Lao', 'serif'],
+                    },
                     colors: {
                         burgundy: {
-                            50: '#FFFFFF',   // Pure White
-                            100: '#F8FAFC',  // Very soft gray
-                            200: '#FFFFFF',  // Changed from gold to pure white for dark banners
-                            600: '#6A182F',  // Unified to primary burgundy
-                            700: '#6A182F',  // Unified to primary burgundy
-                            800: '#6A182F',  // Unified to primary burgundy
-                            900: '#6A182F',  // Unified to primary burgundy
+                            50: '#FFFDF2',   // Ivory background
+                            100: '#FAF7EC',  // Soft cream
+                            200: '#F4EFE0',  // Warm beige
+                            600: '#7E253A',
+                            700: '#6B1D2F',  // Primary Burgundy
+                            800: '#531321',  // Dark Burgundy
+                            900: '#3D0B16',
+                            950: '#26050E',  // Deep Dark Burgundy
                         },
                         gold: {
-                            100: '#FFFFFF',
-                            200: '#FFFFFF',
-                            300: '#FFFFFF',
-                            400: '#FFFFFF',  // Changed to white for badges on dark background
-                            500: '#6A182F',
-                            600: '#6A182F',  // Changed to primary burgundy
-                            700: '#4D0E1E',
-                            800: '#340713',
+                            100: '#FCF7E8',
+                            200: '#F8EECF',
+                            300: '#F3E1B1',
+                            400: '#EAD29B',
+                            500: '#DCAE6C',  // Light Gold
+                            600: '#CD9947',  // Dark Gold
+                            700: '#B28135',
+                            800: '#946726',
+                            900: '#774F1A',
+                        },
+                        wood: {
+                            50: '#F9F5F0',   // Warm birch wood light
+                            100: '#F2E8DC',  // Soft oak grain
+                            200: '#E3D0BE',  // Timber beige
+                            300: '#C5A080',  // Warm teak wood
+                            400: '#A3724C',  // Rich walnut
+                            500: '#83522E',  // Polished mahogany wood
+                            600: '#673D1E',  // Dark wood accent
+                            700: '#4E2B13',  // Dark oak timber
+                            800: '#381D0B',  // Deep espresso wood
+                            900: '#261205',  // Charcoal timber
+                        },
+                        coffee: {
+                            50: '#FAF6F0',   // Latte foam
+                            100: '#F3E9DD',  // Cappuccino cream
+                            200: '#E2CEBA',  // Light roast
+                            300: '#C8A382',  // Milk coffee
+                            400: '#AA7952',  // Medium roast bean
+                            500: '#8A562B',  // Dark roast coffee
+                            600: '#6E401C',  // Rich espresso
+                            700: '#542E12',  // Deep mocha
+                            800: '#3D1F0A',  // Dark coffee bean
+                            900: '#271204',  // Espresso black
+                        },
+                        beer: {
+                            50: '#FFFDF0',   // Draft foam white
+                            100: '#FFF9D6',  // Light lager gold
+                            200: '#FFF0A8',  // Golden pilsner
+                            300: '#FDE070',  // Draft beer gold
+                            400: '#F5C83B',  // Rich amber lager
+                            500: '#E2AA1E',  // Golden amber draft
+                            600: '#BE8510',  // Craft ale amber
+                            700: '#996309',  // Dark amber craft
+                            800: '#734605',  // Stout brown
+                            900: '#4E2C02',  // Dark stout
                         },
                         cream: {
-                            50: '#FFFFFF',   // White
-                            100: '#FFFFFF',  // White
-                            200: '#F8FAFC',  // Very soft gray
-                            300: '#E2E8F0',  // Muted gray
+                            50: '#FFFDF2',   // Ivory
+                            100: '#FAF7EC',
+                            200: '#F4EFE0',
+                            300: '#E7DFCC',
                         }
                     }
                 }
@@ -90,56 +136,78 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 document.body.style.overflow = '';
             }
         }
+
+        function updateHeaderScroll() {
+            var header = document.getElementById('main-header');
+            if (!header) return;
+            if (window.scrollY > 30) {
+                header.classList.add('nav-scrolled');
+                header.classList.remove('nav-at-top');
+            } else {
+                header.classList.add('nav-at-top');
+                header.classList.remove('nav-scrolled');
+            }
+        }
+        window.addEventListener('scroll', updateHeaderScroll);
+        document.addEventListener('DOMContentLoaded', updateHeaderScroll);
     </script>
 </head>
-<body class="pt-20"> <!-- ປ້ອງກັນບໍ່ໃຫ້ເນື້ອຫາຖືກບັງໂດຍ Header ທີ່ເປັນ fixed -->
+<body class="bg-white font-sans text-gray-800 antialiased selection:bg-burgundy-700 selection:text-white">
 
-    <!-- Header (Luckin-inspired glass design) -->
-    <header class="fixed top-0 left-0 right-0 h-20 glass-header border-b border-transparent transition-all duration-300 z-50 flex items-center justify-between px-6 md:px-12">
+    <!-- Header (Luckin-inspired dynamic transparent top -> glass scroll header) -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 h-20 border-b border-transparent z-50 flex items-center justify-between px-6 md:px-12 nav-at-top <?php echo $is_standalone ? 'is-standalone-page' : ''; ?>">
         <!-- Logo -->
-        <a href="index.php" class="flex items-center space-x-3">
-            <img src="assets/images/logo.png" alt="LaoFe Logo" class="w-12 h-12 object-contain rounded-full shadow-sm bg-cream-100 border border-burgundy-700/10">
+        <a href="index.php" class="flex items-center space-x-3 group">
+            <img src="assets/images/logo.png" alt="LaoFe Logo" class="w-12 h-12 object-contain rounded-full shadow-md bg-white border border-white/20 p-0.5 group-hover:scale-105 transition-transform duration-300">
             <div class="flex flex-col">
-                <span class="text-xl font-bold tracking-wider font-serif-lao text-burgundy-700 leading-none">LaoFe</span>
-                <span class="text-[10px] font-semibold text-gray-500 tracking-widest mt-0.5">CAFE & BAR</span>
+                <span class="logo-title text-xl font-extrabold tracking-wider font-sans-lao leading-none">LaoFe</span>
+                <span class="logo-subtitle text-[10px] font-bold tracking-widest mt-0.5">CAFE & BAR</span>
             </div>
         </a>
 
         <!-- Desktop Navigation -->
         <nav class="hidden lg:flex items-center space-x-8">
-            <a href="index.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'index.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="index.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'index.php' ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_home'); ?>
             </a>
-            <a href="our-story.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo ($current_page === 'our-story.php' || $current_page === 'about.php') ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="our-story.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo ($current_page === 'our-story.php' || $current_page === 'about.php') ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_story'); ?>
             </a>
-            <a href="menu.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'menu.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="menu.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'menu.php' ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_menu'); ?>
             </a>
-            <a href="locations.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'locations.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="locations.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'locations.php' ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_locations'); ?>
             </a>
-            <a href="news.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'news.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="news.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'news.php' ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_news'); ?>
             </a>
-            <a href="franchise.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'franchise.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="franchise.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'franchise.php' ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_franchise'); ?>
             </a>
-            <!-- Hidden for Phase 1 - Uncomment to show when App launches
-            <a href="app.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'app.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
-                <?php echo t('nav_app'); ?>
-            </a>
-            -->
-            <a href="contact.php" class="nav-link font-medium text-gray-700 hover:text-burgundy-700 transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'contact.php' ? 'border-burgundy-700 text-burgundy-700' : 'border-transparent'; ?>">
+            <a href="contact.php" class="nav-link font-medium transition-colors duration-200 py-2 border-b-2 <?php echo $current_page === 'contact.php' ? 'active-link' : 'border-transparent'; ?>">
                 <?php echo t('nav_contact'); ?>
             </a>
         </nav>
 
         <!-- Right Side: Lang Toggle & Mobile Menu Btn -->
         <div class="flex items-center space-x-4">
+            <!-- Member Login/Account Button -->
+            <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
+                <a href="account.php" class="nav-btn hidden md:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full transition-all duration-300 text-xs font-bold shadow-sm" title="<?php echo t('nav_account'); ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span><?php echo htmlspecialchars($_SESSION['user_fullname'] ?? t('nav_account')); ?></span>
+                </a>
+            <?php else: ?>
+                <a href="login.php" class="nav-btn hidden md:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full transition-all duration-300 text-xs font-bold shadow-sm" title="<?php echo t('nav_login'); ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    <span><?php echo t('nav_login'); ?></span>
+                </a>
+            <?php endif; ?>
+
             <!-- Language Switcher with Flag Icon -->
             <?php if ($current_lang === 'lo'): ?>
-                <a href="?lang=en" class="inline-flex items-center gap-2 px-3.5 py-1.5 border border-burgundy-700/30 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 text-xs font-bold shadow-sm group bg-white" title="Switch to English">
+                <a href="?lang=en" class="nav-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all duration-300 text-xs font-bold shadow-sm group" title="Switch to English">
                     <svg class="w-5 h-3.5 rounded-sm shadow-sm shrink-0" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
                         <clipPath id="s_uk"><path d="M0 0v30h60V0z"/></clipPath>
                         <clipPath id="t_uk"><path d="M30 15h30v15zM0 0h30v15zM30 15H0v15zM60 0H30v15z"/></clipPath>
@@ -154,7 +222,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <span>EN</span>
                 </a>
             <?php else: ?>
-                <a href="?lang=lo" class="inline-flex items-center gap-2 px-3.5 py-1.5 border border-burgundy-700/30 text-burgundy-700 hover:bg-burgundy-700 hover:text-white rounded-full transition-all duration-300 text-xs font-bold shadow-sm group bg-white" title="ປ່ຽນເປັນພາສາລາວ">
+                <a href="?lang=lo" class="nav-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all duration-300 text-xs font-bold shadow-sm group" title="ປ່ຽນເປັນພາສາລາວ">
                     <svg class="w-5 h-3.5 rounded-sm shadow-sm shrink-0" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
                         <rect width="600" height="400" fill="#CE1126"/>
                         <rect y="100" width="600" height="200" fill="#002868"/>
@@ -184,7 +252,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <div class="flex items-center space-x-3">
                     <img src="assets/images/logo.png" alt="LaoFe Logo" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 shadow">
                     <div class="flex flex-col">
-                        <span class="text-xl font-bold tracking-wider font-serif-lao text-white leading-none">LaoFe</span>
+                        <span class="text-xl font-bold tracking-wider font-sans-lao text-white leading-none">LaoFe</span>
                         <span class="text-[9px] font-semibold text-white/70 tracking-widest mt-0.5">CAFE & BAR</span>
                     </div>
                 </div>
@@ -223,6 +291,27 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <a href="contact.php" onclick="toggleMobileMenu(false)" class="text-2xl font-medium tracking-wide text-white hover:text-white/80 transition-colors <?php echo $current_page === 'contact.php' ? 'font-bold border-b-2 border-white pb-1 w-max' : ''; ?>">
                     <?php echo t('nav_contact'); ?>
                 </a>
+
+                <!-- Account / Login for mobile drawer -->
+                <div class="pt-6 border-t border-white/15 flex flex-col space-y-4">
+                    <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
+                        <div class="text-lg font-semibold text-white flex items-center gap-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            <span><?php echo htmlspecialchars($_SESSION['user_fullname']); ?></span>
+                        </div>
+                        <a href="account.php" onclick="toggleMobileMenu(false)" class="text-sm font-medium text-white/80 hover:text-white transition-colors underline">
+                            <?php echo t('nav_account'); ?>
+                        </a>
+                        <a href="login.php?logout=true" onclick="toggleMobileMenu(false)" class="text-sm font-medium text-red-300 hover:text-red-400 transition-colors">
+                            <?php echo $current_lang === 'lo' ? 'ອອກຈາກລະບົບ' : 'Logout'; ?>
+                        </a>
+                    <?php else: ?>
+                        <a href="login.php" onclick="toggleMobileMenu(false)" class="text-lg font-semibold text-white flex items-center gap-2 hover:text-white/85 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                            <span><?php echo t('nav_login'); ?></span>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </nav>
         </div>
 

@@ -1,12 +1,17 @@
 CREATE DATABASE IF NOT EXISTS laofe_beer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE laofe_beer;
 
--- 1. ຕາຕະລາງຜູ້ດູແລລະບົບ (Admin Users)
+-- 1. ຕາຕະລາງຜູ້ໃຊ້ (Users - ທັງ Admin ແລະ ລູກຄ້າສະມາຊິກ)
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) DEFAULT 'admin',
+    fullname VARCHAR(100) NULL,
+    phone VARCHAR(50) NULL,
+    email VARCHAR(100) NULL,
+    role VARCHAR(20) DEFAULT 'admin', -- 'admin', 'customer'
+    points INT DEFAULT 0,
+    tier VARCHAR(50) DEFAULT 'Member',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -24,7 +29,7 @@ CREATE TABLE IF NOT EXISTS menus (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 3. ຕາຕະລາງຂ່າວສານ ແລະ ໂໂປຣໂມຊັນ (News & Promotions)
+-- 3. ຕາຕະລາງຂ່າວສານ ແລະ ໂປຣໂມຊັນ (News & Promotions)
 CREATE TABLE IF NOT EXISTS news (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title_lo VARCHAR(255) NOT NULL,
@@ -72,6 +77,70 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 7. ຕາຕະລາງອໍເດີ້ສັ່ງຊື້ (Orders)
+CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    total_amount DECIMAL(12, 0) NOT NULL,
+    points_earned INT DEFAULT 0,
+    status VARCHAR(50) DEFAULT 'Pending', -- 'Pending', 'Paid', 'Completed', 'Cancelled'
+    payment_method VARCHAR(50) DEFAULT 'Cash', -- 'Cash', 'BCEL OnePay'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 8. ຕາຕະລາງລາຍການໃນອໍເດີ້ (Order Items)
+CREATE TABLE IF NOT EXISTS order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    menu_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(12, 0) NOT NULL,
+    notes TEXT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (menu_id) REFERENCES menus(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 9. ຕາຕະລາງຈອງໂຕະ (Bookings)
+CREATE TABLE IF NOT EXISTS bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    branch_id INT NOT NULL,
+    booking_name VARCHAR(100) NOT NULL,
+    booking_phone VARCHAR(50) NOT NULL,
+    booking_email VARCHAR(100) NOT NULL,
+    booking_date DATE NOT NULL,
+    booking_time TIME NOT NULL,
+    guest_count INT NOT NULL,
+    table_zone VARCHAR(50) DEFAULT 'Standard', -- 'Standard', 'Lounge', 'VIP'
+    status VARCHAR(50) DEFAULT 'Pending', -- 'Pending', 'Confirmed', 'Cancelled'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 10. ຕາຕະລາງ Banner (Banners)
+CREATE TABLE IF NOT EXISTS banners (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    badge_lo VARCHAR(255) NULL,
+    badge_en VARCHAR(255) NULL,
+    title_lo VARCHAR(255) NOT NULL,
+    title_en VARCHAR(255) NOT NULL,
+    subtitle_lo TEXT NULL,
+    subtitle_en TEXT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    btn1_text_lo VARCHAR(100) NULL,
+    btn1_text_en VARCHAR(100) NULL,
+    btn1_link VARCHAR(255) NULL,
+    btn2_text_lo VARCHAR(100) NULL,
+    btn2_text_en VARCHAR(100) NULL,
+    btn2_link VARCHAR(255) NULL,
+    sort_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- ແຊັກຂໍ້ມູນສາຂາເລີ່ມຕົ້ນ (Branch Seeds)
 INSERT INTO branches (name_lo, name_en, address_lo, address_en, hours_lo, hours_en, phone, map_link) VALUES

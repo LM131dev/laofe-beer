@@ -1,29 +1,103 @@
 /* assets/css/style.css */
 
 /* ນຳເຂົ້າຟອນລາວຈາກ Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Noto+Serif+Lao:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Noto+Serif+Lao:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --burgundy-primary: #6A182F; /* Logo primary maroon */
-    --burgundy-dark: #6A182F;    /* Unified to primary burgundy */
-    --burgundy-light: #6A182F;   /* Unified to primary burgundy */
-    --burgundy-soft: #FFFFFF;    /* White background */
-    --burgundy-accent: #6A182F;  /* Logo primary maroon */
+    --burgundy-primary: #6B1D2F; /* Logo primary burgundy */
+    --burgundy-dark: #531321;    /* Dark burgundy */
+    --burgundy-light: #7E253A;   /* Light burgundy */
+    --burgundy-soft: #FFFDF2;    /* Ivory background */
+    --burgundy-accent: #CD9947;  /* Logo gold accent */
     
-    --gold-light: #FFFFFF;
-    --gold-dark: #6A182F;
-    --logo-cream: #FFFFFF;
+    --wood-dark: #381D0B;        /* Deep oak wood */
+    --wood-warm: #673D1E;        /* Warm teak wood */
+    --wood-amber: #A3724C;       /* Polished timber */
+    --wood-light: #F7F0E6;       /* Birch wood cream */
+
+    --coffee-dark: #271204;      /* Dark espresso roast */
+    --coffee-mocha: #542E12;     /* Rich mocha brown */
+    --coffee-caramel: #C8A382;   /* Creamy latte gold */
+
+    --beer-gold: #E5A024;        /* Draft beer golden amber */
+    --beer-amber: #BE8510;       /* Craft ale amber */
+    --beer-foam: #FFF9D6;        /* Draft foam white */
+
+    --gold-light: #DCAE6C;
+    --gold-dark: #CD9947;
+    --logo-cream: #FFFDF2;
+}
+
+* {
+    font-family: 'Noto Serif Lao', serif !important;
 }
 
 body {
-    font-family: 'Noto Sans Lao', 'Outfit', sans-serif;
+    font-family: 'Noto Serif Lao', serif !important;
     scroll-behavior: smooth;
-    background-color: #ffffff;
+    background-color: #FFFDF2; /* Beautiful warm Ivory background */
     color: #1a1a1a;
 }
 
-h1, h2, h3, h4, .font-serif-lao {
-    font-family: 'Noto Serif Lao', 'Outfit', serif;
+input, button, select, textarea, label {
+    font-family: 'Noto Serif Lao', serif !important;
+}
+
+/* Lao Font Utility Classes - Universal Noto Serif Lao */
+.font-serif-lao, .font-sans-lao, .font-sans, .font-serif {
+    font-family: 'Noto Serif Lao', serif !important;
+}
+
+/* 3 Core Design Pillars Styling: Wood, Coffee, Beer */
+.wood-gradient-bg {
+    background: linear-gradient(135deg, #261205 0%, #4E2B13 50%, #673D1E 100%);
+}
+
+.coffee-gradient-bg {
+    background: linear-gradient(135deg, #1C0E05 0%, #3D1F0A 50%, #6E401C 100%);
+}
+
+.beer-gradient-bg {
+    background: linear-gradient(135deg, #4E2C02 0%, #996309 50%, #E2AA1E 100%);
+}
+
+.wood-border {
+    border-color: rgba(107, 29, 47, 0.15);
+}
+
+.wood-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(107, 29, 47, 0.08);
+    box-shadow: 0 15px 35px -10px rgba(61, 11, 22, 0.07), 0 5px 15px -5px rgba(0, 0, 0, 0.04);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wood-card:hover {
+    border-color: rgba(205, 153, 71, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px -12px rgba(61, 11, 22, 0.16);
+}
+
+.pillar-badge-wood {
+    background: rgba(107, 29, 47, 0.08);
+    color: #6B1D2F;
+    border: 1px solid rgba(107, 29, 47, 0.2);
+}
+
+.pillar-badge-coffee {
+    background: rgba(180, 83, 9, 0.08);
+    color: #B45309;
+    border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+.pillar-badge-beer {
+    background: rgba(217, 119, 6, 0.12);
+    color: #92400E;
+    border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif Lao', 'Noto Sans Lao', serif !important;
 }
 
 /* Custom Scrollbar */
@@ -41,12 +115,127 @@ h1, h2, h3, h4, .font-serif-lao {
     background: var(--burgundy-dark);
 }
 
-/* Glassmorphism Header */
-.glass-header {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(107, 29, 47, 0.1);
+/* Dynamic Scroll Header (Transparent at top with White Text -> White Glass on Scroll with Burgundy Text) */
+#main-header,
+#main-header *,
+#mobile-menu,
+#mobile-menu * {
+    font-family: 'Noto Sans Lao', 'Phetsarath OT', 'Outfit', system-ui, -apple-system, sans-serif !important;
+    transition: all 0.35s ease;
+}
+
+#main-header .nav-link {
+    font-family: 'Noto Sans Lao', 'Phetsarath OT', 'Outfit', system-ui, -apple-system, sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.01em;
+}
+
+#main-header {
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* At Top of Hero Pages: Clean Overlay with NO border line so Hero Image/Video shows 100% Full Height */
+#main-header.nav-at-top:not(.is-standalone-page) {
+    background: linear-gradient(180deg, rgba(15, 3, 7, 0.85) 0%, rgba(15, 3, 7, 0.4) 60%, transparent 100%) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+#main-header.nav-at-top:not(.is-standalone-page) .logo-title {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+#main-header.nav-at-top:not(.is-standalone-page) .logo-subtitle {
+    color: #FDE68A !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#main-header.nav-at-top:not(.is-standalone-page) .nav-link {
+    color: #FFFFFF !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+#main-header.nav-at-top:not(.is-standalone-page) .nav-link:hover {
+    color: #FDE68A !important;
+}
+
+#main-header.nav-at-top:not(.is-standalone-page) .nav-link.active-link {
+    border-color: #FDE68A !important;
+    color: #FFFFFF !important;
+}
+
+/* Nav Pill Buttons (Login & Language Switcher) - Luxury Burgundy & Gold */
+#main-header .nav-btn {
+    color: #FFFFFF !important;
+    border: 1px solid rgba(253, 230, 138, 0.45) !important;
+    background-color: rgba(61, 11, 22, 0.90) !important;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+#main-header .nav-btn:hover {
+    background-color: #6B1D2F !important;
+    color: #FDE68A !important;
+    border-color: #FDE68A !important;
+    box-shadow: 0 6px 16px rgba(107, 29, 47, 0.4);
+}
+
+#main-header .nav-btn svg:not([viewBox="0 0 60 30"]):not([viewBox="0 0 600 400"]) {
+    color: #FDE68A !important;
+    stroke: #FDE68A !important;
+}
+
+/* On Standalone Light Pages (login.php) OR when Scrolled Down: Luxury Dark Burgundy Glass Bar */
+#main-header.nav-scrolled,
+#main-header.is-standalone-page {
+    background: rgba(26, 5, 11, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(205, 153, 71, 0.35) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+#main-header.nav-scrolled .logo-title,
+#main-header.is-standalone-page .logo-title {
+    color: #FFFFFF !important;
+}
+
+#main-header.nav-scrolled .logo-subtitle,
+#main-header.is-standalone-page .logo-subtitle {
+    color: #FDE68A !important;
+}
+
+#main-header.nav-scrolled .nav-link,
+#main-header.is-standalone-page .nav-link {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+#main-header.nav-scrolled .nav-link:hover,
+#main-header.is-standalone-page .nav-link:hover {
+    color: #FDE68A !important;
+}
+
+#main-header.nav-scrolled .nav-link.active-link,
+#main-header.is-standalone-page .nav-link.active-link {
+    border-color: #CD9947 !important;
+    color: #FDE68A !important;
+}
+
+#main-header.nav-scrolled .nav-btn {
+    color: #6B1D2F !important;
+    border-color: rgba(107, 29, 47, 0.3) !important;
+    background-color: #FFFFFF !important;
+    font-family: 'Noto Sans Lao', 'Phetsarath OT', 'Outfit', sans-serif !important;
+}
+
+#main-header.nav-scrolled #mobile-menu-btn {
+    color: #374151 !important;
 }
 
 .text-burgundy {
@@ -244,4 +433,175 @@ h1, h2, h3, h4, .font-serif-lao {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(106, 24, 47, 0.15);
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Luxury Footer Burgundy Gradient (Matching User Uploaded Gradient Image) */
+.footer-burgundy-gradient {
+    background: linear-gradient(180deg, #3D0B16 0%, #24050D 50%, #120206 100%) !important;
+}
+
+/* Ultra-Premium Story Card Styles (Matching Reference Warm Aesthetics) */
+.reference-story-card {
+    background-color: #FAF7F2;
+    border: 1px solid #E5DCD0;
+    border-radius: 1.5rem;
+    box-shadow: 0 18px 42px -10px rgba(44, 24, 16, 0.16), 0 6px 18px -4px rgba(44, 24, 16, 0.08);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+.reference-story-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 56px -12px rgba(44, 24, 16, 0.26), 0 10px 24px -4px rgba(107, 29, 47, 0.18);
+    border-color: #CFC0A9;
+}
+.reference-story-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, #6B1D2F 0%, #CD9947 100%);
+}
+
+/* Category Line-Art Icon Tiles (Matching Reference Screenshot 100%) */
+.category-tile-btn {
+    width: 6.75rem;
+    height: 6.75rem;
+    background-color: #E6DFC8;
+    border: 1px solid #D8CFB5;
+    border-radius: 1.5rem;
+    color: #2C1810;
+    box-shadow: 0 4px 14px -3px rgba(44, 24, 16, 0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (min-width: 640px) {
+    .category-tile-btn {
+        width: 7.5rem;
+        height: 7.5rem;
+    }
+}
+.category-tile-btn:hover {
+    background-color: #DBD2BD;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px -4px rgba(44, 24, 16, 0.15);
+}
+.category-tile-btn.filter-active {
+    background-color: #6B1D2F !important;
+    border-color: #531321 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 14px 30px -6px rgba(107, 29, 47, 0.38) !important;
+    transform: translateY(-4px) scale(1.04) !important;
+}
+.category-tile-btn.filter-active svg {
+    stroke: #FDE68A !important;
+}
+
+/* Ultra-Premium Reference Bakery/Cafe Menu Card Styles with Deep Ambient Drop Shadow */
+.reference-menu-card {
+    background-color: #FAF7F2;
+    border: 1px solid #E5DCD0;
+    border-radius: 1.25rem;
+    box-shadow: 0 16px 36px -8px rgba(44, 24, 16, 0.18), 0 6px 16px -4px rgba(44, 24, 16, 0.10);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reference-menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 52px -10px rgba(44, 24, 16, 0.28), 0 10px 24px -4px rgba(107, 29, 47, 0.20);
+    border-color: #CFC0A9;
+}
+
+
+.reference-card-image-wrap {
+    width: 100%;
+    height: 13.5rem;
+    position: relative;
+    overflow: hidden;
+    background-color: #EFE8DD;
+}
+
+.reference-card-title {
+    color: #2C1810;
+    font-family: 'Noto Serif Lao', 'Outfit', serif !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.reference-card-price {
+    color: #2C1810;
+    font-family: 'Noto Serif Lao', 'Outfit', serif !important;
+    font-weight: 700;
+}
+
+
+/* Floating Glassmorphism Badge */
+.luxury-glass-badge {
+    background: rgba(83, 19, 33, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(220, 174, 108, 0.35);
+    color: #FDE68A;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+/* Luxury Story Card */
+.luxury-story-card {
+    background: #ffffff;
+    border-radius: 1.75rem;
+    border: 1px solid rgba(205, 153, 71, 0.2);
+    box-shadow: 0 20px 40px -15px rgba(107, 29, 47, 0.08), 0 6px 18px -4px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.luxury-story-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, #6B1D2F 0%, #CD9947 100%);
+    border-radius: 6px 0 0 6px;
+}
+.luxury-story-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -18px rgba(107, 29, 47, 0.14);
+    border-color: rgba(205, 153, 71, 0.5);
+}
+
+/* Category Tile Buttons matching reference design */
+.category-tile-btn {
+    background-color: #E6DEC9;
+    color: #332219;
+    border-radius: 1.25rem;
+    transition: all 0.25s ease-in-out;
+}
+.category-tile-btn .dot-indicator {
+    background-color: #A89B84;
+}
+.category-tile-btn.filter-active {
+    background-color: #581825 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 10px 25px -5px rgba(88, 24, 37, 0.4);
+}
+.category-tile-btn.filter-active svg {
+    color: #F59E0B !important;
+    stroke: #F59E0B !important;
+}
+.category-tile-btn.filter-active .dot-indicator {
+    background-color: #F59E0B !important;
+}
+
 

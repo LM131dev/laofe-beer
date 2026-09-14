@@ -144,46 +144,49 @@ if (isset($_GET['edit'])) {
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ຊື່ເມນູ (ພາສາລາວ) *</label>
-                    <input type="text" name="name_lo" required value="<?php echo htmlspecialchars($edit_item['name_lo'] ?? ''); ?>" class="w-full px-3 py-2 border rounded focus:ring-1 focus:ring-burgundy-700">
+                    <input type="text" name="name_lo" required value="<?php echo htmlspecialchars($edit_item['name_lo'] ?? ''); ?>" placeholder="ເຊັ່ນ: ລາເຕ້ຮ້ອນ" class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-burgundy-700 focus:outline-none">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ຊື່ເມນູ (English) *</label>
-                    <input type="text" name="name_en" required value="<?php echo htmlspecialchars($edit_item['name_en'] ?? ''); ?>" class="w-full px-3 py-2 border rounded focus:ring-1 focus:ring-burgundy-700">
+                    <input type="text" name="name_en" required value="<?php echo htmlspecialchars($edit_item['name_en'] ?? ''); ?>" placeholder="e.g. Hot Latte" class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-burgundy-700 focus:outline-none">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ປະເພດ *</label>
-                        <select name="category" class="w-full px-3 py-2 border rounded focus:ring-1 focus:ring-burgundy-700">
-                            <option value="coffee" <?php echo (isset($edit_item['category']) && $edit_item['category'] === 'coffee') ? 'selected' : ''; ?>>Coffee</option>
-                            <option value="drinks" <?php echo (isset($edit_item['category']) && $edit_item['category'] === 'drinks') ? 'selected' : ''; ?>>Drinks</option>
-                            <option value="bar" <?php echo (isset($edit_item['category']) && $edit_item['category'] === 'bar') ? 'selected' : ''; ?>>Bar/Cocktail</option>
-                            <option value="food" <?php echo (isset($edit_item['category']) && $edit_item['category'] === 'food') ? 'selected' : ''; ?>>Lao Food</option>
+                        <select name="category" class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-burgundy-700 focus:outline-none">
+                            <option value="food" <?php echo (isset($edit_item['category']) && $edit_item['category'] === 'food') ? 'selected' : ''; ?>>ອາຫານ (Food)</option>
+                            <option value="drinks" <?php echo (isset($edit_item['category']) && ($edit_item['category'] === 'drinks' || $edit_item['category'] === 'coffee')) ? 'selected' : ''; ?>>ເຄື່ອງດື່ມ (Drinks)</option>
+                            <option value="bar" <?php echo (isset($edit_item['category']) && ($edit_item['category'] === 'bar' || $edit_item['category'] === 'alcohol')) ? 'selected' : ''; ?>>ເຫຼົ້າ & ເບຍ (Alcohol & Beer)</option>
+                            <option value="promo" <?php echo (isset($edit_item['category']) && ($edit_item['category'] === 'promo' || $edit_item['category'] === 'promotion')) ? 'selected' : ''; ?>>Promotion</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ລາຄາ (LAK) *</label>
-                        <input type="number" name="price" required value="<?php echo htmlspecialchars($edit_item['price'] ?? ''); ?>" class="w-full px-3 py-2 border rounded focus:ring-1 focus:ring-burgundy-700">
+                        <input type="number" name="price" required value="<?php echo htmlspecialchars($edit_item['price'] ?? ''); ?>" placeholder="ເຊັ່ນ: 35000" class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-burgundy-700 focus:outline-none">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ຄຳອະທິບາຍ (ພາສາລາວ)</label>
-                    <textarea name="description_lo" rows="3" class="w-full px-3 py-2 border rounded focus:ring-1 focus:ring-burgundy-700"><?php echo htmlspecialchars($edit_item['description_lo'] ?? ''); ?></textarea>
+                    <textarea name="description_lo" rows="3" placeholder="ຄຳອະທິບາຍລາຍລະອຽດ..." class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-burgundy-700 focus:outline-none"><?php echo htmlspecialchars($edit_item['description_lo'] ?? ''); ?></textarea>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ຄຳອະທິບາຍ (English)</label>
-                    <textarea name="description_en" rows="3" class="w-full px-3 py-2 border rounded focus:ring-1 focus:ring-burgundy-700"><?php echo htmlspecialchars($edit_item['description_en'] ?? ''); ?></textarea>
+                    <textarea name="description_en" rows="3" placeholder="Description details..." class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-burgundy-700 focus:outline-none"><?php echo htmlspecialchars($edit_item['description_en'] ?? ''); ?></textarea>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">ຮູບພາບເມນູ</label>
                     <?php if (isset($edit_item['image_path'])): ?>
-                        <img src="../<?php echo htmlspecialchars($edit_item['image_path']); ?>" class="w-20 h-20 object-cover rounded mb-2 border">
+                        <div class="w-20 h-20 rounded overflow-hidden mb-2 border border-gray-150 shadow-sm">
+                            <img src="../<?php echo htmlspecialchars($edit_item['image_path']); ?>" class="w-full h-full object-cover">
+                        </div>
                     <?php endif; ?>
-                    <input type="file" name="image" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-burgundy-700 file:text-white hover:file:bg-burgundy-800">
+                    <input type="file" name="image" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-burgundy-700 file:text-white hover:file:bg-burgundy-800 cursor-pointer">
+                    <span class="block text-[10px] text-gray-400 mt-1">ແນະນຳຮູບພາບອັດຕາສ່ວນ 1:1 (ຈຳນວນຫຼ່ຽມ)</span>
                 </div>
 
                 <div class="flex items-center space-x-2 pt-2">
@@ -192,11 +195,11 @@ if (isset($_GET['edit'])) {
                 </div>
 
                 <div class="pt-4 flex gap-2">
-                    <button type="submit" class="flex-grow py-2.5 bg-burgundy-700 hover:bg-burgundy-800 text-white font-bold rounded shadow transition-all duration-200">
+                    <button type="submit" class="flex-grow py-2.5 bg-burgundy-700 hover:bg-burgundy-800 text-white font-bold rounded shadow text-sm transition-all duration-200">
                         <?php echo $edit_item ? 'ບັນທຶກການແກ້ໄຂ' : 'ເພີ່ມເມນູ'; ?>
                     </button>
                     <?php if ($edit_item): ?>
-                        <a href="menu_manage.php" class="px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded font-bold transition-all duration-200">ยกເລີກ</a>
+                        <a href="menu_manage.php" class="px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded font-bold text-sm transition-all duration-200">ຍົກເລີກ</a>
                     <?php endif; ?>
                 </div>
             </form>
@@ -208,34 +211,62 @@ if (isset($_GET['edit'])) {
             
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 rounded-lg">
                         <tr>
                             <th class="px-4 py-3">ຮູບພາບ</th>
                             <th class="px-4 py-3">ຊື່ເມນູ (ລາວ / En)</th>
                             <th class="px-4 py-3">ປະເພດ</th>
-                            <th class="px-4 py-3">ລາຄາ (ກີບ)</th>
+                            <th class="px-4 py-3">ລາຄາ</th>
                             <th class="px-4 py-3 text-right">ຈັດການ</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="divide-y divide-gray-100">
                         <?php if (count($menus) > 0): ?>
                             <?php foreach ($menus as $m): ?>
-                                <tr class="bg-white border-b hover:bg-gray-50 <?php echo (isset($edit_item['id']) && $edit_item['id'] === $m['id']) ? 'bg-burgundy-50/50' : ''; ?>">
-                                    <td class="px-4 py-3">
-                                        <img src="../<?php echo htmlspecialchars($m['image_path']); ?>" alt="Menu image" class="w-12 h-12 object-cover rounded-md border border-gray-100">
+                                <tr class="hover:bg-gray-50/50 transition-all duration-200 <?php echo (isset($edit_item['id']) && $edit_item['id'] === $m['id']) ? 'bg-burgundy-50/30' : ''; ?>">
+                                    <td class="px-4 py-4">
+                                        <div class="w-14 h-14 rounded overflow-hidden border border-gray-100 shadow-sm">
+                                            <img src="../<?php echo htmlspecialchars($m['image_path']); ?>" class="w-full h-full object-cover">
+                                        </div>
                                     </td>
-                                    <td class="px-4 py-3 font-semibold text-gray-900">
-                                        <div><?php echo htmlspecialchars($m['name_lo']); ?></div>
-                                        <div class="text-xs text-gray-400 font-light"><?php echo htmlspecialchars($m['name_en']); ?></div>
-                                        <?php if ($m['is_popular'] == 1): ?>
-                                            <span class="inline-block px-2 py-0.5 bg-yellow-100 text-yellow-800 text-[9px] rounded-full mt-1">Popular</span>
-                                        <?php endif; ?>
+                                    <td class="px-4 py-4 max-w-xs">
+                                        <div class="space-y-1">
+                                            <div class="text-sm font-bold text-gray-950"><?php echo htmlspecialchars($m['name_lo']); ?></div>
+                                            <div class="text-xs text-gray-400 font-mono">EN: <?php echo htmlspecialchars($m['name_en']); ?></div>
+                                            <?php if ($m['is_popular'] == 1): ?>
+                                                <span class="inline-flex items-center px-1.5 py-0.5 bg-yellow-100 text-yellow-800 text-[9px] font-bold rounded-full mt-1">
+                                                    ⭐ Popular
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
-                                    <td class="px-4 py-3 text-xs uppercase"><?php echo htmlspecialchars($m['category']); ?></td>
-                                    <td class="px-4 py-3 font-bold text-burgundy-700"><?php echo number_format($m['price']); ?></td>
-                                    <td class="px-4 py-3 text-right space-x-2">
-                                        <a href="menu_manage.php?edit=<?php echo $m['id']; ?>" class="text-blue-600 hover:text-blue-800 font-semibold text-xs">ແກ້ໄຂ</a>
-                                        <a href="menu_manage.php?delete=<?php echo $m['id']; ?>" onclick="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບເມນູນີ້?')" class="text-red-600 hover:text-red-800 font-semibold text-xs">ລຶບ</a>
+                                    <td class="px-4 py-4">
+                                        <?php 
+                                            $cat_colors = [
+                                                'coffee' => 'bg-amber-100 text-amber-800',
+                                                'drinks' => 'bg-blue-100 text-blue-800',
+                                                'bar' => 'bg-purple-100 text-purple-800',
+                                                'food' => 'bg-emerald-100 text-emerald-800',
+                                                'promo' => 'bg-red-100 text-red-800'
+                                            ];
+                                            $cat_color = $cat_colors[$m['category']] ?? 'bg-gray-100 text-gray-800';
+                                        ?>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold <?php echo $cat_color; ?> uppercase">
+                                            <?php echo htmlspecialchars($m['category']); ?>
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 font-extrabold text-burgundy-700 font-mono">
+                                        <?php echo number_format($m['price']); ?> LAK
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <div class="flex items-center justify-end space-x-2.5">
+                                            <a href="menu_manage.php?edit=<?php echo $m['id']; ?>" class="inline-flex items-center justify-center p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-all" title="ແກ້ໄຂ">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                            </a>
+                                            <a href="menu_manage.php?delete=<?php echo $m['id']; ?>" onclick="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບເມນູນີ້?')" class="inline-flex items-center justify-center p-1.5 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-lg transition-all" title="ລຶບ">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
