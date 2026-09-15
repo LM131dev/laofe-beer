@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS laofe_beer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE laofe_beer;
+-- Database Schema for LaoFe & Beer
+-- Note: On shared hosting, select your database in phpMyAdmin before importing.
 
 -- 1. ຕາຕະລາງຜູ້ໃຊ້ (Users - ທັງ Admin ແລະ ລູກຄ້າສະມາຊິກ)
 CREATE TABLE IF NOT EXISTS users (

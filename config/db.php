@@ -1,11 +1,22 @@
 <?php
 // config/db.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$host = 'localhost';
-$db_name = 'laofe_beer';
-$username = 'root';
-$password = '';
+$host = 'sql312.infinityfree.com';
+$db_name = 'if0_42919161_laofe_db';
+$username = 'if0_42919161';
+$password = 'HaTW8bVQ5E4xFq';
 $charset = 'utf8mb4';
+
+// ອັດຕະໂນມັດສະຫຼັບໃຊ້ Local Server ຖ້າຢູ່ເທິງເຄື່ອງ XAMPP (Localhost)
+if (isset($_SERVER['SERVER_NAME']) && ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1')) {
+    $host = 'localhost';
+    $db_name = 'laofe_beer';
+    $username = 'root';
+    $password = '';
+}
 
 $dsn = "mysql:host=$host;dbname=$db_name;charset=$charset";
 $options = [
@@ -15,14 +26,16 @@ $options = [
 ];
 
 try {
-    // ເຊື່ອມຕໍ່ຫາຖານຂໍ້ມູນ (Direct PDO connection for Live Hosting & Local)
     try {
         $pdo = new PDO($dsn, $username, $password, $options);
     } catch (\PDOException $e_connect) {
-        // ຖ້າຫາກເປັນ Local Server ທີ່ຍັງບໍ່ມີ Database ໃຫ້ລອງສ້າງໃຫມ່
-        $pdo_init = new PDO("mysql:host=$host;charset=$charset", $username, $password, $options);
-        $pdo_init->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $pdo = new PDO($dsn, $username, $password, $options);
+        if ($host === 'localhost' || $host === '127.0.0.1') {
+            $pdo_init = new PDO("mysql:host=$host;charset=$charset", $username, $password, $options);
+            $pdo_init->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            $pdo = new PDO($dsn, $username, $password, $options);
+        } else {
+            throw $e_connect;
+        }
     }
 
     // ກວດສອບ ແລະ ສ້າງຕາຕະລາງພື້ນຖານ ຖ້າຫາກຍັງບໍ່ມີ (ເພື່ອຄວາມສະດວກໃນການຕິດຕັ້ງ)
@@ -452,6 +465,19 @@ try {
     }
 
 } catch (\PDOException $e) {
-    die("ການເຊື່ອມຕໍ່ຖານຂໍ້ມູນຫຼົ້ມເຫຼວ: " . $e->getMessage());
+    die("
+    <div style='font-family: Arial, sans-serif; background: #FFFDF2; padding: 30px; text-align: center; border-radius: 20px; border: 2px solid #DCAE6C; max-width: 550px; margin: 60px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); color: #3D0B16;'>
+        <div style='font-size: 40px; margin-bottom: 10px;'>⚠️</div>
+        <h2 style='font-size: 20px; margin: 0 0 10px 0; color: #6B1D2F;'>Database Connection Error</h2>
+        <p style='font-size: 14px; color: #531321; line-height: 1.6;'>
+            ບໍ່ສາມາດເຊື່ອມຕໍ່ Database ໄດ້: <br>
+            <code style='background: #F4EFE0; padding: 4px 8px; border-radius: 6px; font-size: 13px; color: #C0392B;'>" . htmlspecialchars($e->getMessage()) . "</code>
+        </p>
+        <hr style='border: 0; border-top: 1px solid #E7DFCC; margin: 20px 0;'>
+        <p style='font-size: 13px; color: #666; margin: 0;'>
+            💡 <b>ວິທີແກ້ໄຂ:</b> ກະລຸນາກວດສອບ <b>vPanel Password</b> ໃນໄຟລ໌ <code>config/db.php</code> (ບັນທັດທີ 7) ໃຫ້ຖືກຕ້ອງ.
+        </p>
+    </div>
+    ");
 }
 ?>
