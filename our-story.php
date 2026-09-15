@@ -5,12 +5,12 @@ require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Section 1: Hero Banner (Luckin Our Story full-screen video background layout) -->
 <section class="relative w-full h-[75vh] md:h-[85vh] flex items-center justify-center overflow-hidden bg-burgundy-700">
     <!-- Autoplaying looping video -->
-    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-        <source src="https://ilucky-fe-outside-oss-prod.luckincdn.com/iadmin/ab6140f6-129c-4ae9-aaa0-20190c43183b.mp4" type="video/mp4"/>
-        <source src="https://web.luckincdn.com/default/assets/ourstory-41023fc9.webm" type="video/webm"/>
+    <video autoplay muted loop playsinline poster="assets/images/our_story.png" class="absolute inset-0 w-full h-full object-cover">
+        <source src="https://res.cloudinary.com/wycebg9u/video/upload/v1789444483/Laofe.mp4" type="video/mp4"/>
+        <source src="assets/videos/Laofe.mp4" type="video/mp4"/>
+        <img src="assets/images/our_story.png" alt="LaoFe & Beer Story" class="w-full h-full object-cover">
     </video>
     
     <!-- Dark & Burgundy Overlay to ensure perfect text contrast -->
