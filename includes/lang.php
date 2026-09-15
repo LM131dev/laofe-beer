@@ -1,7 +1,7 @@
 <?php
 // includes/lang.php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    @session_start();
 }
 
 // ບັງຄັບໃຫ້ Browser ບໍ່ຈື່ຈຳແຄຊ໌ ເພື່ອໃຫ້ສະແດງຜົນການອັບເດດສີຫຼ້າສຸດທັນທີ

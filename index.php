@@ -1,8 +1,13 @@
 <?php
 // index.php - Luckin Coffee Singapore 1:1 Homepage Architecture (Fully Bilingual Lao & English)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if (isset($_SERVER['SERVER_NAME']) && ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+} else {
+    ini_set('display_errors', 0);
+    error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+}
 
 require_once __DIR__ . '/includes/lang.php';
 require_once __DIR__ . '/config/db.php';
@@ -388,7 +393,9 @@ try {
 <section class="w-full bg-burgundy-900 overflow-hidden">
     <div class="w-full h-[400px] md:h-[550px] relative overflow-hidden bg-burgundy-900">
         <video autoplay muted loop playsinline poster="assets/images/hero_banner.png" class="w-full h-full object-cover">
+            <source src="https://res.cloudinary.com/wycebg9u/video/upload/v1789444483/Laofe.mp4" type="video/mp4"/>
             <source src="assets/videos/Laofe.mp4" type="video/mp4"/>
+            <source src="https://ilucky-fe-outside-oss-prod.luckincdn.com/iadmin/ab6140f6-129c-4ae9-aaa0-20190c43183b.mp4" type="video/mp4"/>
             <img src="assets/images/hero_banner.png" alt="LaoFe & Beer Showcase" class="w-full h-full object-cover">
         </video>
         <div class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-burgundy-950/40"></div>
