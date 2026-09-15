@@ -305,8 +305,8 @@ require_once __DIR__ . '/includes/header.php';
             <div class="w-20 h-1 bg-amber-400/80 rounded-full"></div>
             <p class="text-amber-100/90 font-normal leading-relaxed text-base md:text-lg font-sans-lao">
                 <?php echo $current_lang === 'lo'
-                    ? 'ແກ່ນກາເຟຂອງພວກເຮົາສົ່ງກົງຈາກແຫຼ່ງປູກບໍລະເວນ ເຊິ່ງເປັນແຫຼ່ງປູກກາເຟທີ່ມີຊື່ສຽງລະດັບໂລກ. ທຸກໆ Batch ຂອງກາເຟໄດ້ຮັບການຄັດສັນ ແລະ ປຸງແຕ່ງຢ່າງພິຖີພິຖັນໂດຍທີມງານແຊັມບາຣິສຕ້າລະດັບຊາດ ແລະ Q-Grader ມືອາຊີບ ຈາກຫຼາຍກວ່າ 180 ສູດປະສົມ ເພື່ອໃຫ້ໄດ້ລົດຊາດທີ່ຖືກໃຈລູກຄ້າທີ່ສຸດ.'
-                    : 'Our coffee beans come directly from the world-renowned Bolaven Plateau. Every batch of coffee is carefully selected and blended by our team of national champion baristas and professional Q-Graders, chosen from over 180 blending formulas to perfectly match your taste.';
+                    ? 'ແກ່ນກາເຟຂອງພວກເຮົາສົ່ງກົງຈາກແຫຼ່ງປູກບໍລະເວນ ເຊິ່ງເປັນແຫຼ່ງປູກກາເຟທີ່ມີຊື່ສຽງລະດັບໂລກ. ທຸກໆ Batch ຂອງກາເຟໄດ້ຮັບການຄັດສັນ ແລະ ປຸງແຕ່ງຢ່າງພິຖີພິຖັນ ໂດຍທີມງານບາຣິສຕ້າ ມືອາຊີບ ເພື່ອໃຫ້ໄດ້ລົດຊາດທີ່ຖືກໃຈລູກຄ້າທີ່ສຸດ.'
+                    : 'Our coffee beans come directly from the world-renowned Bolaven Plateau. Every batch of coffee is carefully selected and blended by our team of professional baristas to perfectly match your taste.';
                 ?>
             </p>
         </div>

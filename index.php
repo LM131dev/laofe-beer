@@ -264,15 +264,15 @@ try {
             <div class="w-20 h-1.5 bg-gold-400 rounded-full"></div>
             <p class="text-gray-200 font-light leading-relaxed text-base md:text-lg font-serif-lao">
                 <?php echo $current_lang === 'lo'
-                    ? 'ກາເຟຂອງພວກເຮົາໄດ້ຮັບການຄັດເລືອກຈາກສູດການປະສົມຫຼາຍກວ່າ 180 ສູດ ທີ່ປັບປຸງມາໃຫ້ເຂົ້າກັບລົດຊາດຂອງຜູ້ບໍລິໂພກທັງພາຍໃນ ແລະ ຕ່າງປະເທດ ຢ່າງລົງຕົວ.'
-                    : 'Our coffee is selected from more than 180 blending formulas that highly match the taste and preferences of modern coffee lovers.'; ?>
+                    ? 'ກາເຟຂອງພວກເຮົາໄດ້ຮັບການຄັດເລືອກ ແລະ ປັບປຸງສູດຢ່າງພິຖີພິຖັນ ໃຫ້ເຂົ້າກັບລົດຊາດຂອງຜູ້ບໍລິໂພກທັງພາຍໃນ ແລະ ຕ່າງປະເທດ ຢ່າງລົງຕົວ.'
+                    : 'Our coffee is carefully selected and blended to perfectly match the taste and preferences of modern coffee lovers.'; ?>
             </p>
         </div>
     </div>
 </section>
 
 <!-- =========================================================
-     5. LUCKIN "BLENDED BY THE WBC CHAMPIONS" (Barista Showcase)
+     5. LUCKIN "BLENDED BY THE MASTER TEAM" (Barista Showcase)
      ========================================================= -->
 <section class="relative py-24 bg-gradient-to-r from-[#1C050B] via-[#4D0F1E] to-[#1C050B] text-white px-6 md:px-12 border-t border-amber-400/20 overflow-hidden shadow-2xl">
     <!-- Subtle Golden Ambient Glow -->
@@ -280,13 +280,13 @@ try {
     <div class="max-w-7xl mx-auto space-y-16 relative z-10">
         <div class="text-center space-y-4">
             <h2 class="text-3xl md:text-5xl font-extrabold font-serif-lao text-white tracking-tight">
-                <?php echo $current_lang === 'lo' ? 'ຄັດສັນ ແລະ ປຸງແຕ່ງໂດຍທີມແຊັມບາຣິສຕ້າ' : 'Blended by the WBC Champions'; ?>
+                <?php echo $current_lang === 'lo' ? 'ຄັດສັນ ແລະ ປຸງແຕ່ງໂດຍທີມງານຜູ້ຊ່ຽວຊານ LaoFe' : 'Blended by LaoFe Master Team'; ?>
             </h2>
             <div class="w-24 h-1.5 bg-gold-400 mx-auto rounded-full"></div>
             <p class="text-gray-300 font-light max-w-2xl mx-auto text-base font-serif-lao">
                 <?php echo $current_lang === 'lo' 
-                    ? 'ທຸກໆ Batch ຂອງກາເຟ ແລະ ເຄື່ອງດື່ມ ໄດ້ຮັບການທົດສອບ ແລະ ປຸງແຕ່ງຢ່າງພິຖີພິຖັນ ໂດຍທີມງານແຊັມບາຣິສຕ້າ ແລະ ມິກໂຊໂລຈິສມືອາຊີບ.'
-                    : 'Every batch of our coffee is carefully tested and blended by our team of master baristas and mixologists.'; ?>
+                    ? 'ທຸກໆ Batch ຂອງກາເຟ ແລະ ເຄື່ອງດື່ມ ໄດ້ຮັບການທົດສອບ ແລະ ປຸງແຕ່ງຢ່າງພິຖີພິຖັນ ໂດຍທີມງານບາຣິສຕ້າ ແລະ ມິກໂຊໂລຈິສມືອາຊີບ.'
+                    : 'Every batch of our coffee is carefully tested and blended by our professional team of baristas and mixologists.'; ?>
             </p>
         </div>
 
@@ -299,14 +299,20 @@ try {
                     <span class="text-xs font-extrabold text-gold-400 uppercase tracking-widest font-serif-lao">
                         <?php echo $current_lang === 'lo' ? 'ບາຣິສຕ້າ ຜູ້ຊ່ຽວຊານ LaoFe' : 'LaoFe Master Barista'; ?>
                     </span>
-                    <h3 class="text-3xl font-extrabold font-serif-lao text-white">Sengdavone V.</h3>
+                    <h3 class="text-3xl font-extrabold font-serif-lao text-white">
+                        <?php echo $current_lang === 'lo' ? 'ທີມງານບາຣິສຕ້າ LaoFe' : 'LaoFe Barista Team'; ?>
+                    </h3>
                     <p class="text-xl md:text-2xl italic text-gray-200 font-light leading-relaxed font-serif-lao">
-                        "ກາເຟບໍ່ແມ່ນພຽງແຕ່ເຄື່ອງດື່ມ, ແຕ່ມັນຄືສິລະປະ ແລະ ຄວາມຕັ້ງໃຈໃນທຸກໆຢອດເພື່ອມອບຄວາມສຸກໃຫ້ທ່ານ."
+                        <?php echo $current_lang === 'lo'
+                            ? '"ກາເຟ ແລະ ເຄື່ອງດື່ມທຸກແກ້ວ ຖືກສ້າງສັນດ້ວຍຄວາມຕັ້ງໃຈ ເພື່ອມອບລົດຊາດ ແລະ ປະສົບການທີ່ດີທີ່ສຸດໃຫ້ລູກຄ້າ."'
+                            : '"Every cup of coffee and beverage is crafted with care to deliver the finest taste and experience to our customers."'; ?>
                     </p>
                     <div class="pt-4 border-t border-white/15 flex flex-col space-y-1">
-                        <strong class="text-white text-lg font-bold">Sengdavone V.</strong>
+                        <strong class="text-white text-lg font-bold">
+                            <?php echo $current_lang === 'lo' ? 'ທີມງານບາຣິສຕ້າ LaoFe' : 'LaoFe Barista Team'; ?>
+                        </strong>
                         <span class="text-sm text-gray-300 font-light font-serif-lao">
-                            <?php echo $current_lang === 'lo' ? 'ແຊັມບາຣິສຕ້າລະດັບຊາດ ປີ 2022 & Q-Grader' : '2022 Lao National Barista Champion & Q-Grader'; ?>
+                            <?php echo $current_lang === 'lo' ? 'ບາຣິສຕ້າ ມືອາຊີບ' : 'Professional Barista Team'; ?>
                         </span>
                     </div>
                 </div>
@@ -316,14 +322,20 @@ try {
                     <span class="text-xs font-extrabold text-gold-400 uppercase tracking-widest font-serif-lao">
                         <?php echo $current_lang === 'lo' ? 'ມິກໂຊໂລຈິສ ຜູ້ຊ່ຽວຊານ LaoFe' : 'LaoFe Master Mixologist'; ?>
                     </span>
-                    <h3 class="text-3xl font-extrabold font-serif-lao text-white">Bounmy S.</h3>
+                    <h3 class="text-3xl font-extrabold font-serif-lao text-white">
+                        <?php echo $current_lang === 'lo' ? 'ທີມງານມິກໂຊໂລຈິສ LaoFe' : 'LaoFe Mixologist Team'; ?>
+                    </h3>
                     <p class="text-xl md:text-2xl italic text-gray-200 font-light leading-relaxed font-serif-lao">
-                        "ການປະສົມເຄື່ອງດື່ມໃນຍາມຄ່ຳຄືນ ຄືການປະສົມປະສານລົດຊາດທ້ອງຖິ່ນໃຫ້ເກີດຄວາມສຸກ ແລະ ຄວາມຊົງຈຳທີ່ດີ."
+                        <?php echo $current_lang === 'lo'
+                            ? '"ການຜະສົມຜະສານເຄື່ອງດື່ມ ແລະ ບັນຍາກາດຍາມຄ່ຳຄືນ ໃຫ້ທ່ານໄດ້ຜ່ອນຄາຍ ແລະ ມີຄວາມສຸກ."'
+                            : '"Blending craft beverages with evening ambiance for your ultimate relaxation and enjoyment."'; ?>
                     </p>
                     <div class="pt-4 border-t border-white/15 flex flex-col space-y-1">
-                        <strong class="text-white text-lg font-bold">Bounmy S.</strong>
+                        <strong class="text-white text-lg font-bold">
+                            <?php echo $current_lang === 'lo' ? 'ທີມງານມິກໂຊໂລຈິສ LaoFe' : 'LaoFe Mixologist Team'; ?>
+                        </strong>
                         <span class="text-sm text-gray-300 font-light font-serif-lao">
-                            <?php echo $current_lang === 'lo' ? 'ຫົວໜ້າມິກໂຊໂລຈິສ & ຜູ້ຊ່ຽວຊານຄັອກເທວສະໝຸນໄພ' : 'Head Mixologist & Craft Herbal Cocktail Specialist'; ?>
+                            <?php echo $current_lang === 'lo' ? 'ມິກໂຊໂລຈິສ ມືອາຊີບ' : 'Professional Mixologist Team'; ?>
                         </span>
                     </div>
                 </div>
@@ -333,14 +345,20 @@ try {
                     <span class="text-xs font-extrabold text-gold-400 uppercase tracking-widest font-serif-lao">
                         <?php echo $current_lang === 'lo' ? 'ນັກຂົ້ວກາເຟ ຜູ້ຊ່ຽວຊານ LaoFe' : 'LaoFe Master Roaster'; ?>
                     </span>
-                    <h3 class="text-3xl font-extrabold font-serif-lao text-white">Aloun K.</h3>
+                    <h3 class="text-3xl font-extrabold font-serif-lao text-white">
+                        <?php echo $current_lang === 'lo' ? 'ທີມງານນັກຂົ້ວກາເຟ LaoFe' : 'LaoFe Roaster Team'; ?>
+                    </h3>
                     <p class="text-xl md:text-2xl italic text-gray-200 font-light leading-relaxed font-serif-lao">
-                        "ໄຟ, ອຸນຫະພູມ ແລະ ເວລາ ຄືສິ່ງກຳນົດຈິດວິນຍານ ແລະ ລົດຊາດທີ່ແທ້ຈິງຂອງເມັດກາເຟ."
+                        <?php echo $current_lang === 'lo'
+                            ? '"ຄັດສັນເມັດກາເຟຄຸນນະພາບ ແລະ ຄວບຄຸມການຂົ້ວຢ່າງພິຖີພິຖັນ ເພື່ອກິ່ນຫອມ ແລະ ລົດຊາດທີ່ເປັນເອກະລັກ."'
+                            : '"Selecting quality coffee beans and carefully roasting to extract rich, signature aromas."'; ?>
                     </p>
                     <div class="pt-4 border-t border-white/15 flex flex-col space-y-1">
-                        <strong class="text-white text-lg font-bold">Aloun K.</strong>
+                        <strong class="text-white text-lg font-bold">
+                            <?php echo $current_lang === 'lo' ? 'ທີມງານນັກຂົ້ວກາເຟ LaoFe' : 'LaoFe Roaster Team'; ?>
+                        </strong>
                         <span class="text-sm text-gray-300 font-light font-serif-lao">
-                            <?php echo $current_lang === 'lo' ? 'ຜູ້ຊ່ຽວຊານການຂົ້ວກາເຟ ບໍລະເວນ' : 'Bolaven Coffee Roasting Specialist'; ?>
+                            <?php echo $current_lang === 'lo' ? 'ນັກຂົ້ວກາເຟ ມືອາຊີບ' : 'Professional Coffee Roaster Team'; ?>
                         </span>
                     </div>
                 </div>
@@ -349,13 +367,13 @@ try {
             <!-- Right: Interactive Avatar Selectors (4 Cols) -->
             <div class="lg:col-span-4 flex lg:flex-col justify-center lg:justify-start gap-6">
                 <button onclick="switchBarista(0)" class="barista-tab-btn active w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-gold-400 overflow-hidden shrink-0 shadow-xl transition-all">
-                    <img src="assets/images/our_story.png" alt="Sengdavone" class="w-full h-full object-cover">
+                    <img src="assets/images/our_story.png" alt="LaoFe Barista" class="w-full h-full object-cover">
                 </button>
                 <button onclick="switchBarista(1)" class="barista-tab-btn w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-transparent hover:border-gold-400/50 overflow-hidden shrink-0 shadow-xl transition-all">
-                    <img src="assets/images/beer_drink.png" alt="Bounmy" class="w-full h-full object-cover">
+                    <img src="assets/images/beer_drink.png" alt="LaoFe Mixologist" class="w-full h-full object-cover">
                 </button>
                 <button onclick="switchBarista(2)" class="barista-tab-btn w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-transparent hover:border-gold-400/50 overflow-hidden shrink-0 shadow-xl transition-all">
-                    <img src="assets/images/coffee.png" alt="Aloun" class="w-full h-full object-cover">
+                    <img src="assets/images/coffee.png" alt="LaoFe Roaster" class="w-full h-full object-cover">
                 </button>
             </div>
         </div>
@@ -607,7 +625,7 @@ try {
                                 <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
                                     <?php echo $current_lang === 'lo' ? 'ສາຂາ ຫຼວງພະບາງ' : 'LUANG PRABANG HERITAGE'; ?>
                                 </h3>
-                                <a href="https://maps.google.com" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
+                                <a href="https://www.google.com/maps/search/?api=1&query=Luang+Prabang+Heritage+Town" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
                                     <span>🗺️</span>
                                     <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
                                 </a>
@@ -637,7 +655,7 @@ try {
                                 <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
                                     <?php echo $current_lang === 'lo' ? 'ສາຂາ ວັງວຽງ' : 'VANG VIENG RIVERSIDE'; ?>
                                 </h3>
-                                <a href="https://maps.google.com" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
+                                <a href="https://www.google.com/maps/search/?api=1&query=Vang+Vieng+Nam+Song" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
                                     <span>🗺️</span>
                                     <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
                                 </a>
@@ -667,7 +685,7 @@ try {
                                 <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
                                     <?php echo $current_lang === 'lo' ? 'ສາຂາ ປາກເຊ (ຈຳປາສັກ)' : 'PAKSE CHAMPASAK'; ?>
                                 </h3>
-                                <a href="https://maps.google.com" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
+                                <a href="https://www.google.com/maps/search/?api=1&query=Pakse+Champasak" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
                                     <span>🗺️</span>
                                     <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
                                 </a>
