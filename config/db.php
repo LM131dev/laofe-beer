@@ -38,7 +38,8 @@ try {
         }
     }
 
-    // ກວດສອບ ແລະ ສ້າງຕາຕະລາງພື້ນຖານ ຖ້າຫາກຍັງບໍ່ມີ (ເພື່ອຄວາມສະດວກໃນການຕິດຕັ້ງ)
+    // ກວດສອບ ແລະ ສ້າງຕາຕະລາງພື້ນຖານ ຖ້າຫາກເປັນ Local Server
+    if ($host === 'localhost' || $host === '127.0.0.1') {
     $sql_schema = "
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -462,6 +463,7 @@ try {
         );
         ";
         $pdo->exec($sql_add_2nd_art);
+    }
     }
 
 } catch (\PDOException $e) {
