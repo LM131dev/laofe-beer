@@ -2,28 +2,65 @@
 // contact.php - Warm Luxury & Bright Premium Contact Page
 require_once __DIR__ . '/includes/lang.php';
 require_once __DIR__ . '/config/db.php';
+require_once __DIR__ . '/includes/captcha.php';
+require_once __DIR__ . '/includes/mailer.php';
 
-$success_msg = '';
-$error_msg = '';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$success_msg = $_SESSION['flash_success'] ?? '';
+$error_msg   = $_SESSION['flash_error'] ?? '';
+unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $email = trim($_POST['email'] ?? '');
+    $name    = trim($_POST['name'] ?? '');
+    $phone   = trim($_POST['phone'] ?? '');
+    $email   = trim($_POST['email'] ?? '');
     $subject = trim($_POST['subject'] ?? '');
     $message = trim($_POST['message'] ?? '');
 
+    $captcha_error = '';
+    if (!verify_captcha_response($captcha_error, $current_lang)) {
+        $_SESSION['flash_error'] = $captcha_error;
+        header("Location: contact.php#contact-form");
+        exit;
+    }
+
     if (empty($name) || empty($email) || empty($message)) {
-        $error_msg = $current_lang === 'lo' ? 'ກະລຸນາກອກຂໍ້ມູນໃນຊ່ອງທີ່ມີເຄື່ອງໝາຍ * ໃຫ້ຄົບຖ້ວນ' : 'Please fill in all required fields marked with *';
+        $_SESSION['flash_error'] = $current_lang === 'lo' ? 'ກະລຸນາກອກຂໍ້ມູນໃນຊ່ອງທີ່ມີເຄື່ອງໝາຍ * ໃຫ້ຄົບຖ້ວນ' : 'Please fill in all required fields marked with *';
+        header("Location: contact.php#contact-form");
+        exit;
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error_msg = $current_lang === 'lo' ? 'ອີເມລບໍ່ຖືກຕ້ອງ' : 'Please enter a valid email address.';
+        $_SESSION['flash_error'] = $current_lang === 'lo' ? 'ອີເມລບໍ່ຖືກຕ້ອງ' : 'Please enter a valid email address.';
+        header("Location: contact.php#contact-form");
+        exit;
     } else {
         try {
             $stmt = $pdo->prepare("INSERT INTO contact_messages (name, phone, email, subject, message) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$name, $phone, $email, $subject, $message]);
-            $success_msg = t('contact_success');
+            
+            // ແຈ້ງເຕືອນເຂົ້າອີເມລ Admin
+            $mail_subject = "📥 [LaoFe Website] ຂໍ້ຄວາມຕິດຕໍ່ໃໝ່ຈາກ: " . $name;
+            $mail_body = "
+                <h3 style='color: #531321; margin-top: 0;'>ລາຍລະອຽດຂໍ້ຄວາມຕິດຕໍ່ (Contact Inquiry)</h3>
+                <table style='width: 100%; border-collapse: collapse;'>
+                    <tr><td style='padding: 8px; font-weight: bold; width: 120px;'>ຊື່ຜູ້ຕິດຕໍ່:</td><td style='padding: 8px;'>" . htmlspecialchars($name) . "</td></tr>
+                    <tr><td style='padding: 8px; font-weight: bold;'>ເບີໂທລະສັບ:</td><td style='padding: 8px;'>" . htmlspecialchars($phone ?: '-') . "</td></tr>
+                    <tr><td style='padding: 8px; font-weight: bold;'>ອີເມລ:</td><td style='padding: 8px;'>" . htmlspecialchars($email) . "</td></tr>
+                    <tr><td style='padding: 8px; font-weight: bold;'>ຫົວຂໍ້:</td><td style='padding: 8px;'>" . htmlspecialchars($subject ?: 'ສອບຖາມທົ່ວໄປ') . "</td></tr>
+                    <tr><td style='padding: 8px; font-weight: bold; vertical-align: top;'>ເນື້ອຫາ:</td><td style='padding: 8px; background: #FAF7F2; border-radius: 8px;'>" . nl2br(htmlspecialchars($message)) . "</td></tr>
+                </table>
+            ";
+            send_admin_notification($mail_subject, $mail_body);
+
+            $_SESSION['flash_success'] = t('contact_success');
+            header("Location: contact.php?status=success#contact-form");
+            exit;
         } catch (\Exception $e) {
-            $error_msg = ($current_lang === 'lo' ? 'ເກີດຂໍ້ຜິດພາດ: ' : 'Database error: ') . $e->getMessage();
+            $_SESSION['flash_error'] = ($current_lang === 'lo' ? 'ເກີດຂໍ້ຜິດພາດ: ' : 'Database error: ') . $e->getMessage();
+            header("Location: contact.php#contact-form");
+            exit;
         }
     }
 }
@@ -160,7 +197,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Right Side (7 Cols): Bright, Clean, Premium Pure-White Form Card -->
-        <div class="lg:col-span-7 bg-white border border-[#EBE4D8] rounded-3xl p-8 md:p-10 shadow-xl shadow-[#2C1810]/5 space-y-6 font-sans-lao">
+        <div id="contact-form" class="lg:col-span-7 bg-white border border-[#EBE4D8] rounded-3xl p-8 md:p-10 shadow-xl shadow-[#2C1810]/5 space-y-6 font-sans-lao">
             
             <div>
                 <h3 class="text-2xl md:text-3xl font-bold text-[#2C1810] font-sans-lao flex items-center gap-2">
@@ -188,7 +225,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             <?php endif; ?>
 
-            <form action="contact.php" method="POST" class="space-y-5 font-sans-lao">
+            <form action="contact.php#contact-form" method="POST" class="space-y-5 font-sans-lao">
                 <div>
                     <label for="name" class="block text-xs font-bold text-[#4A3B34] uppercase font-sans-lao tracking-wider mb-2">
                         <?php echo t('contact_name'); ?> *
@@ -224,6 +261,9 @@ require_once __DIR__ . '/includes/header.php';
                     </label>
                     <textarea name="message" id="message" rows="4" required placeholder="<?php echo $current_lang === 'lo' ? 'ພິມຂໍ້ຄວາມຂອງທ່ານຢູ່ບ່ອນນີ້...' : 'Write your message details here...'; ?>" class="w-full bg-[#FAF7F2] border border-[#E2D9CC] text-[#2C1810] placeholder-[#9E8C82] rounded-xl px-4 py-3.5 focus:outline-none focus:bg-white focus:border-[#D97706] focus:ring-2 focus:ring-[#D97706]/20 font-sans-lao text-sm transition-all shadow-sm"></textarea>
                 </div>
+
+                <!-- Anti-Spam Captcha Protection -->
+                <?php render_captcha_widget($current_lang); ?>
 
                 <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#D97706] text-[#1F100A] font-extrabold text-sm tracking-wide shadow-[0_8px_20px_rgba(217,119,6,0.3)] hover:shadow-[0_12px_28px_rgba(217,119,6,0.45)] hover:scale-[1.01] transition-all duration-300 font-sans-lao flex items-center justify-center gap-2">
                     <span><?php echo t('contact_submit'); ?></span>
