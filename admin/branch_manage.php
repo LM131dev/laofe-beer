@@ -14,90 +14,114 @@ try {
     }
 } catch (\Exception $e) {}
 
-// 1. ຈັດການການລຶບສາຂາ (DELETE)
-if (isset($_GET['delete'])) {
-    $delete_id = intval($_GET['delete']);
-    try {
-        // ດຶງຮູບພາບມາລຶບອອກຈາກເຊີເວີກ່ອນ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default/assets ຫຼັກ)
-        $stmt_img = $pdo->prepare("SELECT image_path FROM branches WHERE id = ?");
-        $stmt_img->execute([$delete_id]);
-        $img_path = $stmt_img->fetchColumn();
-        if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'branch_namphou') && !strpos($img_path, 'branch_luangprabang') && !strpos($img_path, 'branch_pakse') && !strpos($img_path, 'branch_vangvieng')) {
-            @unlink('../' . $img_path);
-        }
+// 1. ຈັດການການລຶບສາຂາ (DELETE via POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if (!verify_csrf_token()) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $delete_id = intval($_POST['delete_id'] ?? 0);
+        try {
+            $stmt_img = $pdo->prepare("SELECT image_path FROM branches WHERE id = ?");
+            $stmt_img->execute([$delete_id]);
+            $img_path = $stmt_img->fetchColumn();
+            if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'branch_namphou') && !strpos($img_path, 'branch_luangprabang') && !strpos($img_path, 'branch_pakse') && !strpos($img_path, 'branch_vangvieng')) {
+                @unlink('../' . $img_path);
+            }
 
-        $stmt = $pdo->prepare("DELETE FROM branches WHERE id = ?");
-        $stmt->execute([$delete_id]);
-        $success = 'ລຶບຂໍ້ມູນສາຂາຮຽບຮ້ອຍແລ້ວ!';
-    } catch (\Exception $e) {
-        $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+            $stmt = $pdo->prepare("DELETE FROM branches WHERE id = ?");
+            $stmt->execute([$delete_id]);
+            $success = 'ລຶບຂໍ້ມູນສາຂາຮຽບຮ້ອຍແລ້ວ!';
+        } catch (\Exception $e) {
+            error_log("Branch delete error: " . $e->getMessage());
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບຂໍ້ມູນ.';
+        }
     }
 }
 
-// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂສາຂາ (CREATE / UPDATE)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    $name_lo = trim($_POST['name_lo'] ?? '');
-    $name_en = trim($_POST['name_en'] ?? '');
-    $address_lo = trim($_POST['address_lo'] ?? '');
-    $address_en = trim($_POST['address_en'] ?? '');
-    $hours_lo = trim($_POST['hours_lo'] ?? '');
-    $hours_en = trim($_POST['hours_en'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $map_link = trim($_POST['map_link'] ?? '');
-    
-    $image_path = $_POST['existing_image'] ?? 'assets/images/branch_namphou.png';
+// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂສາຂາ (CREATE / UPDATE via POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST['action'] !== 'delete')) {
+    if (!verify_csrf_token()) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $id = intval($_POST['id'] ?? 0);
+        $name_lo = trim($_POST['name_lo'] ?? '');
+        $name_en = trim($_POST['name_en'] ?? '');
+        $address_lo = trim($_POST['address_lo'] ?? '');
+        $address_en = trim($_POST['address_en'] ?? '');
+        $hours_lo = trim($_POST['hours_lo'] ?? '');
+        $hours_en = trim($_POST['hours_en'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $map_link = trim($_POST['map_link'] ?? '');
+        
+        $image_path = $_POST['existing_image'] ?? 'assets/images/branch_namphou.png';
 
-    // ຈັດການການອັບໂຫຼດຮູບພາບ
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileType = $_FILES['image']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+        // ຈັດການການອັບໂຫຼດຮູບພາບ (ກວດສອບຂະໜາດ ແລະ MIME type ແທ້)
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image']['tmp_name'];
+            $fileName = $_FILES['image']['name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
 
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        if (in_array($fileExtension, $allowedExtensions)) {
-            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-            $uploadFileDir = '../assets/images/';
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $allowedMimeTypes  = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
             
-            if (!file_exists($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true);
-            }
-
-            $dest_path = $uploadFileDir . $newFileName;
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                // ລຶບຮູບເກົ່າ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default)
-                if ($id > 0 && $image_path && file_exists('../' . $image_path) && !strpos($image_path, 'branch_namphou') && !strpos($image_path, 'branch_luangprabang') && !strpos($image_path, 'branch_pakse') && !strpos($image_path, 'branch_vangvieng')) {
-                    @unlink('../' . $image_path);
+            // ກວດສອບ Real MIME Type
+            $mimeType = false;
+            if (function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeType = finfo_file($finfo, $fileTmpPath);
+                finfo_close($finfo);
+            } elseif (function_exists('mime_content_type')) {
+                $mimeType = mime_content_type($fileTmpPath);
+            } else {
+                $imgInfo = @getimagesize($fileTmpPath);
+                if ($imgInfo && isset($imgInfo['mime'])) {
+                    $mimeType = $imgInfo['mime'];
                 }
-                $image_path = 'assets/images/' . $newFileName;
-            } else {
-                $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
             }
-        } else {
-            $error = 'ອັບໂຫຼດບໍ່ສຳເລັດ. ນາມສະກຸນໄຟລ໌ທີ່ອະນຸຍາດ: ' . implode(',', $allowedExtensions);
-        }
-    }
 
-    if (empty($name_lo) || empty($name_en) || empty($address_lo)) {
-        $error = 'ກະລຸນາກອກ ຊື່ສາຂາ ແລະ ທີ່ຢູ່ ໃຫ້ຄົບຖ້ວນ.';
-    } elseif (empty($error)) {
-        try {
-            if ($id > 0) {
-                // UPDATE
-                $stmt = $pdo->prepare("UPDATE branches SET name_lo = ?, name_en = ?, address_lo = ?, address_en = ?, hours_lo = ?, hours_en = ?, phone = ?, map_link = ?, image_path = ? WHERE id = ?");
-                $stmt->execute([$name_lo, $name_en, $address_lo, $address_en, $hours_lo, $hours_en, $phone, $map_link, $image_path, $id]);
-                $success = 'ແກ້ໄຂຂໍ້ມູນສາຂາຮຽບຮ້ອຍ!';
+            if ($fileSize > 5 * 1024 * 1024) {
+                $error = 'ຂະໜາດໄຟລ໌ຮູບພາບໃຫຍ່ເກີນໄປ (ອະນຸຍາດບໍ່ເກີນ 5MB).';
+            } elseif (!in_array($fileExtension, $allowedExtensions) || !in_array($mimeType, $allowedMimeTypes)) {
+                $error = 'ໄຟລ໌ບໍ່ແມ່ນຮູບພາບທີ່ຖືກຕ້ອງ! ອະນຸຍາດສະເພາະ (JPG, PNG, WEBP, GIF).';
             } else {
-                // INSERT
-                $stmt = $pdo->prepare("INSERT INTO branches (name_lo, name_en, address_lo, address_en, hours_lo, hours_en, phone, map_link, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$name_lo, $name_en, $address_lo, $address_en, $hours_lo, $hours_en, $phone, $map_link, $image_path]);
-                $success = 'ເພີ່ມສາຂາໃໝ່ຮຽບຮ້ອຍ!';
+                $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                $uploadFileDir = '../assets/images/';
+                
+                if (!file_exists($uploadFileDir)) {
+                    mkdir($uploadFileDir, 0755, true);
+                }
+
+                $dest_path = $uploadFileDir . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                    if ($id > 0 && $image_path && file_exists('../' . $image_path) && !strpos($image_path, 'branch_namphou') && !strpos($image_path, 'branch_luangprabang') && !strpos($image_path, 'branch_pakse') && !strpos($image_path, 'branch_vangvieng')) {
+                        @unlink('../' . $image_path);
+                    }
+                    $image_path = 'assets/images/' . $newFileName;
+                } else {
+                    $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
+                }
             }
-        } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+        }
+
+        if (empty($name_lo) || empty($name_en) || empty($address_lo)) {
+            $error = 'ກະລຸນາກອກ ຊື່ສາຂາ ແລະ ທີ່ຢູ່ ໃຫ້ຄົບຖ້ວນ.';
+        } elseif (empty($error)) {
+            try {
+                if ($id > 0) {
+                    $stmt = $pdo->prepare("UPDATE branches SET name_lo = ?, name_en = ?, address_lo = ?, address_en = ?, hours_lo = ?, hours_en = ?, phone = ?, map_link = ?, image_path = ? WHERE id = ?");
+                    $stmt->execute([$name_lo, $name_en, $address_lo, $address_en, $hours_lo, $hours_en, $phone, $map_link, $image_path, $id]);
+                    $success = 'ແກ້ໄຂຂໍ້ມູນສາຂາຮຽບຮ້ອຍ!';
+                } else {
+                    $stmt = $pdo->prepare("INSERT INTO branches (name_lo, name_en, address_lo, address_en, hours_lo, hours_en, phone, map_link, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$name_lo, $name_en, $address_lo, $address_en, $hours_lo, $hours_en, $phone, $map_link, $image_path]);
+                    $success = 'ເພີ່ມສາຂາໃໝ່ຮຽບຮ້ອຍ!';
+                }
+            } catch (\Exception $e) {
+                error_log("Branch save error: " . $e->getMessage());
+                $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກຂໍ້ມູນ.';
+            }
         }
     }
 }
@@ -212,9 +236,14 @@ if (isset($_GET['edit'])) {
                             <a href="branch_manage.php?edit=<?php echo $br['id']; ?>" class="px-3.5 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-bold rounded-lg transition-all font-serif-lao">
                                 ✏️ ແກ້ໄຂ
                             </a>
-                            <a href="branch_manage.php?delete=<?php echo $br['id']; ?>" onclick="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບສາຂານີ້?');" class="px-3.5 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold rounded-lg transition-all font-serif-lao">
-                                🗑️ ລຶບ
-                            </a>
+                            <form action="branch_manage.php" method="POST" class="inline" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບສາຂານີ້?');">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="delete_id" value="<?php echo $br['id']; ?>">
+                                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                <button type="submit" class="px-3.5 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold rounded-lg transition-all font-serif-lao">
+                                    🗑️ ລຶບ
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -241,6 +270,7 @@ if (isset($_GET['edit'])) {
         </div>
 
         <form action="branch_manage.php" method="POST" enctype="multipart/form-data" class="space-y-5 font-serif-lao">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <input type="hidden" name="id" value="<?php echo $edit_branch['id'] ?? 0; ?>">
             <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($edit_branch['image_path'] ?? 'assets/images/branch_namphou.png'); ?>">
 

@@ -5,99 +5,128 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// 1. ຈັດການການລຶບ (DELETE)
-if (isset($_GET['delete'])) {
-    $delete_id = intval($_GET['delete']);
-    try {
-        // ດຶງຮູບພາບມາລຶບອອກຈາກເຊີເວີກ່ອນ (ຖ້າມີ)
-        $stmt_img = $pdo->prepare("SELECT image_path FROM banners WHERE id = ?");
-        $stmt_img->execute([$delete_id]);
-        $img_path = $stmt_img->fetchColumn();
-        if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'default') && !strpos($img_path, 'hero_banner.png') && !strpos($img_path, 'beer_drink.png')) {
-            @unlink('../' . $img_path);
-        }
+// 1. ຈັດການການລຶບ (DELETE - POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $delete_id = intval($_POST['delete_id'] ?? 0);
+        try {
+            // ດຶງຮູບພາບມາລຶບອອກຈາກເຊີເວີກ່ອນ (ຖ້າມີ)
+            $stmt_img = $pdo->prepare("SELECT image_path FROM banners WHERE id = ?");
+            $stmt_img->execute([$delete_id]);
+            $img_path = $stmt_img->fetchColumn();
+            if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'default') && !strpos($img_path, 'hero_banner.png') && !strpos($img_path, 'beer_drink.png')) {
+                @unlink('../' . $img_path);
+            }
 
-        $stmt = $pdo->prepare("DELETE FROM banners WHERE id = ?");
-        $stmt->execute([$delete_id]);
-        $success = 'ລຶບ Banner ຮຽບຮ້ອຍແລ້ວ!';
-    } catch (\Exception $e) {
-        $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+            $stmt = $pdo->prepare("DELETE FROM banners WHERE id = ?");
+            $stmt->execute([$delete_id]);
+            $success = 'ລຶບ Banner ຮຽບຮ້ອຍແລ້ວ!';
+        } catch (\Exception $e) {
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+        }
     }
 }
 
-// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂ (CREATE / UPDATE)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    $badge_lo = trim($_POST['badge_lo'] ?? '');
-    $badge_en = trim($_POST['badge_en'] ?? '');
-    $title_lo = trim($_POST['title_lo'] ?? '');
-    $title_en = trim($_POST['title_en'] ?? '');
-    $subtitle_lo = trim($_POST['subtitle_lo'] ?? '');
-    $subtitle_en = trim($_POST['subtitle_en'] ?? '');
-    $btn1_text_lo = trim($_POST['btn1_text_lo'] ?? '');
-    $btn1_text_en = trim($_POST['btn1_text_en'] ?? '');
-    $btn1_link = trim($_POST['btn1_link'] ?? '');
-    $btn2_text_lo = trim($_POST['btn2_text_lo'] ?? '');
-    $btn2_text_en = trim($_POST['btn2_text_en'] ?? '');
-    $btn2_link = trim($_POST['btn2_link'] ?? '');
-    $sort_order = intval($_POST['sort_order'] ?? 0);
-    $is_active = isset($_POST['is_active']) ? 1 : 0;
-    $target_page = trim($_POST['target_page'] ?? 'all');
-    
-    $image_path = $_POST['existing_image'] ?? 'assets/images/hero_banner.png';
+// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂ (CREATE / UPDATE - POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST['action'] !== 'delete')) {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $id = intval($_POST['id'] ?? 0);
+        $badge_lo = trim($_POST['badge_lo'] ?? '');
+        $badge_en = trim($_POST['badge_en'] ?? '');
+        $title_lo = trim($_POST['title_lo'] ?? '');
+        $title_en = trim($_POST['title_en'] ?? '');
+        $subtitle_lo = trim($_POST['subtitle_lo'] ?? '');
+        $subtitle_en = trim($_POST['subtitle_en'] ?? '');
+        $btn1_text_lo = trim($_POST['btn1_text_lo'] ?? '');
+        $btn1_text_en = trim($_POST['btn1_text_en'] ?? '');
+        $btn1_link = trim($_POST['btn1_link'] ?? '');
+        $btn2_text_lo = trim($_POST['btn2_text_lo'] ?? '');
+        $btn2_text_en = trim($_POST['btn2_text_en'] ?? '');
+        $btn2_link = trim($_POST['btn2_link'] ?? '');
+        $sort_order = intval($_POST['sort_order'] ?? 0);
+        $is_active = isset($_POST['is_active']) ? 1 : 0;
+        $target_page = trim($_POST['target_page'] ?? 'all');
+        
+        $image_path = $_POST['existing_image'] ?? 'assets/images/hero_banner.png';
 
-    // ຈັດການການອັບໂຫຼດຮູບພາບ
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileType = $_FILES['image']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+        // ຈັດການການອັບໂຫຼດຮູບພາບ (ກວດຂະໜາດ ແລະ MIME type ທີ່ແທ້ຈິງ)
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image']['tmp_name'];
+            $fileName = $_FILES['image']['name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
 
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        if (in_array($fileExtension, $allowedExtensions)) {
-            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-            $uploadFileDir = '../assets/images/';
-            
-            if (!file_exists($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true);
-            }
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-            $dest_path = $uploadFileDir . $newFileName;
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                // ລຶບຮູບເກົ່າ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default)
-                if ($id > 0 && $image_path && file_exists('../' . $image_path) && !strpos($image_path, 'default') && !strpos($image_path, 'hero_banner.png') && !strpos($image_path, 'beer_drink.png')) {
-                    @unlink('../' . $image_path);
+            // ກວດຂະໜາດໄຟລ໌ (ບໍ່ເກີນ 5MB)
+            if ($fileSize > 5 * 1024 * 1024) {
+                $error = 'ຂະໜາດໄຟລ໌ຮູບພາບໃຫຍ່ເກີນໄປ (ຕ້ອງບໍ່ເກີນ 5MB).';
+            } elseif (!in_array($fileExtension, $allowedExtensions)) {
+                $error = 'ນາມສະກຸນໄຟລ໌ບໍ່ຖືກຕ້ອງ. ອະນຸຍາດສະເພາະ: ' . implode(',', $allowedExtensions);
+            } else {
+                // ກວດ MIME type ທີ່ແທ້ຈິງ
+                $realMime = '';
+                if (function_exists('finfo_open')) {
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $realMime = finfo_file($finfo, $fileTmpPath);
+                    finfo_close($finfo);
+                } elseif (function_exists('mime_content_type')) {
+                    $realMime = mime_content_type($fileTmpPath);
+                } else {
+                    $imgInfo = getimagesize($fileTmpPath);
+                    $realMime = $imgInfo['mime'] ?? '';
                 }
-                $image_path = 'assets/images/' . $newFileName;
-            } else {
-                $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
-            }
-        } else {
-            $error = 'ອັບໂຫຼດບໍ່ສຳເລັດ. ນາມສະກຸນໄຟລ໌ທີ່ອະນຸຍາດ: ' . implode(',', $allowedExtensions);
-        }
-    }
 
-    if (empty($title_lo) || empty($title_en)) {
-        $error = 'ກະລຸນາກອກ ຫົວຂໍ້ໃຫຍ່ ທັງພາສາລາວ ແລະ ອັງກິດ.';
-    } elseif (empty($image_path)) {
-        $error = 'ກະລຸນາເລືອກຮູບພາບ Banner.';
-    } elseif (empty($error)) {
-        try {
-            if ($id > 0) {
-                // UPDATE
-                $stmt = $pdo->prepare("UPDATE banners SET badge_lo = ?, badge_en = ?, title_lo = ?, title_en = ?, subtitle_lo = ?, subtitle_en = ?, btn1_text_lo = ?, btn1_text_en = ?, btn1_link = ?, btn2_text_lo = ?, btn2_text_en = ?, btn2_link = ?, sort_order = ?, is_active = ?, target_page = ?, image_path = ? WHERE id = ?");
-                $stmt->execute([$badge_lo, $badge_en, $title_lo, $title_en, $subtitle_lo, $subtitle_en, $btn1_text_lo, $btn1_text_en, $btn1_link, $btn2_text_lo, $btn2_text_en, $btn2_link, $sort_order, $is_active, $target_page, $image_path, $id]);
-                $success = 'ແກ້ໄຂ Banner ຮຽບຮ້ອຍ!';
-            } else {
-                // INSERT
-                $stmt = $pdo->prepare("INSERT INTO banners (badge_lo, badge_en, title_lo, title_en, subtitle_lo, subtitle_en, btn1_text_lo, btn1_text_en, btn1_link, btn2_text_lo, btn2_text_en, btn2_link, sort_order, is_active, target_page, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$badge_lo, $badge_en, $title_lo, $title_en, $subtitle_lo, $subtitle_en, $btn1_text_lo, $btn1_text_en, $btn1_link, $btn2_text_lo, $btn2_text_en, $btn2_link, $sort_order, $is_active, $target_page, $image_path]);
-                $success = 'ເພີ່ມ Banner ໃໝ່ຮຽບຮ້ອຍ!';
+                if (!in_array($realMime, $allowedMimes)) {
+                    $error = 'ໄຟລ໌ທີ່ອັບໂຫຼດບໍ່ແມ່ນຮູບພາບທີ່ຖືກຕ້ອງ (MIME type invalid).';
+                } else {
+                    $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                    $uploadFileDir = '../assets/images/';
+                    
+                    if (!file_exists($uploadFileDir)) {
+                        mkdir($uploadFileDir, 0755, true);
+                    }
+
+                    $dest_path = $uploadFileDir . $newFileName;
+                    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                        // ລຶບຮູບເກົ່າ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default)
+                        if ($id > 0 && $image_path && file_exists('../' . $image_path) && !strpos($image_path, 'default') && !strpos($image_path, 'hero_banner.png') && !strpos($image_path, 'beer_drink.png')) {
+                            @unlink('../' . $image_path);
+                        }
+                        $image_path = 'assets/images/' . $newFileName;
+                    } else {
+                        $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
+                    }
+                }
             }
-        } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+        }
+
+        if (empty($title_lo) || empty($title_en)) {
+            $error = 'ກະລຸນາກອກ ຫົວຂໍ້ໃຫຍ່ ທັງພາສາລາວ ແລະ ອັງກິດ.';
+        } elseif (empty($image_path)) {
+            $error = 'ກະລຸນາເລືອກຮູບພາບ Banner.';
+        } elseif (empty($error)) {
+            try {
+                if ($id > 0) {
+                    // UPDATE
+                    $stmt = $pdo->prepare("UPDATE banners SET badge_lo = ?, badge_en = ?, title_lo = ?, title_en = ?, subtitle_lo = ?, subtitle_en = ?, btn1_text_lo = ?, btn1_text_en = ?, btn1_link = ?, btn2_text_lo = ?, btn2_text_en = ?, btn2_link = ?, sort_order = ?, is_active = ?, target_page = ?, image_path = ? WHERE id = ?");
+                    $stmt->execute([$badge_lo, $badge_en, $title_lo, $title_en, $subtitle_lo, $subtitle_en, $btn1_text_lo, $btn1_text_en, $btn1_link, $btn2_text_lo, $btn2_text_en, $btn2_link, $sort_order, $is_active, $target_page, $image_path, $id]);
+                    $success = 'ແກ້ໄຂ Banner ຮຽບຮ້ອຍ!';
+                } else {
+                    // INSERT
+                    $stmt = $pdo->prepare("INSERT INTO banners (badge_lo, badge_en, title_lo, title_en, subtitle_lo, subtitle_en, btn1_text_lo, btn1_text_en, btn1_link, btn2_text_lo, btn2_text_en, btn2_link, sort_order, is_active, target_page, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$badge_lo, $badge_en, $title_lo, $title_en, $subtitle_lo, $subtitle_en, $btn1_text_lo, $btn1_text_en, $btn1_link, $btn2_text_lo, $btn2_text_en, $btn2_link, $sort_order, $is_active, $target_page, $image_path]);
+                    $success = 'ເພີ່ມ Banner ໃໝ່ຮຽບຮ້ອຍ!';
+                }
+            } catch (\Exception $e) {
+                $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+            }
         }
     }
 }
@@ -153,6 +182,7 @@ if (isset($_GET['edit'])) {
             </h3>
             
             <form action="banner_manage.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                 <input type="hidden" name="id" value="<?php echo $edit_item['id'] ?? 0; ?>">
                 <input type="hidden" name="existing_image" value="<?php echo $edit_item['image_path'] ?? ''; ?>">
 

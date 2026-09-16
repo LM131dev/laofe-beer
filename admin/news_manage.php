@@ -5,100 +5,133 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// 1. ຈັດການການຕັ້ງ Featured Hero Banner (1-Click Set Featured)
-if (isset($_GET['set_featured'])) {
-    $feat_id = intval($_GET['set_featured']);
-    try {
-        $pdo->exec("UPDATE news SET is_featured = 0");
-        $stmt = $pdo->prepare("UPDATE news SET is_featured = 1 WHERE id = ?");
-        $stmt->execute([$feat_id]);
-        $success = 'ຕັ້ງລາຍການນີ້ເປັນ Hero Banner (ປ້າຍໄຮໄລ້ເທິງສຸດໜ້າຂ່າວສານ) ຮຽບຮ້ອຍແລ້ວ! 🔥';
-    } catch (\Exception $e) {
-        $error = 'ເກີດຂໍ້ຜິດພາດໃນການຕັ້ງ Hero Banner: ' . $e->getMessage();
-    }
-}
-
-// 2. ຈັດການການລຶບ (DELETE)
-if (isset($_GET['delete'])) {
-    $delete_id = intval($_GET['delete']);
-    try {
-        $stmt_img = $pdo->prepare("SELECT image_path FROM news WHERE id = ?");
-        $stmt_img->execute([$delete_id]);
-        $img_path = $stmt_img->fetchColumn();
-
-        $stmt = $pdo->prepare("DELETE FROM news WHERE id = ?");
-        $stmt->execute([$delete_id]);
-        $success = 'ລຶບລາຍການຮຽບຮ້ອຍແລ້ວ!';
-    } catch (\Exception $e) {
-        $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
-    }
-}
-
-// 3. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂ (CREATE / UPDATE)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    $title_lo = trim($_POST['title_lo'] ?? '');
-    $title_en = trim($_POST['title_en'] ?? '');
-    $content_lo = trim($_POST['content_lo'] ?? '');
-    $content_en = trim($_POST['content_en'] ?? '');
-    $is_promo = intval($_POST['is_promo'] ?? 0);
-    $is_featured = isset($_POST['is_featured']) ? 1 : 0;
-    $category = trim($_POST['category'] ?? 'article_news');
-    $event_location = trim($_POST['event_location'] ?? '');
-    $event_date = trim($_POST['event_date'] ?? '');
-    $status = trim($_POST['status'] ?? 'published');
-    $publish_date = trim($_POST['publish_date'] ?? date('Y-m-d'));
-    
-    $image_path = $_POST['existing_image'] ?? 'assets/images/hero_banner.png';
-
-    // ຈັດການການອັບໂຫຼດຮູບພາບ
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        if (in_array($fileExtension, $allowedExtensions)) {
-            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-            $uploadFileDir = '../assets/images/';
-            
-            if (!file_exists($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true);
-            }
-
-            $dest_path = $uploadFileDir . $newFileName;
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                $image_path = 'assets/images/' . $newFileName;
-            } else {
-                $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
-            }
-        } else {
-            $error = 'ອັບໂຫຼດບໍ່ສຳເລັດ. ນາມສະກຸນໄຟລ໌ທີ່ອະນຸຍາດ: ' . implode(',', $allowedExtensions);
+// 1. ຈັດການການຕັ້ງ Featured Hero Banner (POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'set_featured') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $feat_id = intval($_POST['feat_id'] ?? 0);
+        try {
+            $pdo->exec("UPDATE news SET is_featured = 0");
+            $stmt = $pdo->prepare("UPDATE news SET is_featured = 1 WHERE id = ?");
+            $stmt->execute([$feat_id]);
+            $success = 'ຕັ້ງລາຍການນີ້ເປັນ Hero Banner (ປ້າຍໄຮໄລ້ເທິງສຸດໜ້າຂ່າວສານ) ຮຽບຮ້ອຍແລ້ວ! 🔥';
+        } catch (\Exception $e) {
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການຕັ້ງ Hero Banner: ' . $e->getMessage();
         }
     }
+}
 
-    if (empty($title_lo) || empty($title_en) || empty($content_lo) || empty($content_en)) {
-        $error = 'ກະລຸນາກອກ ຫົວຂໍ້ ແລະ ເນື້ອຫາ ທັງພາສາລາວ ແລະ ອັງກິດ.';
-    } elseif (empty($error)) {
+// 2. ຈັດການການລຶບ (DELETE - POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $delete_id = intval($_POST['delete_id'] ?? 0);
         try {
-            // ຖ້າເລືອກ set is_featured = 1 ໃຫ້ unset featured ອື່ນໆກ່ອນ
-            if ($is_featured == 1) {
-                $pdo->exec("UPDATE news SET is_featured = 0");
-            }
+            $stmt_img = $pdo->prepare("SELECT image_path FROM news WHERE id = ?");
+            $stmt_img->execute([$delete_id]);
+            $img_path = $stmt_img->fetchColumn();
 
-            if ($id > 0) {
-                // UPDATE
-                $stmt = $pdo->prepare("UPDATE news SET title_lo = ?, title_en = ?, content_lo = ?, content_en = ?, is_promo = ?, is_featured = ?, category = ?, event_location = ?, event_date = ?, status = ?, publish_date = ?, image_path = ? WHERE id = ?");
-                $stmt->execute([$title_lo, $title_en, $content_lo, $content_en, $is_promo, $is_featured, $category, $event_location, $event_date, $status, $publish_date, $image_path, $id]);
-                $success = 'ແກ້ໄຂຂໍ້ມູນບົດຄວາມ/ກິດຈະກຳ ຮຽບຮ້ອຍ!';
-            } else {
-                // INSERT
-                $stmt = $pdo->prepare("INSERT INTO news (title_lo, title_en, content_lo, content_en, is_promo, is_featured, category, event_location, event_date, status, publish_date, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$title_lo, $title_en, $content_lo, $content_en, $is_promo, $is_featured, $category, $event_location, $event_date, $status, $publish_date, $image_path]);
-                $success = 'ເພີ່ມບົດຄວາມ/ກິດຈະກຳ ໃໝ່ຮຽບຮ້ອຍ!';
-            }
+            $stmt = $pdo->prepare("DELETE FROM news WHERE id = ?");
+            $stmt->execute([$delete_id]);
+            $success = 'ລຶບລາຍການຮຽບຮ້ອຍແລ້ວ!';
         } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+        }
+    }
+}
+
+// 3. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂ (CREATE / UPDATE - POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || !in_array($_POST['action'], ['delete', 'set_featured']))) {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $id = intval($_POST['id'] ?? 0);
+        $title_lo = trim($_POST['title_lo'] ?? '');
+        $title_en = trim($_POST['title_en'] ?? '');
+        $content_lo = trim($_POST['content_lo'] ?? '');
+        $content_en = trim($_POST['content_en'] ?? '');
+        $is_promo = intval($_POST['is_promo'] ?? 0);
+        $is_featured = isset($_POST['is_featured']) ? 1 : 0;
+        $category = trim($_POST['category'] ?? 'article_news');
+        $event_location = trim($_POST['event_location'] ?? '');
+        $event_date = trim($_POST['event_date'] ?? '');
+        $status = trim($_POST['status'] ?? 'published');
+        $publish_date = trim($_POST['publish_date'] ?? date('Y-m-d'));
+        
+        $image_path = $_POST['existing_image'] ?? 'assets/images/hero_banner.png';
+
+        // ຈັດການການອັບໂຫຼດຮູບພາບ (ກວດຂະໜາດ ແລະ MIME type ທີ່ແທ້ຈິງ)
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image']['tmp_name'];
+            $fileName = $_FILES['image']['name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+            if ($fileSize > 5 * 1024 * 1024) {
+                $error = 'ຂະໜາດໄຟລ໌ຮູບພາບໃຫຍ່ເກີນໄປ (ຕ້ອງບໍ່ເກີນ 5MB).';
+            } elseif (!in_array($fileExtension, $allowedExtensions)) {
+                $error = 'ນາມສະກຸນໄຟລ໌ບໍ່ຖືກຕ້ອງ. ອະນຸຍາດສະເພາະ: ' . implode(',', $allowedExtensions);
+            } else {
+                $realMime = '';
+                if (function_exists('finfo_open')) {
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $realMime = finfo_file($finfo, $fileTmpPath);
+                    finfo_close($finfo);
+                } elseif (function_exists('mime_content_type')) {
+                    $realMime = mime_content_type($fileTmpPath);
+                } else {
+                    $imgInfo = getimagesize($fileTmpPath);
+                    $realMime = $imgInfo['mime'] ?? '';
+                }
+
+                if (!in_array($realMime, $allowedMimes)) {
+                    $error = 'ໄຟລ໌ທີ່ອັບໂຫຼດບໍ່ແມ່ນຮູບພາບທີ່ຖືກຕ້ອງ (MIME type invalid).';
+                } else {
+                    $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                    $uploadFileDir = '../assets/images/';
+                    
+                    if (!file_exists($uploadFileDir)) {
+                        mkdir($uploadFileDir, 0755, true);
+                    }
+
+                    $dest_path = $uploadFileDir . $newFileName;
+                    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                        $image_path = 'assets/images/' . $newFileName;
+                    } else {
+                        $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
+                    }
+                }
+            }
+        }
+
+        if (empty($title_lo) || empty($title_en) || empty($content_lo) || empty($content_en)) {
+            $error = 'ກະລຸນາກອກ ຫົວຂໍ້ ແລະ ເນື້ອຫາ ທັງພາສາລາວ ແລະ ອັງກິດ.';
+        } elseif (empty($error)) {
+            try {
+                // ຖ້າເລືອກ set is_featured = 1 ໃຫ້ unset featured ອື່ນໆກ່ອນ
+                if ($is_featured == 1) {
+                    $pdo->exec("UPDATE news SET is_featured = 0");
+                }
+
+                if ($id > 0) {
+                    // UPDATE
+                    $stmt = $pdo->prepare("UPDATE news SET title_lo = ?, title_en = ?, content_lo = ?, content_en = ?, is_promo = ?, is_featured = ?, category = ?, event_location = ?, event_date = ?, status = ?, publish_date = ?, image_path = ? WHERE id = ?");
+                    $stmt->execute([$title_lo, $title_en, $content_lo, $content_en, $is_promo, $is_featured, $category, $event_location, $event_date, $status, $publish_date, $image_path, $id]);
+                    $success = 'ແກ້ໄຂຂໍ້ມູນບົດຄວາມ/ກິດຈະກຳ ຮຽບຮ້ອຍ!';
+                } else {
+                    // INSERT
+                    $stmt = $pdo->prepare("INSERT INTO news (title_lo, title_en, content_lo, content_en, is_promo, is_featured, category, event_location, event_date, status, publish_date, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$title_lo, $title_en, $content_lo, $content_en, $is_promo, $is_featured, $category, $event_location, $event_date, $status, $publish_date, $image_path]);
+                    $success = 'ເພີ່ມບົດຄວາມ/ກິດຈະກຳ ໃໝ່ຮຽບຮ້ອຍ!';
+                }
+            } catch (\Exception $e) {
+                $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+            }
         }
     }
 }
@@ -198,6 +231,7 @@ if (isset($_GET['edit'])) {
             </div>
             
             <form action="news_manage.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                 <input type="hidden" name="id" value="<?php echo $edit_item['id'] ?? 0; ?>">
                 <input type="hidden" name="existing_image" value="<?php echo $edit_item['image_path'] ?? 'assets/images/hero_banner.png'; ?>">
 

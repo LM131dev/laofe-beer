@@ -5,18 +5,22 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// ຈັດການການອັບເດດສະຖານະການຈອງ
+// ຈັດການການອັບເດດສະຖານະການຈອງ (POST + CSRF)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_booking_status'])) {
-    $booking_id = intval($_POST['booking_id'] ?? 0);
-    $status = $_POST['status'] ?? 'Pending';
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $booking_id = intval($_POST['booking_id'] ?? 0);
+        $status = $_POST['status'] ?? 'Pending';
 
-    if ($booking_id > 0) {
-        try {
-            $stmt = $pdo->prepare("UPDATE bookings SET status = ? WHERE id = ?");
-            $stmt->execute([$status, $booking_id]);
-            $success = 'ອັບເດດສະຖານະການຈອງໂຕະສຳເລັດແລ້ວ!';
-        } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+        if ($booking_id > 0) {
+            try {
+                $stmt = $pdo->prepare("UPDATE bookings SET status = ? WHERE id = ?");
+                $stmt->execute([$status, $booking_id]);
+                $success = 'ອັບເດດສະຖານະການຈອງໂຕະສຳເລັດແລ້ວ!';
+            } catch (\Exception $e) {
+                $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+            }
         }
     }
 }
@@ -132,6 +136,7 @@ try {
                                     <div class="flex items-center justify-end space-x-2">
                                         <?php if ($book['status'] === 'Pending'): ?>
                                             <form action="bookings.php?status=<?php echo $status_filter; ?>" method="POST" class="inline">
+                                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                                                 <input type="hidden" name="booking_id" value="<?php echo $book['id']; ?>">
                                                 <input type="hidden" name="status" value="Confirmed">
                                                 <button type="submit" name="update_booking_status" class="px-2.5 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-xs font-bold transition-all shadow-sm flex items-center space-x-1" title="Confirm Booking">
@@ -142,6 +147,7 @@ try {
                                         <?php endif; ?>
                                         
                                         <form action="bookings.php?status=<?php echo $status_filter; ?>" method="POST" class="flex items-center space-x-1.5">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                                             <input type="hidden" name="booking_id" value="<?php echo $book['id']; ?>">
                                             <select name="status" class="px-2 py-1 text-xs border rounded bg-white focus:outline-none text-gray-700">
                                                 <option value="Pending" <?php echo $book['status'] === 'Pending' ? 'selected' : ''; ?>>Pending</option>

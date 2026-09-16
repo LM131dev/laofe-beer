@@ -5,52 +5,56 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// ຈັດການການປ່ຽນສະຖານະອໍເດີ້
+// ຈັດການການປ່ຽນສະຖານະອໍເດີ້ (POST + CSRF)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
-    $order_id = intval($_POST['order_id'] ?? 0);
-    $status = $_POST['status'] ?? 'Pending';
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $order_id = intval($_POST['order_id'] ?? 0);
+        $status = $_POST['status'] ?? 'Pending';
 
-    if ($order_id > 0) {
-        try {
-            $pdo->beginTransaction();
+        if ($order_id > 0) {
+            try {
+                $pdo->beginTransaction();
 
-            // ດຶງສະຖານະເກົ່າ ແລະ ຂໍ້ມູນອໍເດີ້
-            $stmt_old = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
-            $stmt_old->execute([$order_id]);
-            $old_order = $stmt_old->fetch();
+                // ດຶງສະຖານະເກົ່າ ແລະ ຂໍ້ມູນອໍເດີ້
+                $stmt_old = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
+                $stmt_old->execute([$order_id]);
+                $old_order = $stmt_old->fetch();
 
-            if ($old_order) {
-                // ອັບເດດສະຖານະ
-                $stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");
-                $stmt->execute([$status, $order_id]);
+                if ($old_order) {
+                    // ອັບເດດສະຖານະ
+                    $stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");
+                    $stmt->execute([$status, $order_id]);
 
-                // ຫາກປ່ຽນເປັນ Paid ຫຼື Completed ຈາກ Pending/Cancelled ແລະ ອໍເດີ້ມີ user_id -> ໃຫ້ຄະແນນສະສົມ
-                if (in_array($status, ['Paid', 'Completed']) && !in_array($old_order['status'], ['Paid', 'Completed']) && $old_order['user_id']) {
-                    $points_earned = intval($old_order['points_earned']);
-                    if ($points_earned > 0) {
-                        $stmt_u = $pdo->prepare("SELECT points FROM users WHERE id = ?");
-                        $stmt_u->execute([$old_order['user_id']]);
-                        $current_p = intval($stmt_u->fetchColumn());
-                        
-                        $new_p = $current_p + $points_earned;
-                        
-                        // ຄຳນວນ Tier
-                        $new_tier = 'Member';
-                        if ($new_p >= 1000) $new_tier = 'Platinum';
-                        elseif ($new_p >= 500) $new_tier = 'Gold';
-                        elseif ($new_p >= 100) $new_tier = 'Silver';
+                    // ຫາກປ່ຽນເປັນ Paid ຫຼື Completed ຈາກ Pending/Cancelled ແລະ ອໍເດີ້ມີ user_id -> ໃຫ້ຄະແນນສະສົມ
+                    if (in_array($status, ['Paid', 'Completed']) && !in_array($old_order['status'], ['Paid', 'Completed']) && $old_order['user_id']) {
+                        $points_earned = intval($old_order['points_earned']);
+                        if ($points_earned > 0) {
+                            $stmt_u = $pdo->prepare("SELECT points FROM users WHERE id = ?");
+                            $stmt_u->execute([$old_order['user_id']]);
+                            $current_p = intval($stmt_u->fetchColumn());
+                            
+                            $new_p = $current_p + $points_earned;
+                            
+                            // ຄຳນວນ Tier
+                            $new_tier = 'Member';
+                            if ($new_p >= 1000) $new_tier = 'Platinum';
+                            elseif ($new_p >= 500) $new_tier = 'Gold';
+                            elseif ($new_p >= 100) $new_tier = 'Silver';
 
-                        $stmt_up = $pdo->prepare("UPDATE users SET points = ?, tier = ? WHERE id = ?");
-                        $stmt_up->execute([$new_p, $new_tier, $old_order['user_id']]);
+                            $stmt_up = $pdo->prepare("UPDATE users SET points = ?, tier = ? WHERE id = ?");
+                            $stmt_up->execute([$new_p, $new_tier, $old_order['user_id']]);
+                        }
                     }
                 }
-            }
 
-            $pdo->commit();
-            $success = 'ອັບເດດສະຖານະອໍເດີ້ສຳເລັດແລ້ວ! (ສົ່ງຄະແນນສະສົມໃຫ້ລູກຄ້າອັດຕະໂນມັດ)';
-        } catch (\Exception $e) {
-            $pdo->rollBack();
-            $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+                $pdo->commit();
+                $success = 'ອັບເດດສະຖານະອໍເດີ້ສຳເລັດແລ້ວ! (ສົ່ງຄະແນນສະສົມໃຫ້ລູກຄ້າອັດຕະໂນມັດ)';
+            } catch (\Exception $e) {
+                $pdo->rollBack();
+                $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+            }
         }
     }
 }
@@ -181,6 +185,7 @@ try {
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <form action="orders.php?status=<?php echo $status_filter; ?>" method="POST" class="flex items-center justify-end space-x-2">
+                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                                         <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
                                         <select name="status" class="px-2 py-1 text-xs border rounded bg-white focus:outline-none">
                                             <option value="Pending" <?php echo $order['status'] === 'Pending' ? 'selected' : ''; ?>>Pending</option>

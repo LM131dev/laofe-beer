@@ -5,86 +5,113 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// 1. ຈັດການການລຶບ (DELETE)
-if (isset($_GET['delete'])) {
-    $delete_id = intval($_GET['delete']);
-    try {
-        // ດຶງຮູບພາບມາລຶບອອກຈາກເຊີເວີກ່ອນ (ຖ້າມີ)
-        $stmt_img = $pdo->prepare("SELECT image_path FROM gallery WHERE id = ?");
-        $stmt_img->execute([$delete_id]);
-        $img_path = $stmt_img->fetchColumn();
-        if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'hero_banner') && !strpos($img_path, 'our_story') && !strpos($img_path, 'coffee') && !strpos($img_path, 'beer_drink')) {
-            @unlink('../' . $img_path);
-        }
+// 1. ຈັດການການລຶບ (DELETE - POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $delete_id = intval($_POST['delete_id'] ?? 0);
+        try {
+            // ດຶງຮູບພາບມາລຶບອອກຈາກເຊີເວີກ່ອນ (ຖ້າມີ)
+            $stmt_img = $pdo->prepare("SELECT image_path FROM gallery WHERE id = ?");
+            $stmt_img->execute([$delete_id]);
+            $img_path = $stmt_img->fetchColumn();
+            if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'hero_banner') && !strpos($img_path, 'our_story') && !strpos($img_path, 'coffee') && !strpos($img_path, 'beer_drink')) {
+                @unlink('../' . $img_path);
+            }
 
-        $stmt = $pdo->prepare("DELETE FROM gallery WHERE id = ?");
-        $stmt->execute([$delete_id]);
-        $success = 'ລຶບຮູບພາບ Gallery ຮຽບຮ້ອຍແລ້ວ!';
-    } catch (\Exception $e) {
-        $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+            $stmt = $pdo->prepare("DELETE FROM gallery WHERE id = ?");
+            $stmt->execute([$delete_id]);
+            $success = 'ລຶບຮູບພາບ Gallery ຮຽບຮ້ອຍແລ້ວ!';
+        } catch (\Exception $e) {
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+        }
     }
 }
 
-// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂ (CREATE / UPDATE)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    $title_lo = trim($_POST['title_lo'] ?? '');
-    $title_en = trim($_POST['title_en'] ?? '');
-    $sort_order = intval($_POST['sort_order'] ?? 0);
-    $is_active = isset($_POST['is_active']) ? 1 : 0;
-    
-    $image_path = $_POST['existing_image'] ?? '';
+// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂ (CREATE / UPDATE - POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST['action'] !== 'delete')) {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $id = intval($_POST['id'] ?? 0);
+        $title_lo = trim($_POST['title_lo'] ?? '');
+        $title_en = trim($_POST['title_en'] ?? '');
+        $sort_order = intval($_POST['sort_order'] ?? 0);
+        $is_active = isset($_POST['is_active']) ? 1 : 0;
+        
+        $image_path = $_POST['existing_image'] ?? '';
 
-    // ຈັດການການອັບໂຫຼດຮູບພາບ
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileType = $_FILES['image']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+        // ຈັດການການອັບໂຫຼດຮູບພາບ (ກວດຂະໜາດ ແລະ MIME type ທີ່ແທ້ຈິງ)
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image']['tmp_name'];
+            $fileName = $_FILES['image']['name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
 
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        if (in_array($fileExtension, $allowedExtensions)) {
-            $newFileName = 'gal_' . md5(time() . $fileName) . '.' . $fileExtension;
-            $uploadFileDir = '../assets/images/';
-            
-            if (!file_exists($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true);
-            }
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-            $dest_path = $uploadFileDir . $newFileName;
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                // ລຶບຮູບເກົ່າ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default)
-                if ($id > 0 && $image_path && file_exists('../' . $image_path) && !strpos($image_path, 'hero_banner') && !strpos($image_path, 'our_story') && !strpos($image_path, 'coffee') && !strpos($image_path, 'beer_drink')) {
-                    @unlink('../' . $image_path);
+            if ($fileSize > 5 * 1024 * 1024) {
+                $error = 'ຂະໜາດໄຟລ໌ຮູບພາບໃຫຍ່ເກີນໄປ (ຕ້ອງບໍ່ເກີນ 5MB).';
+            } elseif (!in_array($fileExtension, $allowedExtensions)) {
+                $error = 'ນາມສະກຸນໄຟລ໌ບໍ່ຖືກຕ້ອງ. ອະນຸຍາດສະເພາະ: ' . implode(',', $allowedExtensions);
+            } else {
+                $realMime = '';
+                if (function_exists('finfo_open')) {
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $realMime = finfo_file($finfo, $fileTmpPath);
+                    finfo_close($finfo);
+                } elseif (function_exists('mime_content_type')) {
+                    $realMime = mime_content_type($fileTmpPath);
+                } else {
+                    $imgInfo = getimagesize($fileTmpPath);
+                    $realMime = $imgInfo['mime'] ?? '';
                 }
-                $image_path = 'assets/images/' . $newFileName;
-            } else {
-                $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
-            }
-        } else {
-            $error = 'ອັບໂຫຼດບໍ່ສຳເລັດ. ນາມສະກຸນໄຟລ໌ທີ່ອະນຸຍາດ: ' . implode(',', $allowedExtensions);
-        }
-    }
 
-    if (empty($image_path)) {
-        $error = 'ກະລຸນາເລືອກ ຫຼື ອັບໂຫຼດຮູບພາບ Gallery.';
-    } elseif (empty($error)) {
-        try {
-            if ($id > 0) {
-                // UPDATE
-                $stmt = $pdo->prepare("UPDATE gallery SET title_lo = ?, title_en = ?, sort_order = ?, is_active = ?, image_path = ? WHERE id = ?");
-                $stmt->execute([$title_lo, $title_en, $sort_order, $is_active, $image_path, $id]);
-                $success = 'ແກ້ໄຂຮູບພາບ Gallery ຮຽບຮ້ອຍ!';
-            } else {
-                // INSERT
-                $stmt = $pdo->prepare("INSERT INTO gallery (title_lo, title_en, sort_order, is_active, image_path) VALUES (?, ?, ?, ?, ?)");
-                $stmt->execute([$title_lo, $title_en, $sort_order, $is_active, $image_path]);
-                $success = 'ເພີ່ມຮູບພາບ Gallery ໃໝ່ຮຽບຮ້ອຍ!';
+                if (!in_array($realMime, $allowedMimes)) {
+                    $error = 'ໄຟລ໌ທີ່ອັບໂຫຼດບໍ່ແມ່ນຮູບພາບທີ່ຖືກຕ້ອງ (MIME type invalid).';
+                } else {
+                    $newFileName = 'gal_' . md5(time() . $fileName) . '.' . $fileExtension;
+                    $uploadFileDir = '../assets/images/';
+                    
+                    if (!file_exists($uploadFileDir)) {
+                        mkdir($uploadFileDir, 0755, true);
+                    }
+
+                    $dest_path = $uploadFileDir . $newFileName;
+                    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                        // ລຶບຮູບເກົ່າ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default)
+                        if ($id > 0 && $image_path && file_exists('../' . $image_path) && !strpos($image_path, 'hero_banner') && !strpos($image_path, 'our_story') && !strpos($image_path, 'coffee') && !strpos($image_path, 'beer_drink')) {
+                            @unlink('../' . $image_path);
+                        }
+                        $image_path = 'assets/images/' . $newFileName;
+                    } else {
+                        $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
+                    }
+                }
             }
-        } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+        }
+
+        if (empty($image_path)) {
+            $error = 'ກະລຸນາເລືອກ ຫຼື ອັບໂຫຼດຮູບພາບ Gallery.';
+        } elseif (empty($error)) {
+            try {
+                if ($id > 0) {
+                    // UPDATE
+                    $stmt = $pdo->prepare("UPDATE gallery SET title_lo = ?, title_en = ?, sort_order = ?, is_active = ?, image_path = ? WHERE id = ?");
+                    $stmt->execute([$title_lo, $title_en, $sort_order, $is_active, $image_path, $id]);
+                    $success = 'ແກ້ໄຂຮູບພາບ Gallery ຮຽບຮ້ອຍ!';
+                } else {
+                    // INSERT
+                    $stmt = $pdo->prepare("INSERT INTO gallery (title_lo, title_en, sort_order, is_active, image_path) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->execute([$title_lo, $title_en, $sort_order, $is_active, $image_path]);
+                    $success = 'ເພີ່ມຮູບພາບ Gallery ໃໝ່ຮຽບຮ້ອຍ!';
+                }
+            } catch (\Exception $e) {
+                $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
+            }
         }
     }
 }
@@ -140,6 +167,7 @@ if (isset($_GET['edit'])) {
             </h3>
             
             <form action="gallery_manage.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                 <input type="hidden" name="id" value="<?php echo $edit_item['id'] ?? 0; ?>">
                 <input type="hidden" name="existing_image" value="<?php echo $edit_item['image_path'] ?? ''; ?>">
 
@@ -244,14 +272,19 @@ if (isset($_GET['edit'])) {
                                             </span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="py-3 px-4 text-right space-x-2">
-                                        <a href="gallery_manage.php?edit=<?php echo $item['id']; ?>" class="inline-flex items-center px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-bold transition-all border border-amber-200">
-                                            ແກ້ໄຂ
-                                        </a>
-                                        <a href="gallery_manage.php?delete=<?php echo $item['id']; ?>" onclick="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບພາບນີ້?');" class="inline-flex items-center px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-bold transition-all border border-red-200">
-                                            ລຶບ
-                                        </a>
-                                    </td>
+                                     <td class="py-3 px-4 text-right space-x-2 flex items-center justify-end">
+                                         <a href="gallery_manage.php?edit=<?php echo $item['id']; ?>" class="inline-flex items-center px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-bold transition-all border border-amber-200">
+                                             ແກ້ໄຂ
+                                         </a>
+                                         <form action="gallery_manage.php" method="POST" class="inline" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບພາບນີ້?');">
+                                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+                                             <input type="hidden" name="action" value="delete">
+                                             <input type="hidden" name="delete_id" value="<?php echo $item['id']; ?>">
+                                             <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-bold transition-all border border-red-200">
+                                                 ລຶບ
+                                             </button>
+                                         </form>
+                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>

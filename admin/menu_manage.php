@@ -5,87 +5,106 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// 1. ຈັດການການລຶບເມນູ (DELETE)
-if (isset($_GET['delete'])) {
-    $delete_id = intval($_GET['delete']);
-    try {
-        // ດຶງຮູບພາບມາລຶບອອກຈາກເຊີເວີກ່ອນ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບພື້ນຖານ)
-        $stmt_img = $pdo->prepare("SELECT image_path FROM menus WHERE id = ?");
-        $stmt_img->execute([$delete_id]);
-        $img_path = $stmt_img->fetchColumn();
-        if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'default')) {
-            // @unlink('../' . $img_path);
-        }
+// 1. ຈັດການການລຶບເມນູ (DELETE via POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if (!verify_csrf_token()) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $delete_id = intval($_POST['delete_id'] ?? 0);
+        try {
+            $stmt_img = $pdo->prepare("SELECT image_path FROM menus WHERE id = ?");
+            $stmt_img->execute([$delete_id]);
+            $img_path = $stmt_img->fetchColumn();
 
-        $stmt = $pdo->prepare("DELETE FROM menus WHERE id = ?");
-        $stmt->execute([$delete_id]);
-        $success = 'ລຶບເມນູຮຽບຮ້ອຍແລ້ວ!';
-    } catch (\Exception $e) {
-        $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບ: ' . $e->getMessage();
+            $stmt = $pdo->prepare("DELETE FROM menus WHERE id = ?");
+            $stmt->execute([$delete_id]);
+            $success = 'ລຶບເມນູຮຽບຮ້ອຍແລ້ວ!';
+        } catch (\Exception $e) {
+            error_log("Menu delete error: " . $e->getMessage());
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການລຶບຂໍ້ມູນ.';
+        }
     }
 }
 
-// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂເມນູ (CREATE / UPDATE)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    $name_lo = trim($_POST['name_lo'] ?? '');
-    $name_en = trim($_POST['name_en'] ?? '');
-    $category = trim($_POST['category'] ?? 'coffee');
-    $price = floatval($_POST['price'] ?? 0);
-    $description_lo = trim($_POST['description_lo'] ?? '');
-    $description_en = trim($_POST['description_en'] ?? '');
-    $is_popular = isset($_POST['is_popular']) ? 1 : 0;
-    
-    $image_path = $_POST['existing_image'] ?? 'assets/images/coffee.png';
+// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂເມນູ (CREATE / UPDATE via POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST['action'] !== 'delete')) {
+    if (!verify_csrf_token()) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $id = intval($_POST['id'] ?? 0);
+        $name_lo = trim($_POST['name_lo'] ?? '');
+        $name_en = trim($_POST['name_en'] ?? '');
+        $category = trim($_POST['category'] ?? 'coffee');
+        $price = floatval($_POST['price'] ?? 0);
+        $description_lo = trim($_POST['description_lo'] ?? '');
+        $description_en = trim($_POST['description_en'] ?? '');
+        $is_popular = isset($_POST['is_popular']) ? 1 : 0;
+        
+        $image_path = $_POST['existing_image'] ?? 'assets/images/coffee.png';
 
-    // ຈັດການການອັບໂຫຼດຮູບພາບ
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileType = $_FILES['image']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+        // ຈັດການການອັບໂຫຼດຮູບພາບ (ກວດສອບຂະໜາດ ແລະ MIME type ແທ້)
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image']['tmp_name'];
+            $fileName = $_FILES['image']['name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
 
-        // ນາມສະກຸນໄຟລ໌ທີ່ອະນຸຍາດ
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        if (in_array($fileExtension, $allowedExtensions)) {
-            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-            $uploadFileDir = '../assets/images/';
-            
-            // ສ້າງໂຟນເດີຖ້າຍັງບໍ່ມີ
-            if (!file_exists($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true);
-            }
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $allowedMimeTypes  = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-            $dest_path = $uploadFileDir . $newFileName;
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                $image_path = 'assets/images/' . $newFileName;
+            $mimeType = false;
+            if (function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeType = finfo_file($finfo, $fileTmpPath);
+                finfo_close($finfo);
+            } elseif (function_exists('mime_content_type')) {
+                $mimeType = mime_content_type($fileTmpPath);
             } else {
-                $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
+                $imgInfo = @getimagesize($fileTmpPath);
+                if ($imgInfo && isset($imgInfo['mime'])) {
+                    $mimeType = $imgInfo['mime'];
+                }
             }
-        } else {
-            $error = 'ອັບໂຫຼດບໍ່ສຳເລັດ. ນາມສະກຸນໄຟລ໌ທີ່ອະນຸຍາດ: ' . implode(',', $allowedExtensions);
+
+            if ($fileSize > 5 * 1024 * 1024) {
+                $error = 'ຂະໜາດໄຟລ໌ຮູບພາບໃຫຍ່ເກີນໄປ (ອະນຸຍາດບໍ່ເກີນ 5MB).';
+            } elseif (!in_array($fileExtension, $allowedExtensions) || !in_array($mimeType, $allowedMimeTypes)) {
+                $error = 'ໄຟລ໌ບໍ່ແມ່ນຮູບພາບທີ່ຖືກຕ້ອງ! ອະນຸຍາດສະເພາະ (JPG, PNG, WEBP, GIF).';
+            } else {
+                $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                $uploadFileDir = '../assets/images/';
+                
+                if (!file_exists($uploadFileDir)) {
+                    mkdir($uploadFileDir, 0755, true);
+                }
+
+                $dest_path = $uploadFileDir . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                    $image_path = 'assets/images/' . $newFileName;
+                } else {
+                    $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';
+                }
+            }
         }
-    }
 
-    if (empty($name_lo) || empty($name_en) || $price <= 0) {
-        $error = 'ກະລຸນາກອກ ຊື່ເມນູ ແລະ ລາຄາ ໃຫ້ຖືກຕ້ອງ.';
-    } elseif (empty($error)) {
-        try {
-            if ($id > 0) {
-                // UPDATE
-                $stmt = $pdo->prepare("UPDATE menus SET name_lo = ?, name_en = ?, category = ?, price = ?, description_lo = ?, description_en = ?, image_path = ?, is_popular = ? WHERE id = ?");
-                $stmt->execute([$name_lo, $name_en, $category, $price, $description_lo, $description_en, $image_path, $is_popular, $id]);
-                $success = 'ແກ້ໄຂເມນູຮຽບຮ້ອຍ!';
-            } else {
-                // INSERT
-                $stmt = $pdo->prepare("INSERT INTO menus (name_lo, name_en, category, price, description_lo, description_en, image_path, is_popular) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$name_lo, $name_en, $category, $price, $description_lo, $description_en, $image_path, $is_popular]);
-                $success = 'ເພີ່ມເມນູໃໝ່ຮຽບຮ້ອຍ!';
+        if (empty($name_lo) || empty($name_en) || $price <= 0) {
+            $error = 'ກະລຸນາກອກ ຊື່ເມນູ ແລະ ລາຄາ ໃຫ້ຖືກຕ້ອງ.';
+        } elseif (empty($error)) {
+            try {
+                if ($id > 0) {
+                    $stmt = $pdo->prepare("UPDATE menus SET name_lo = ?, name_en = ?, category = ?, price = ?, description_lo = ?, description_en = ?, image_path = ?, is_popular = ? WHERE id = ?");
+                    $stmt->execute([$name_lo, $name_en, $category, $price, $description_lo, $description_en, $image_path, $is_popular, $id]);
+                    $success = 'ແກ້ໄຂເມນູຮຽບຮ້ອຍ!';
+                } else {
+                    $stmt = $pdo->prepare("INSERT INTO menus (name_lo, name_en, category, price, description_lo, description_en, image_path, is_popular) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$name_lo, $name_en, $category, $price, $description_lo, $description_en, $image_path, $is_popular]);
+                    $success = 'ເພີ່ມເມນູໃໝ່ຮຽບຮ້ອຍ!';
+                }
+            } catch (\Exception $e) {
+                error_log("Menu save error: " . $e->getMessage());
+                $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກຂໍ້ມູນ.';
             }
-        } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດໃນການບັນທຶກ: ' . $e->getMessage();
         }
     }
 }
@@ -139,6 +158,7 @@ if (isset($_GET['edit'])) {
             </h3>
             
             <form action="menu_manage.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <input type="hidden" name="id" value="<?php echo $edit_item['id'] ?? 0; ?>">
                 <input type="hidden" name="existing_image" value="<?php echo $edit_item['image_path'] ?? 'assets/images/coffee.png'; ?>">
 
@@ -263,9 +283,14 @@ if (isset($_GET['edit'])) {
                                             <a href="menu_manage.php?edit=<?php echo $m['id']; ?>" class="inline-flex items-center justify-center p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-all" title="ແກ້ໄຂ">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                             </a>
-                                            <a href="menu_manage.php?delete=<?php echo $m['id']; ?>" onclick="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບເມນູນີ້?')" class="inline-flex items-center justify-center p-1.5 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-lg transition-all" title="ລຶບ">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                            </a>
+                                            <form action="menu_manage.php" method="POST" class="inline" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບເມນູນີ້?');">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="delete_id" value="<?php echo $m['id']; ?>">
+                                                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                                <button type="submit" class="inline-flex items-center justify-center p-1.5 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-lg transition-all" title="ລຶບ">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

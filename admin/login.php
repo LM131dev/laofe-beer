@@ -17,38 +17,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (empty($username) || empty($password)) {
-        $error = 'ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບຖ້ວນ';
-    } else {
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch();
+    // Rate Limiting (5 failed attempts max per 15 minutes)
+    $max_attempts = 5;
+    $lockout_time = 900; // 15 mins
+    if (!isset($_SESSION['admin_login_attempts'])) {
+        $_SESSION['admin_login_attempts'] = 0;
+        $_SESSION['admin_last_attempt'] = time();
+    }
 
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['admin_logged_in'] = true;
-                $_SESSION['admin_user'] = $user['username'];
-                header("Location: dashboard.php");
-                exit;
-            } else if ($username === 'admin' && ($password === 'admin123' || $password === 'admin')) {
-                // Emergency Fallback & Auto-Heal: Insert/Update admin account in DB
-                $admin_pass = password_hash('admin123', PASSWORD_DEFAULT);
-                if ($user) {
-                    $up = $pdo->prepare("UPDATE users SET password = ?, role = 'admin' WHERE username = 'admin'");
-                    $up->execute([$admin_pass]);
+    if ($_SESSION['admin_login_attempts'] >= $max_attempts) {
+        $time_left = $lockout_time - (time() - $_SESSION['admin_last_attempt']);
+        if ($time_left > 0) {
+            $mins = ceil($time_left / 60);
+            $error = "ທ່ານລອງເຂົ້າສູ່ລະບົບຜິດຫຼາຍເກີນໄປ ($max_attempts ຄັ້ງ). ກະລຸນາລໍຖ້າ $mins ນາທີ ແລ້ວລອງໃໝ່.";
+        } else {
+            $_SESSION['admin_login_attempts'] = 0;
+        }
+    }
+
+    if (empty($error)) {
+        if (empty($username) || empty($password)) {
+            $error = 'ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບຖ້ວນ';
+        } else {
+            try {
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+                $stmt->execute([$username]);
+                $user = $stmt->fetch();
+
+                if ($user && password_verify($password, $user['password']) && in_array($user['role'], ['admin', 'staff'])) {
+                    session_regenerate_id(true);
+                    $_SESSION['admin_logged_in'] = true;
+                    $_SESSION['admin_user'] = $user['username'];
+                    $_SESSION['admin_role'] = $user['role'];
+                    $_SESSION['admin_login_attempts'] = 0; // Reset counter
+                    header("Location: dashboard.php");
+                    exit;
                 } else {
-                    $ins = $pdo->prepare("INSERT INTO users (username, password, role) VALUES ('admin', ?, 'admin')");
-                    $ins->execute([$admin_pass]);
+                    $_SESSION['admin_login_attempts']++;
+                    $_SESSION['admin_last_attempt'] = time();
+                    $error = 'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!';
                 }
-                $_SESSION['admin_logged_in'] = true;
-                $_SESSION['admin_user'] = 'admin';
-                header("Location: dashboard.php");
-                exit;
-            } else {
-                $error = 'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!';
+            } catch (\Exception $e) {
+                error_log("Admin login error: " . $e->getMessage());
+                $error = 'ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່ລະບົບ. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ.';
             }
-        } catch (\Exception $e) {
-            $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
         }
     }
 }

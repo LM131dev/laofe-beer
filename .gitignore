@@ -1,0 +1,10 @@
+# Environment files containing sensitive credentials
+.env
+.env.local
+.env.*.local
+
+# Temp and scratch files
+*.log
+scratch/
+.DS_Store
+Thumbs.db

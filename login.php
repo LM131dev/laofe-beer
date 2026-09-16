@@ -26,29 +26,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (empty($username) || empty($password)) {
-        $error = $current_lang === 'lo' ? 'ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບຖ້ວນ' : 'Please enter username and password.';
-    } else {
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? AND role = 'customer'");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch();
+    // Rate Limiting (5 failed attempts max per 15 minutes)
+    $max_attempts = 5;
+    $lockout_time = 900;
+    if (!isset($_SESSION['user_login_attempts'])) {
+        $_SESSION['user_login_attempts'] = 0;
+        $_SESSION['user_last_attempt'] = time();
+    }
 
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_logged_in'] = true;
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_username'] = $user['username'];
-                $_SESSION['user_fullname'] = $user['fullname'];
-                $_SESSION['user_points'] = $user['points'];
-                $_SESSION['user_tier'] = $user['tier'];
+    if ($_SESSION['user_login_attempts'] >= $max_attempts) {
+        $time_left = $lockout_time - (time() - $_SESSION['user_last_attempt']);
+        if ($time_left > 0) {
+            $mins = ceil($time_left / 60);
+            $error = $current_lang === 'lo' 
+                ? "ທ່ານລອງເຂົ້າສູ່ລະບົບຜິດຫຼາຍເກີນໄປ ($max_attempts ຄັ້ງ). ກະລຸນາລໍຖ້າ $mins ນາທີ." 
+                : "Too many login attempts. Please wait $mins minutes.";
+        } else {
+            $_SESSION['user_login_attempts'] = 0;
+        }
+    }
 
-                header("Location: account.php");
-                exit;
-            } else {
-                $error = $current_lang === 'lo' ? 'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!' : 'Invalid username or password.';
+    if (empty($error)) {
+        if (empty($username) || empty($password)) {
+            $error = $current_lang === 'lo' ? 'ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບຖ້ວນ' : 'Please enter username and password.';
+        } else {
+            try {
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? AND role = 'customer'");
+                $stmt->execute([$username]);
+                $user = $stmt->fetch();
+
+                if ($user && password_verify($password, $user['password'])) {
+                    session_regenerate_id(true);
+                    $_SESSION['user_logged_in'] = true;
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_username'] = $user['username'];
+                    $_SESSION['user_fullname'] = $user['fullname'];
+                    $_SESSION['user_points'] = $user['points'];
+                    $_SESSION['user_tier'] = $user['tier'];
+                    $_SESSION['user_login_attempts'] = 0;
+
+                    header("Location: account.php");
+                    exit;
+                } else {
+                    $_SESSION['user_login_attempts']++;
+                    $_SESSION['user_last_attempt'] = time();
+                    $error = $current_lang === 'lo' ? 'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!' : 'Invalid username or password.';
+                }
+            } catch (\Exception $e) {
+                error_log("User login error: " . $e->getMessage());
+                $error = $current_lang === 'lo' ? 'ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່ລະບົບ. ກະລຸນາລອງໃໝ່.' : 'Connection error. Please try again.';
             }
-        } catch (\Exception $e) {
-            $error = ($current_lang === 'lo' ? 'ເກີດຂໍ້ຜິດພາດ: ' : 'Database error: ') . $e->getMessage();
         }
     }
 }

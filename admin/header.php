@@ -12,6 +12,16 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 
 require_once __DIR__ . '/../config/db.php';
 $admin_page = basename($_SERVER['PHP_SELF']);
+
+// CSRF Protection Token Initialization
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+function verify_csrf_token() {
+    $token = $_POST['csrf_token'] ?? '';
+    return !empty($token) && !empty($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+}
 ?>
 <!DOCTYPE html>
 <html lang="lo">

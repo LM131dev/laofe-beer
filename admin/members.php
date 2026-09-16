@@ -5,53 +5,57 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// ຈັດການການອັບເດດຂໍ້ມູນສະມາຊິກ (POST Actions)
+// ຈັດການການອັບເດດຂໍ້ມູນສະມາຊິກ (POST Actions + CSRF)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        $action = $_POST['action'] ?? '';
 
-    // 1. ເພີ່ມ/ລົບ ຄະແນນ ຫຼື ປ່ຽນ Tier ຂອງສະມາຊິກ
-    if ($action === 'update_member') {
-        $member_id = intval($_POST['member_id'] ?? 0);
-        $points = intval($_POST['points'] ?? 0);
-        $tier = trim($_POST['tier'] ?? 'Member');
+        // 1. ເພີ່ມ/ລົບ ຄະແນນ ຫຼື ປ່ຽນ Tier ຂອງສະມາຊິກ
+        if ($action === 'update_member') {
+            $member_id = intval($_POST['member_id'] ?? 0);
+            $points = intval($_POST['points'] ?? 0);
+            $tier = trim($_POST['tier'] ?? 'Member');
 
-        if ($member_id > 0) {
-            try {
-                $stmt = $pdo->prepare("UPDATE users SET points = ?, tier = ? WHERE id = ?");
-                $stmt->execute([$points, $tier, $member_id]);
-                $success = 'ອັບເດດຂໍ້ມູນສະມາຊິກສຳເລັດແລ້ວ!';
-            } catch (\PDOException $e) {
-                $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+            if ($member_id > 0) {
+                try {
+                    $stmt = $pdo->prepare("UPDATE users SET points = ?, tier = ? WHERE id = ?");
+                    $stmt->execute([$points, $tier, $member_id]);
+                    $success = 'ອັບເດດຂໍ້ມູນສະມາຊິກສຳເລັດແລ້ວ!';
+                } catch (\PDOException $e) {
+                    $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+                }
             }
         }
-    }
 
-    // 2. 增加/扣减 Points (Quick Action)
-    if ($action === 'adjust_points') {
-        $member_id = intval($_POST['member_id'] ?? 0);
-        $delta = intval($_POST['delta_points'] ?? 0);
+        // 2. 增加/扣减 Points (Quick Action)
+        if ($action === 'adjust_points') {
+            $member_id = intval($_POST['member_id'] ?? 0);
+            $delta = intval($_POST['delta_points'] ?? 0);
 
-        if ($member_id > 0 && $delta != 0) {
-            try {
-                $stmt = $pdo->prepare("UPDATE users SET points = GREATEST(0, points + ?) WHERE id = ?");
-                $stmt->execute([$delta, $member_id]);
-                $success = 'ປັບປຸງຄະແນນສະສົມສຳເລັດແລ້ວ!';
-            } catch (\PDOException $e) {
-                $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+            if ($member_id > 0 && $delta != 0) {
+                try {
+                    $stmt = $pdo->prepare("UPDATE users SET points = GREATEST(0, points + ?) WHERE id = ?");
+                    $stmt->execute([$delta, $member_id]);
+                    $success = 'ປັບປຸງຄະແນນສະສົມສຳເລັດແລ້ວ!';
+                } catch (\PDOException $e) {
+                    $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+                }
             }
         }
-    }
 
-    // 3. ລົບສະມາຊິກ
-    if ($action === 'delete_member') {
-        $member_id = intval($_POST['member_id'] ?? 0);
-        if ($member_id > 0) {
-            try {
-                $stmt = $pdo->prepare("DELETE FROM users WHERE id = ? AND role != 'admin'");
-                $stmt->execute([$member_id]);
-                $success = 'ລົບສະມາຊິກອອກຈາກລະບົບຮຽບຮ້ອຍແລ້ວ!';
-            } catch (\PDOException $e) {
-                $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+        // 3. ລົບສະມາຊິກ
+        if ($action === 'delete_member') {
+            $member_id = intval($_POST['member_id'] ?? 0);
+            if ($member_id > 0) {
+                try {
+                    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ? AND role != 'admin'");
+                    $stmt->execute([$member_id]);
+                    $success = 'ລົບສະມາຊິກອອກຈາກລະບົບຮຽບຮ້ອຍແລ້ວ!';
+                } catch (\PDOException $e) {
+                    $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+                }
             }
         }
     }
@@ -231,6 +235,7 @@ $vip_count = $stmt_vip->fetchColumn();
                                         </span>
                                         <!-- Quick Adjust Buttons -->
                                         <form method="POST" action="members.php" class="inline-flex gap-1">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                                             <input type="hidden" name="action" value="adjust_points">
                                             <input type="hidden" name="member_id" value="<?php echo $m['id']; ?>">
                                             <button type="submit" name="delta_points" value="50" title="+50 Points" class="w-6 h-6 rounded bg-gray-100 hover:bg-emerald-600 hover:text-white text-xs font-bold text-gray-600 flex items-center justify-center transition-colors">
@@ -265,6 +270,7 @@ $vip_count = $stmt_vip->fetchColumn();
                                         </button>
                                         <!-- Delete Button -->
                                         <form method="POST" action="members.php" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລົບສະມາຊິກນີ້?');">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                                             <input type="hidden" name="action" value="delete_member">
                                             <input type="hidden" name="member_id" value="<?php echo $m['id']; ?>">
                                             <button type="submit" class="px-2.5 py-1.5 bg-red-50 hover:bg-red-600 text-red-600 hover:text-white rounded-lg text-xs font-bold transition-all border border-red-200">
@@ -291,6 +297,7 @@ $vip_count = $stmt_vip->fetchColumn();
         </div>
 
         <form method="POST" action="members.php" class="space-y-4">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
             <input type="hidden" name="action" value="update_member">
             <input type="hidden" name="member_id" id="modal-member-id">
 
