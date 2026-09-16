@@ -326,10 +326,10 @@ function openModal() {
 function closeModal() {
     document.getElementById('branchModal').classList.add('hidden');
     document.getElementById('branchModal').classList.remove('flex');
-    if (window.location.search.includes('edit=')) {
-        window.location.href = 'branch_manage.php';
-    }
+    window.location.href = 'branch_manage.php';
 }
+</script>
+
     </main>
 </body>
 </html>
