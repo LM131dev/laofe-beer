@@ -580,137 +580,102 @@ try {
     </div>
 
     <!-- Center-Active Swiper Store Carousel -->
-    <div class="relative w-full max-w-7xl mx-auto px-4">
-        <div class="swiper store-carousel-swiper w-full overflow-visible py-4">
+    <div class="relative w-full max-w-7xl mx-auto px-4 md:px-12">
+        <div class="swiper store-carousel-swiper w-full rounded-2xl md:rounded-3xl overflow-hidden py-4 shadow-xl">
             <div class="swiper-wrapper">
                 
-                <!-- Store 1: Namphou Vientiane -->
-                <div class="swiper-slide transition-all duration-500">
-                    <div class="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 aspect-[16/9] md:aspect-[16/8] group">
-                        <img src="assets/images/branch_namphou.png" alt="Namphou Vientiane Branch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        
-                        <!-- Bottom Blue/Burgundy Overlay Banner (Luckin Style) -->
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-[#1C050B]/95 via-[#531321]/90 to-[#1C050B]/95 text-white p-5 md:p-8 border-t border-amber-400/30 backdrop-blur-md space-y-2">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
-                                    <?php echo $current_lang === 'lo' ? 'ສາຂາ ນ້ຳພຸ (ນະຄອນຫຼວງວຽງຈັນ)' : 'NAMPHOU VIENTIANE'; ?>
-                                </h3>
-                                <a href="https://www.google.com/maps?q=17.966801,102.606311" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
-                                    <span>🗺️</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
-                                </a>
-                            </div>
-                            <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">
-                                <span class="flex items-center gap-1.5 font-semibold">
-                                    <span>🕒</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຈັນ - ອາທິດ: 07:00 - 23:00 ໂມງ' : 'Mon - Sun: 07:00 AM - 11:00 PM'; ?></span>
-                                </span>
-                                <span class="flex items-center gap-1.5 text-amber-100/90 font-light">
-                                    <span>📍</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຖະໜົນນ້ຳພຸ, ບ້ານຊຽງຍືນ, ເມືອງຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ' : 'Namphou Rd, XiengNgeun Village, Vientiane Capital'; ?></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Store 2: Luang Prabang -->
-                <div class="swiper-slide transition-all duration-500">
-                    <div class="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 aspect-[16/9] md:aspect-[16/8] group">
-                        <img src="assets/images/branch_luangprabang.png" alt="Luang Prabang Branch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        
-                        <!-- Bottom Blue/Burgundy Overlay Banner (Luckin Style) -->
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-[#1C050B]/95 via-[#531321]/90 to-[#1C050B]/95 text-white p-5 md:p-8 border-t border-amber-400/30 backdrop-blur-md space-y-2">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
-                                    <?php echo $current_lang === 'lo' ? 'ສາຂາ ຫຼວງພະບາງ' : 'LUANG PRABANG HERITAGE'; ?>
-                                </h3>
-                                <a href="https://www.google.com/maps/search/?api=1&query=Luang+Prabang+Heritage+Town" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
-                                    <span>🗺️</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
-                                </a>
-                            </div>
-                            <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">
-                                <span class="flex items-center gap-1.5 font-semibold">
-                                    <span>🕒</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຈັນ - ອາທິດ: 07:00 - 22:00 ໂມງ' : 'Mon - Sun: 07:00 AM - 10:00 PM'; ?></span>
-                                </span>
-                                <span class="flex items-center gap-1.5 text-amber-100/90 font-light">
-                                    <span>📍</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຖະໜົນສີສະຫວ່າງວົງ, ບ້ານສາມແສນໄທ, ແຂວງຫຼວງພະບາງ' : 'Sisavangvong Rd, Luang Prabang World Heritage Town'; ?></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Store 3: Vang Vieng -->
-                <div class="swiper-slide transition-all duration-500">
-                    <div class="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 aspect-[16/9] md:aspect-[16/8] group">
-                        <img src="assets/images/branch_vangvieng.png" alt="Vang Vieng Branch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        
-                        <!-- Bottom Blue/Burgundy Overlay Banner (Luckin Style) -->
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-[#1C050B]/95 via-[#531321]/90 to-[#1C050B]/95 text-white p-5 md:p-8 border-t border-amber-400/30 backdrop-blur-md space-y-2">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
-                                    <?php echo $current_lang === 'lo' ? 'ສາຂາ ວັງວຽງ' : 'VANG VIENG RIVERSIDE'; ?>
-                                </h3>
-                                <a href="https://www.google.com/maps/search/?api=1&query=Vang+Vieng+Nam+Song" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
-                                    <span>🗺️</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
-                                </a>
-                            </div>
-                            <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">
-                                <span class="flex items-center gap-1.5 font-semibold">
-                                    <span>🕒</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຈັນ - ອາທິດ: 07:00 - 23:00 ໂມງ' : 'Mon - Sun: 07:00 AM - 11:00 PM'; ?></span>
-                                </span>
-                                <span class="flex items-center gap-1.5 text-amber-100/90 font-light">
-                                    <span>📍</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຖະໜົນຄັງແຄມນ້ຳຊອງ, ບ້ານສະຫວ່າງ, ເມືອງວັງວຽງ' : 'Nam Song Riverside Rd, Savang Village, Vang Vieng'; ?></span>
-                                </span>
+                <?php
+                // Store slides data array (duplicated once to ensure 8 slides for 100% seamless continuous Swiper looping)
+                $store_slides_data = [
+                    [
+                        'name_lo' => 'ສາຂາ ນ້ຳພຸ (ນະຄອນຫຼວງວຽງຈັນ)',
+                        'name_en' => 'NAMPHOU VIENTIANE',
+                        'map' => 'https://www.google.com/maps?q=17.966801,102.606311',
+                        'hours_lo' => 'ຈັນ - ອາທິດ: 07:00 - 23:00 ໂມງ',
+                        'hours_en' => 'Mon - Sun: 07:00 AM - 11:00 PM',
+                        'addr_lo' => 'ຖະໜົນນ້ຳພຸ, ບ້ານຊຽງຍືນ, ເມືອງຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ',
+                        'addr_en' => 'Namphou Rd, XiengNgeun Village, Vientiane Capital',
+                        'img' => 'assets/images/branch_namphou.png'
+                    ],
+                    [
+                        'name_lo' => 'ສາຂາ ຫຼວງພະບາງ',
+                        'name_en' => 'LUANG PRABANG HERITAGE',
+                        'map' => 'https://www.google.com/maps/search/?api=1&query=Luang+Prabang+Heritage+Town',
+                        'hours_lo' => 'ຈັນ - ອາທິດ: 07:00 - 22:00 ໂມງ',
+                        'hours_en' => 'Mon - Sun: 07:00 AM - 10:00 PM',
+                        'addr_lo' => 'ຖະໜົນສີສະຫວ່າງວົງ, ບ້ານສາມແສນໄທ, ແຂວງຫຼວງພະບາງ',
+                        'addr_en' => 'Sisavangvong Rd, Luang Prabang World Heritage Town',
+                        'img' => 'assets/images/branch_luangprabang.png'
+                    ],
+                    [
+                        'name_lo' => 'ສາຂາ ວັງວຽງ',
+                        'name_en' => 'VANG VIENG RIVERSIDE',
+                        'map' => 'https://www.google.com/maps/search/?api=1&query=Vang+Vieng+Nam+Song',
+                        'hours_lo' => 'ຈັນ - ອາທິດ: 07:00 - 23:00 ໂມງ',
+                        'hours_en' => 'Mon - Sun: 07:00 AM - 11:00 PM',
+                        'addr_lo' => 'ຖະໜົນຄັງແຄມນ້ຳຊອງ, ບ້ານສະຫວ່າງ, ເມືອງວັງວຽງ',
+                        'addr_en' => 'Nam Song Riverside Rd, Savang Village, Vang Vieng',
+                        'img' => 'assets/images/branch_vangvieng.png'
+                    ],
+                    [
+                        'name_lo' => 'ສາຂາ ປາກເຊ (ຈຳປາສັກ)',
+                        'name_en' => 'PAKSE CHAMPASAK',
+                        'map' => 'https://www.google.com/maps/search/?api=1&query=Pakse+Champasak',
+                        'hours_lo' => 'ຈັນ - ອາທິດ: 07:00 - 22:00 ໂມງ',
+                        'hours_en' => 'Mon - Sun: 07:00 AM - 10:00 PM',
+                        'addr_lo' => 'ຖະໜົນ 13 ໃຕ້, ເມືອງປາກເຊ, ແຂວງຈຳປາສັກ',
+                        'addr_en' => 'Route 13 South, Pakse City, Champasak',
+                        'img' => 'assets/images/branch_pakse.png'
+                    ]
+                ];
+                
+                // Duplicate slides list to guarantee 8 slides for infinite continuous Swiper loop
+                $loop_slides = array_merge($store_slides_data, $store_slides_data);
+                foreach ($loop_slides as $st):
+                ?>
+                    <div class="swiper-slide transition-all duration-500">
+                        <div class="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 aspect-[16/9] md:aspect-[16/8] group">
+                            <img src="<?php echo htmlspecialchars($st['img']); ?>" alt="<?php echo htmlspecialchars($st['name_en']); ?>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            
+                            <!-- Bottom Blue/Burgundy Overlay Banner (Luckin Style) -->
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-[#1C050B]/95 via-[#531321]/90 to-[#1C050B]/95 text-white p-5 md:p-8 border-t border-amber-400/30 backdrop-blur-md space-y-2">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
+                                        <?php echo $current_lang === 'lo' ? htmlspecialchars($st['name_lo']) : htmlspecialchars($st['name_en']); ?>
+                                    </h3>
+                                    <a href="<?php echo htmlspecialchars($st['map']); ?>" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
+                                        <span>🗺️</span>
+                                        <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
+                                    </a>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">
+                                    <span class="flex items-center gap-1.5 font-semibold">
+                                        <span>🕒</span>
+                                        <span><?php echo $current_lang === 'lo' ? htmlspecialchars($st['hours_lo']) : htmlspecialchars($st['hours_en']); ?></span>
+                                    </span>
+                                    <span class="flex items-center gap-1.5 text-amber-100/90 font-light">
+                                        <span>📍</span>
+                                        <span><?php echo $current_lang === 'lo' ? htmlspecialchars($st['addr_lo']) : htmlspecialchars($st['addr_en']); ?></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Store 4: Pakse -->
-                <div class="swiper-slide transition-all duration-500">
-                    <div class="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 aspect-[16/9] md:aspect-[16/8] group">
-                        <img src="assets/images/branch_pakse.png" alt="Pakse Branch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        
-                        <!-- Bottom Blue/Burgundy Overlay Banner (Luckin Style) -->
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-[#1C050B]/95 via-[#531321]/90 to-[#1C050B]/95 text-white p-5 md:p-8 border-t border-amber-400/30 backdrop-blur-md space-y-2">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
-                                    <?php echo $current_lang === 'lo' ? 'ສາຂາ ປາກເຊ (ຈຳປາສັກ)' : 'PAKSE CHAMPASAK'; ?>
-                                </h3>
-                                <a href="https://www.google.com/maps/search/?api=1&query=Pakse+Champasak" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
-                                    <span>🗺️</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
-                                </a>
-                            </div>
-                            <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">
-                                <span class="flex items-center gap-1.5 font-semibold">
-                                    <span>🕒</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຈັນ - ອາທິດ: 07:00 - 22:00 ໂມງ' : 'Mon - Sun: 07:00 AM - 10:00 PM'; ?></span>
-                                </span>
-                                <span class="flex items-center gap-1.5 text-amber-100/90 font-light">
-                                    <span>📍</span>
-                                    <span><?php echo $current_lang === 'lo' ? 'ຖະໜົນ 13 ໃຕ້, ເມືອງປາກເຊ, ແຂວງຈຳປາສັກ' : 'Route 13 South, Pakse City, Champasak'; ?></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
 
             </div>
             
-            <!-- Pagination Dots & Navigation Arrows -->
-            <div class="swiper-pagination store-swiper-pagination !relative mt-8"></div>
-            <div class="swiper-button-next store-next-btn text-burgundy-700 bg-white/90 shadow-xl rounded-full w-12 h-12 hidden md:flex items-center justify-center hover:bg-burgundy-700 hover:text-white transition-all"></div>
-            <div class="swiper-button-prev store-prev-btn text-burgundy-700 bg-white/90 shadow-xl rounded-full w-12 h-12 hidden md:flex items-center justify-center hover:bg-burgundy-700 hover:text-white transition-all"></div>
+            <!-- Pagination Dots -->
+            <div class="swiper-pagination store-swiper-pagination !relative mt-6"></div>
         </div>
+
+        <!-- Navigation Buttons Positioned Cleanly on Container Edges -->
+        <button type="button" class="store-prev-btn absolute left-0 md:-left-5 top-1/2 -translate-y-1/2 z-30 text-burgundy-700 bg-white/95 shadow-2xl border border-gray-200 rounded-full w-12 h-12 flex items-center justify-center hover:bg-burgundy-700 hover:text-white transition-all focus:outline-none" aria-label="Previous Slide">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button type="button" class="store-next-btn absolute right-0 md:-right-5 top-1/2 -translate-y-1/2 z-30 text-burgundy-700 bg-white/95 shadow-2xl border border-gray-200 rounded-full w-12 h-12 flex items-center justify-center hover:bg-burgundy-700 hover:text-white transition-all focus:outline-none" aria-label="Next Slide">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
     </div>
 </section>
 
@@ -721,6 +686,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 1. Main Hero Swiper
         new Swiper('.main-hero-swiper', {
             loop: true,
+            loopAdditionalSlides: 2,
             autoplay: {
                 delay: 5000,
                 disableOnInteraction: false,
@@ -736,15 +702,18 @@ document.addEventListener('DOMContentLoaded', function() {
             speed: 800,
         });
 
-        // 2. Luckin-Style Stores Center-Active Carousel Swiper
+        // 2. Luckin-Style Stores Center-Active Carousel Swiper (Continuous Endless Loop)
         new Swiper('.store-carousel-swiper', {
             slidesPerView: 1.15,
             centeredSlides: true,
             spaceBetween: 20,
             loop: true,
+            loopAdditionalSlides: 4,
+            speed: 800,
             autoplay: {
-                delay: 4500,
+                delay: 3500,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
             },
             pagination: {
                 el: '.store-swiper-pagination',
@@ -755,13 +724,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 prevEl: '.store-prev-btn',
             },
             breakpoints: {
-                768: {
+                640: {
                     slidesPerView: 1.35,
-                    spaceBetween: 30,
+                    spaceBetween: 24,
+                    centeredSlides: true,
+                },
+                768: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 28,
+                    centeredSlides: true,
                 },
                 1024: {
-                    slidesPerView: 1.55,
-                    spaceBetween: 40,
+                    slidesPerView: 1.8,
+                    spaceBetween: 32,
+                    centeredSlides: true,
                 }
             }
         });

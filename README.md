@@ -72,9 +72,7 @@
      DB_USER=laofe_dbuser
      DB_PASS=YourStrongDbPassword123!
      ```
-
 ---
-
 ## 🔐 4. ຂໍ້ມູນສິດເຂົ້າເຖິງລະບົບ Admin (Initial Admin Credentials)
 
 - **URL ເຂົ້າລະບົບ ແອດມິນ**: `https://your-domain.com/admin/`
@@ -97,9 +95,7 @@
 
 ### 2. Backup ໄຟລ໌ຮູບພາບ ແລະ ຊອດໂຄ້ດ (Files & Images)
 - ເຂົ້າ File Manager ➔ ເລືອກໂຟນເດີ `public_html` (ຫຼື `assets/images/`) ➔ ກົດ **Compress** ➔ ດາວໂຫຼດໄຟລ໌ `.zip` ເກັບໄວ້.
-
 ---
-
 ## 🛡️ 6. ເງື່ອນໄຂການຮັບປະກັນ (6-Month Warranty & Support Policy)
 
 - **ໄລຍະເວລາຮັບປະກັນ**: **6 ເດືອນ** (ນັບຈາກວັນທີສົ່ງມອບ).

@@ -249,6 +249,7 @@ $branch_card_images = [
 document.addEventListener('DOMContentLoaded', function() {
     new Swiper('.branchHeroSwiper', {
         loop: true,
+        loopAdditionalSlides: 2,
         effect: 'fade',
         fadeEffect: { crossFade: true },
         autoplay: {
