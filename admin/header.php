@@ -135,6 +135,10 @@ $admin_page = basename($_SERVER['PHP_SELF']);
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 <span>ຈອງໂຕະ</span>
             </a>
+            <a href="branch_manage.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'branch_manage.php' ? 'bg-burgundy-700 text-white shadow-sm' : 'text-gray-300 hover:bg-white/5 hover:text-white'; ?>">
+                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span>ຈັດການສາຂາ</span>
+            </a>
             <a href="news_manage.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'news_manage.php' ? 'bg-burgundy-700 text-white shadow-sm' : 'text-gray-300 hover:bg-white/5 hover:text-white'; ?>">
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
                 <span>ບົດຄວາມ & ກິດຈະກຳ</span>
@@ -208,6 +212,9 @@ $admin_page = basename($_SERVER['PHP_SELF']);
                 </a>
                 <a href="bookings.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'bookings.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ຈອງໂຕະ</span>
+                </a>
+                <a href="branch_manage.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'branch_manage.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
+                    <span>ຈັດການສາຂາ</span>
                 </a>
                 <a href="news_manage.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'news_manage.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ບົດຄວາມ & ກິດຈະກຳ</span>

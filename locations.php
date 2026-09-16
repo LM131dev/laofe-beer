@@ -199,7 +199,8 @@ $branch_card_images = [
             <?php 
             $index = 0;
             foreach ($db_branches as $branch): 
-                $current_img = isset($branch_card_images[$index % 4]) ? $branch_card_images[$index % 4] : 'assets/images/branch_namphou.png';
+                $fallback_img = isset($branch_card_images[$index % 4]) ? $branch_card_images[$index % 4] : 'assets/images/branch_namphou.png';
+                $current_img = !empty($branch['image_path']) ? $branch['image_path'] : $fallback_img;
                 $index++;
             ?>
                 <!-- Branch Card -->

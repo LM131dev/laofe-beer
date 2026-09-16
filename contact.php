@@ -132,12 +132,12 @@ require_once __DIR__ . '/includes/header.php';
                     </a>
 
                     <!-- Facebook -->
-                    <a href="#" class="w-10 h-10 rounded-xl bg-[#1877F2] text-white hover:scale-110 flex items-center justify-center transition-all duration-300 shadow-md" title="Facebook">
+                    <a href="https://www.facebook.com/profile.php?id=61577332485813" class="w-10 h-10 rounded-xl bg-[#1877F2] text-white hover:scale-110 flex items-center justify-center transition-all duration-300 shadow-md" title="Facebook">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
 
                     <!-- TikTok -->
-                    <a href="#" class="w-10 h-10 rounded-xl bg-black text-white hover:scale-110 flex items-center justify-center transition-all duration-300 shadow-md" title="TikTok">
+                    <a href="https://www.tiktok.com/@laofecafe_sihorm11?_r=1&_t=ZS-99m4pEa9dQd" class="w-10 h-10 rounded-xl bg-black text-white hover:scale-110 flex items-center justify-center transition-all duration-300 shadow-md" title="TikTok">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
                             <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.63 4.18 1.09 1.15 2.58 1.83 4.15 1.94v3.83c-1.74-.07-3.41-.75-4.69-1.92-.12-.11-.23-.23-.34-.35v6.52c0 1.94-.56 3.84-1.61 5.43-1.46 2.08-3.9 3.32-6.43 3.36-2.58.07-5.11-1.07-6.72-3.13-1.68-2.22-2.12-5.26-1.12-7.87 1.01-2.55 3.52-4.26 6.27-4.39 1.48-.07 2.97.35 4.19 1.2V4.9c-.83-.43-1.75-.68-2.7-.73-2.02-.12-4.04.77-5.27 2.37C2.9 8.23 2.69 10.5 3.31 12.59c.64 2.1 2.35 3.73 4.5 4.3 2.15.54 4.5-.04 6.13-1.54 1.56-1.54 2.21-3.87 1.68-6.01l-.01-9.32z" fill="#00f2fe" transform="translate(-0.8, -0.8)" />
                             <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.63 4.18 1.09 1.15 2.58 1.83 4.15 1.94v3.83c-1.74-.07-3.41-.75-4.69-1.92-.12-.11-.23-.23-.34-.35v6.52c0 1.94-.56 3.84-1.61 5.43-1.46 2.08-3.9 3.32-6.43 3.36-2.58.07-5.11-1.07-6.72-3.13-1.68-2.22-2.12-5.26-1.12-7.87 1.01-2.55 3.52-4.26 6.27-4.39 1.48-.07 2.97.35 4.19 1.2V4.9c-.83-.43-1.75-.68-2.7-.73-2.02-.12-4.04.77-5.27 2.37C2.9 8.23 2.69 10.5 3.31 12.59c.64 2.1 2.35 3.73 4.5 4.3 2.15.54 4.5-.04 6.13-1.54 1.56-1.54 2.21-3.87 1.68-6.01l-.01-9.32z" fill="#ff0050" transform="translate(0.8, 0.8)" />
@@ -146,7 +146,7 @@ require_once __DIR__ . '/includes/header.php';
                     </a>
 
                     <!-- YouTube -->
-                    <a href="#" class="w-10 h-10 rounded-xl bg-[#FF0000] text-white flex items-center justify-center transition-all duration-300 shadow-md hover:scale-110" title="YouTube">
+                    <a href="https://youtube.com/channel/UChlinl63V_DeLIwNb0Kho6g?si=zzYYlPINBv9Ii7wM" class="w-10 h-10 rounded-xl bg-[#FF0000] text-white flex items-center justify-center transition-all duration-300 shadow-md hover:scale-110" title="YouTube">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                     </a>
 
