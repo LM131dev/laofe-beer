@@ -330,6 +330,6 @@ function closeModal() {
         window.location.href = 'branch_manage.php';
     }
 }
-</script>
-
-<?php require_once __DIR__ . '/footer.php'; ?>
+    </main>
+</body>
+</html>
