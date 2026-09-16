@@ -71,44 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - LaoFe & Beer Admin Panel</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        burgundy: {
-                            50: '#FFFFFF',   // Pure White
-                            100: '#F8FAFC',  // Very soft gray
-                            200: '#FFFFFF',  // Changed from gold to pure white
-                            600: '#6A182F',  // Unified to primary burgundy
-                            700: '#6A182F',  // Unified to primary burgundy
-                            800: '#6A182F',  // Unified to primary burgundy
-                            900: '#6A182F',  // Unified to primary burgundy
-                        },
-                        gold: {
-                            100: '#FFFFFF',
-                            200: '#FFFFFF',
-                            300: '#FFFFFF',
-                            400: '#FFFFFF',
-                            500: '#6A182F',
-                            600: '#6A182F',  // Changed to primary burgundy
-                            700: '#4D0E1E',
-                            800: '#340713',
-                        },
-                        cream: {
-                            50: '#FFFFFF',   // White
-                            100: '#FFFFFF',  // White
-                            200: '#F8FAFC',  // Very soft gray
-                            300: '#E2E8F0',  // Muted gray
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="../assets/css/style.css?v=<?php echo time(); ?>">
+    <!-- Production Static Tailwind CSS -->
+    <link rel="stylesheet" href="../assets/css/tailwind.min.css?v=1.0">
+    <link rel="stylesheet" href="../assets/css/style.css?v=1.0">
 </head>
 <body class="bg-burgundy-50 min-h-screen flex items-center justify-center px-4">
 

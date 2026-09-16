@@ -15,6 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmt_img = $pdo->prepare("SELECT image_path FROM menus WHERE id = ?");
             $stmt_img->execute([$delete_id]);
             $img_path = $stmt_img->fetchColumn();
+            if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'coffee.png') && !strpos($img_path, 'beer_drink.png') && !strpos($img_path, 'default')) {
+                @unlink('../' . $img_path);
+            }
 
             $stmt = $pdo->prepare("DELETE FROM menus WHERE id = ?");
             $stmt->execute([$delete_id]);
@@ -47,25 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST
             $fileTmpPath = $_FILES['image']['tmp_name'];
             $fileName = $_FILES['image']['name'];
             $fileSize = $_FILES['image']['size'];
-            $fileNameCmps = explode(".", $fileName);
-            $fileExtension = strtolower(end($fileNameCmps));
 
             $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-            $allowedMimeTypes  = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-            $mimeType = false;
-            if (function_exists('finfo_open')) {
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mimeType = finfo_file($finfo, $fileTmpPath);
-                finfo_close($finfo);
-            } elseif (function_exists('mime_content_type')) {
-                $mimeType = mime_content_type($fileTmpPath);
-            } else {
-                $imgInfo = @getimagesize($fileTmpPath);
-                if ($imgInfo && isset($imgInfo['mime'])) {
-                    $mimeType = $imgInfo['mime'];
-                }
-            }
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $mimeType = function_exists('finfo_open') 
+                ? finfo_file(finfo_open(FILEINFO_MIME_TYPE), $fileTmpPath)
+                : (function_exists('mime_content_type') ? mime_content_type($fileTmpPath) : '');
 
             if ($fileSize > 5 * 1024 * 1024) {
                 $error = 'ຂະໜາດໄຟລ໌ຮູບພາບໃຫຍ່ເກີນໄປ (ອະນຸຍາດບໍ່ເກີນ 5MB).';
@@ -81,6 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST
 
                 $dest_path = $uploadFileDir . $newFileName;
                 if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                    // ລຶບຮູບເກົ່າ (ຖ້າມີ ແລະ ບໍ່ແມ່ນຮູບ default)
+                    $old_img = $_POST['existing_image'] ?? '';
+                    if ($id > 0 && $old_img && file_exists('../' . $old_img) && !strpos($old_img, 'coffee.png') && !strpos($old_img, 'beer_drink.png') && !strpos($old_img, 'default')) {
+                        @unlink('../' . $old_img);
+                    }
                     $image_path = 'assets/images/' . $newFileName;
                 } else {
                     $error = 'ມີບັນຫາໃນການຍ້າຍໄຟລ໌ທີ່ອັບໂຫຼດ.';

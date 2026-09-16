@@ -105,32 +105,9 @@ if ($user['tier'] === 'Silver') $tier_badge = 'bg-slate-100 text-slate-700 borde
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Noto+Serif+Lao:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        burgundy: {
-                            50: '#FDF2F4',
-                            100: '#FBE5E9',
-                            200: '#F7CE89',
-                            700: '#6B1D2F',  // Signature Burgundy
-                            800: '#531321',  // Dark Burgundy
-                            900: '#3D0B16',
-                        },
-                        gold: {
-                            400: '#E5A024',
-                            500: '#CD9947',
-                            600: '#BE8510',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+    <!-- Production Static Tailwind CSS -->
+    <link rel="stylesheet" href="assets/css/tailwind.min.css?v=1.0">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.0">
     <style>
         body {
             background-color: #F8FAFC !important;

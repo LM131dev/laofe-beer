@@ -32,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmt_img = $pdo->prepare("SELECT image_path FROM news WHERE id = ?");
             $stmt_img->execute([$delete_id]);
             $img_path = $stmt_img->fetchColumn();
+            if ($img_path && file_exists('../' . $img_path) && !strpos($img_path, 'hero_banner') && !strpos($img_path, 'default')) {
+                @unlink('../' . $img_path);
+            }
 
             $stmt = $pdo->prepare("DELETE FROM news WHERE id = ?");
             $stmt->execute([$delete_id]);

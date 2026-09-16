@@ -14,94 +14,15 @@ $is_standalone = in_array($current_page, $standalone_pages);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('brand_name'); ?> | <?php echo t('nav_' . str_replace('.php', '', $current_page === 'index.php' ? 'home' : str_replace('-', '', $current_page))); ?></title>
     
-    <!-- Tailwind CSS v3 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Noto Serif Lao', 'serif'],
-                        serif: ['Noto Serif Lao', 'serif'],
-                        'serif-lao': ['Noto Serif Lao', 'serif'],
-                        'sans-lao': ['Noto Serif Lao', 'serif'],
-                    },
-                    colors: {
-                        burgundy: {
-                            50: '#FFFDF2',   // Ivory background
-                            100: '#FAF7EC',  // Soft cream
-                            200: '#F4EFE0',  // Warm beige
-                            600: '#7E253A',
-                            700: '#6B1D2F',  // Primary Burgundy
-                            800: '#531321',  // Dark Burgundy
-                            900: '#3D0B16',
-                            950: '#26050E',  // Deep Dark Burgundy
-                        },
-                        gold: {
-                            100: '#FCF7E8',
-                            200: '#F8EECF',
-                            300: '#F3E1B1',
-                            400: '#EAD29B',
-                            500: '#DCAE6C',  // Light Gold
-                            600: '#CD9947',  // Dark Gold
-                            700: '#B28135',
-                            800: '#946726',
-                            900: '#774F1A',
-                        },
-                        wood: {
-                            50: '#F9F5F0',   // Warm birch wood light
-                            100: '#F2E8DC',  // Soft oak grain
-                            200: '#E3D0BE',  // Timber beige
-                            300: '#C5A080',  // Warm teak wood
-                            400: '#A3724C',  // Rich walnut
-                            500: '#83522E',  // Polished mahogany wood
-                            600: '#673D1E',  // Dark wood accent
-                            700: '#4E2B13',  // Dark oak timber
-                            800: '#381D0B',  // Deep espresso wood
-                            900: '#261205',  // Charcoal timber
-                        },
-                        coffee: {
-                            50: '#FAF6F0',   // Latte foam
-                            100: '#F3E9DD',  // Cappuccino cream
-                            200: '#E2CEBA',  // Light roast
-                            300: '#C8A382',  // Milk coffee
-                            400: '#AA7952',  // Medium roast bean
-                            500: '#8A562B',  // Dark roast coffee
-                            600: '#6E401C',  // Rich espresso
-                            700: '#542E12',  // Deep mocha
-                            800: '#3D1F0A',  // Dark coffee bean
-                            900: '#271204',  // Espresso black
-                        },
-                        beer: {
-                            50: '#FFFDF0',   // Draft foam white
-                            100: '#FFF9D6',  // Light lager gold
-                            200: '#FFF0A8',  // Golden pilsner
-                            300: '#FDE070',  // Draft beer gold
-                            400: '#F5C83B',  // Rich amber lager
-                            500: '#E2AA1E',  // Golden amber draft
-                            600: '#BE8510',  // Craft ale amber
-                            700: '#996309',  // Dark amber craft
-                            800: '#734605',  // Stout brown
-                            900: '#4E2C02',  // Dark stout
-                        },
-                        cream: {
-                            50: '#FFFDF2',   // Ivory
-                            100: '#FAF7EC',
-                            200: '#F4EFE0',
-                            300: '#E7DFCC',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Production Static Tailwind CSS (Pre-compiled, no CDN JS required) -->
+    <link rel="stylesheet" href="assets/css/tailwind.min.css?v=1.0">
     
     <!-- Swiper Slider CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.0">
 
     <script>
         var isMobileMenuOpen = false;
