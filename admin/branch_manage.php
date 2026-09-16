@@ -226,7 +226,7 @@ if (isset($_GET['edit'])) {
                     <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-2">
                         <?php if (!empty($br['map_link'])): ?>
                             <a href="<?php echo htmlspecialchars($br['map_link']); ?>" target="_blank" class="px-3 py-1.5 bg-amber-100 text-amber-900 hover:bg-amber-200 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1 font-serif-lao">
-                                <span>🗺️ แผนທີ່ Google Maps</span>
+                                <span>🗺️ ແຜນທີ່ Google Maps</span>
                             </a>
                         <?php else: ?>
                             <span></span>

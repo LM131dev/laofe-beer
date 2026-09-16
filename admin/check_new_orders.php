@@ -27,7 +27,7 @@ try {
     $stmt_max = $pdo->query("SELECT MAX(id) FROM orders");
     $max_id = intval($stmt_max->fetchColumn() ?: 0);
 
-    // ດຶງອໍເດີ້ໃໝ່ທີ່ເກີດขึ้นຫຼັງຈາກ last_id
+    // ດຶງອໍເດີ້ໃໝ່ທີ່ເກີດຂຶ້ນຫຼັງຈາກ last_id
     $new_orders = [];
     if ($last_id > 0 && $max_id > $last_id) {
         $stmt_new = $pdo->prepare("SELECT id, table_number, order_type, guest_name, total_amount, status, created_at FROM orders WHERE id > ? ORDER BY id DESC LIMIT 5");

@@ -12,7 +12,48 @@ $is_standalone = in_array($current_page, $standalone_pages);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('brand_name'); ?> | <?php echo t('nav_' . str_replace('.php', '', $current_page === 'index.php' ? 'home' : str_replace('-', '', $current_page))); ?></title>
+    <?php
+    $default_desc = $current_lang === 'lo'
+        ? 'LaoFe & Beer - ກາເຟ ບໍລະເວນ ແລະ ບາເບຍສົດ ໃນຮູບແບບລາວປະຍຸກ ທີ່ຜສານຄວາມເປັນລາວເຂົ້າກັບຄວາມທັນສະໄໝຢ່າງລົງຕົວ.'
+        : 'LaoFe & Beer - Authentic Lao-adapted specialty coffee and craft beer lounge blending tradition with modern lifestyle.';
+    $meta_desc = isset($page_description) && !empty($page_description) ? htmlspecialchars($page_description) : $default_desc;
+    
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $uri = $_SERVER['REQUEST_URI'] ?? '';
+    $full_url = $protocol . "://" . $host . $uri;
+    
+    $default_og_image = $protocol . "://" . $host . (dirname($_SERVER['SCRIPT_NAME']) === '/' || dirname($_SERVER['SCRIPT_NAME']) === '\\' ? '' : dirname($_SERVER['SCRIPT_NAME'])) . '/assets/images/hero_banner.png';
+    $og_image_url = isset($page_image) && !empty($page_image) ? $page_image : $default_og_image;
+    
+    $page_title_text = t('brand_name') . ' | ' . t('nav_' . str_replace('.php', '', $current_page === 'index.php' ? 'home' : str_replace('-', '', $current_page)));
+    if (isset($custom_title) && !empty($custom_title)) {
+        $page_title_text = $custom_title;
+    }
+    ?>
+    <title><?php echo htmlspecialchars($page_title_text); ?></title>
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+
+    <!-- SEO Meta Description -->
+    <meta name="description" content="<?php echo $meta_desc; ?>">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="LaoFe & Beer">
+    <meta property="og:url" content="<?php echo htmlspecialchars($full_url); ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($page_title_text); ?>">
+    <meta property="og:description" content="<?php echo $meta_desc; ?>">
+    <meta property="og:image" content="<?php echo htmlspecialchars($og_image_url); ?>">
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<?php echo htmlspecialchars($full_url); ?>">
+    <meta property="twitter:title" content="<?php echo htmlspecialchars($page_title_text); ?>">
+    <meta property="twitter:description" content="<?php echo $meta_desc; ?>">
+    <meta property="twitter:image" content="<?php echo htmlspecialchars($og_image_url); ?>">
     
     <!-- Production Static Tailwind CSS (Pre-compiled, no CDN JS required) -->
     <link rel="stylesheet" href="assets/css/tailwind.min.css?v=1.0">

@@ -70,7 +70,7 @@ if (!$news_item) {
             'id' => 401,
             'title_lo' => 'ຄວາມລັບຂອງເມັດກາເຟ ອາຣາບິກ້າ ບໍລະເວນ (Bolaven Specialty)',
             'title_en' => 'The Secret Behind Bolaven Plateau Arabica Coffee Beans',
-            'content_lo' => "ເຈາະເລິກຄວາມພິເສດຂອງດິນພູເຂົາໄຟເກົ່າ ດອຍບໍລະເວນ ທີ່ເຮັດໃຫ້ເມັດກາເຟ LaoFe ມີກິ່ນຫອມອະລົມມ່າ ຫອມຫວານຄືດອກໄມ້ປ່າ ແລະ ມີລົດຊາດກົມກ່ອມເປັນເອກະລັກ.\n\nພູພຽງບໍລະເວນ ຕັ້ງຢູ່ທາງພາກໃຕ້ຂອງປະເທດລາວ ເຊິ່ງເປັນໜຶ່ງໃນແຫຼ່ງปลูกກາເຟ ອາຣາບິກ້າ ທີ່ດີທີ່ສຸດໃນໂລກ ດ້ວຍຄວາມສູງ 1,200 ແມັດຈາກລະດັບນ້ຳທະເລ ພ້ອມກັບສະພາບອາກາດເຢັນຕະຫຼອດປີ ແລະ ດິນພູເຂົາໄຟອຸດົມສົມບູນ.",
+            'content_lo' => "ເຈາະເລິກຄວາມພິເສດຂອງດິນພູເຂົາໄຟເກົ່າ ດອຍບໍລະເວນ ທີ່ເຮັດໃຫ້ເມັດກາເຟ LaoFe ມີກິ່ນຫອມອະລົມມ່າ ຫອມຫວານຄືດອກໄມ້ປ່າ ແລະ ມີລົດຊາດກົມກ່ອມເປັນເອກະລັກ.\n\nພູພຽງບໍລະເວນ ຕັ້ງຢູ່ທາງພາກໃຕ້ຂອງປະເທດລາວ ເຊິ່ງເປັນໜຶ່ງໃນແຫຼ່ງປູກກາເຟ ອາຣາບິກ້າ ທີ່ດີທີ່ສຸດໃນໂລກ ດ້ວຍຄວາມສູງ 1,200 ແມັດຈາກລະດັບນ້ຳທະເລ ພ້ອມກັບສະພາບອາກາດເຢັນຕະຫຼອດປີ ແລະ ດິນພູເຂົາໄຟອຸດົມສົມບູນ.",
             'content_en' => "Explore how the fertile volcanic soil of Bolaven Plateau creates LaoFe’s distinctive aroma, floral sweetness, and smooth balanced flavor profile.\n\nThe Bolaven Plateau in Southern Laos is recognized as one of the finest Arabica coffee growing regions in the world, elevated at 1,200m above sea level with cool climate and volcanic soil.",
             'image_path' => 'assets/images/our_story.png',
             'publish_date' => '2026-10-10',
