@@ -49,7 +49,7 @@
 
 ---
 
-## 🌐 3. ຄູ່ມືການ Deploy ឡើង Hostinger / cPanel (Production Deployment)
+## 🌐 3. ຄູ່ມືການ Deploy  Hostinger / cPanel (Production Deployment)
 
 1. **Upload ໄຟລ໌ໂຄງການ**:
    - ແຕກໄຟລ໌ zip `laofe-beer-deploy.zip` ໄປໄວ້ທີ່ໂຟນເດີ `public_html` ເທິງ Hosting.
