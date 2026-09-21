@@ -12,7 +12,11 @@ Get-ChildItem -Path $sourcePath -Recurse | ForEach-Object {
     if (-not $_.PSIsContainer) {
         $rel = $_.FullName.Substring($sourcePath.Length + 1).Replace('\', '/')
         if (-not $rel.StartsWith("scratch/") -and -not $rel.EndsWith("laofe-beer-deploy.zip")) {
-            [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $rel) | Out-Null
+            try {
+                [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $rel) | Out-Null
+            } catch {
+                Write-Host "Skipping locked file: $rel"
+            }
         }
     }
 }
