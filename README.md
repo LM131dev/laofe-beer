@@ -5,31 +5,41 @@
 ---
 
 ## 🛠️ 1. ຄວາມຕ້ອງການຂອງລະບົບ (System Requirements)
+- **Web Hosting**: Hostatom Web Hosting (DirectAdmin / cPanel Control Panel)
 - **Web Server**: Apache / Nginx (ຮອງຮັບ mod_rewrite)
-- **PHP Version**: 8.0, 8.1, 8.2+
+- **PHP Version**: PHP 8.0, 8.1, 8.2+
 - **Database**: MySQL 5.7+ / MariaDB 10.4+
 - **PHP Extensions**: `pdo_mysql`, `gd` (ຫຼື `gmp` / `mbstring`), `curl`, `json`
 
 ---
 
-## 🚀 2. ຄູ່ມືການຕິດຕັ້ງໃນ Local (XAMPP / Local Server)
+## 🚀 2. ຄູ່ມືການຕິດຕັ້ງ ແລະ Deploy ເທິງ Hostatom Web Hosting
 
-1. **ກັອບປີໄຟລ໌ໂຄງການ**:
-   - ຍ້າຍໂຟນເດີໂຄງການ `laofe-beer` ໄປໄວ້ທີ່ `c:\xampp\htdocs\laofe-beer` (ຫຼື `www/` ສຳລັບ WAMP/Laragon).
+1. **Upload ໄຟລ໌ໂຄງການ (Upload Project Package)**:
+   - ເຂົ້າລະບົບຈັດການ **Hostatom Control Panel** (DirectAdmin / cPanel) ➔ ເປີດ **File Manager**.
+   - ເຂົ້າໄປທີ່ໂຟນເດີ `public_html` (ຫຼື ໂຟນເດີ Root ຂອງ Domain).
+   - ກົດ **Upload File** ເລືອກໄຟລ໌ `laofe-beer-deploy.zip` ແລ້ວກົດ **Extract (ແຕກໄຟລ໌ Zip)** ອອກມາໄວ້ທີ່ `public_html`.
 
-2. **ຕັ້ງຄ່າ Database**:
-   - ເປີດ phpMyAdmin (`http://localhost/phpmyadmin`)
-   - ສ້າງ Database ໃໝ່ ຊື່ `laofe_beer` (Collation: `utf8mb4_unicode_ci`)
-   - Import ໄຟລ໌ `config/schema.sql` ເຂົ້າໄປໃນ Database `laofe_beer`.
+2. **ສ້າງ Database ແລະ User ເທິງ Hostatom (Create MySQL Database)**:
+   - ໃນ Hostatom Control Panel ➔ ເຂົ້າເມນູ **MySQL Management** (ຫຼື **MySQL Databases**).
+   - ກົດ **Create New Database**:
+     - ກຳນົດຊື່ Database ເຊັ່ນ: `hostatomuser_laofe`
+     - ກຳນົດ Database Username ເຊັ່ນ: `hostatomuser_laofe`
+     - ກຳນົດ Password (ລະຫັດຜ່ານ) ທີ່ປອດໄພ.
 
-3. **ຕັ້ງຄ່າ Environment Variables (`.env`)**:
-   - ສ້າງໄຟລ໌ `.env` ຢູ່ Root Directory (ຫຼື ກັອບປີຈາກ `.env.example`):
+3. **Import Database Schema (Import config/schema.sql)**:
+   - ເຂົ້າເມນູ **phpMyAdmin** ເທິງ Hostatom Control Panel.
+   - ເລືອກ Database `hostatomuser_laofe` ທີ່ສ້າງໄວ້.
+   - ກົດເມນູ **Import** ➔ ເລືອກໄຟລ໌ `config/schema.sql` ຈາກເຄື່ອງ ➔ ກົດ **Go / Exec** ເພື່ອສ້າງຕາຕະລາງທັງໝົດ.
+
+4. **ຕັ້ງຄ່າ Environment Variables (`.env`) ເທິງ Hostatom**:
+   - ເປີດ **File Manager** ໃນ Hostatom ➔ ສ້າງ ຫຼື ແກ້ໄຂໄຟລ໌ `.env` ຢູ່ Root Directory ຂອງ `public_html`:
      ```env
      DB_HOST=localhost
      DB_PORT=3306
-     DB_NAME=laofe_beer
-     DB_USER=root
-     DB_PASS=
+     DB_NAME=hostatomuser_laofe
+     DB_USER=hostatomuser_laofe
+     DB_PASS=YourStrongHostatomPassword123!
 
      SMTP_HOST=smtp.gmail.com
      SMTP_PORT=587
@@ -43,37 +53,17 @@
      TURNSTILE_SECRET_KEY=your_cloudflare_secret_key
      ```
 
-4. **ເປີດໃຊ້ງານ**:
-   - ເຂົ້າເວັບໄຊຜ່ານ: `http://localhost/laofe-beer/`
-   - ເຂົ້າລະບົບ Admin ຜ່ານ: `http://localhost/laofe-beer/admin/`
+5. **ຕັ້ງຄ່າ PHP Version ເທິງ Hostatom**:
+   - ເຂົ້າເມນູ **Select PHP Version** ຫຼື **PHP Selector** ເທິງ Hostatom ➔ ເລືອກ PHP Version ເປັນ **8.1** ຫຼື **8.2**.
+   - ກວດສອບ Extension: ເປີດໃຊ້ `pdo_mysql`, `gd`, `mbstring`, `curl`, `json`.
+
+6. **ເປີດໃຊ້ງານ (Access Website & Admin)**:
+   - ເຂົ້າເວັບໄຊ: `https://your-domain.com/`
+   - ເຂົ້າລະບົບ Admin: `https://your-domain.com/admin/`
 
 ---
 
-## 🌐 3. ຄູ່ມືການ Deploy  Hostinger / cPanel (Production Deployment)
-
-1. **Upload ໄຟລ໌ໂຄງການ**:
-   - ແຕກໄຟລ໌ zip `laofe-beer-deploy.zip` ໄປໄວ້ທີ່ໂຟນເດີ `public_html` ເທິງ Hosting.
-
-2. **ສ້າງ MySQL Database ເທິງ Hosting**:
-   - ເຂົ້າໄປທີ່ cPanel / Hostinger hPanel ➔ **MySQL Databases**.
-   - ສ້າງ Database ໃໝ່ ເຊັ່ນ: `laofe_db`.
-   - ສ້າງ Database User ໃໝ່ (ກຳນົດລະຫັດຜ່ານທີ່ປອດໄພ) ແລະ ມອບສິດ `ALL PRIVILEGES` ໃຫ້ User ດັ່ງກ່າວ.
-
-3. **Import Database Schema**:
-   - ເປີດ phpMyAdmin ເທິງ Hosting.
-   - ເລືອກ Database `laofe_db` ແລ້ວກົດ **Import** ➔ ເລືອກໄຟລ໌ `config/schema.sql`.
-
-4. **ອັບເດດ `.env` ເທິງ Hosting**:
-   - ແກ້ໄຂໄຟລ໌ `.env` ໃນ Server ໃຫ້ກົງກັບ Database ແລະ ອີເມລຂອງ LaoFe:
-     ```env
-     DB_HOST=localhost
-     DB_PORT=3306
-     DB_NAME=laofe_db
-     DB_USER=laofe_dbuser
-     DB_PASS=YourStrongDbPassword123!
-     ```
----
-## 🔐 4. ຂໍ້ມູນສິດເຂົ້າເຖິງລະບົບ Admin (Initial Admin Credentials)
+## 🔐 3. ຂໍ້ມູນສິດເຂົ້າເຖິງລະບົບ Admin (Initial Admin Credentials)
 
 - **URL ເຂົ້າລະບົບ ແອດມິນ**: `https://your-domain.com/admin/`
 - **Username**: `admin`
@@ -83,25 +73,27 @@
 
 ---
 
-## 💾 5. ວິທີ Backup ຂໍ້ມູນ (Data Backup Procedure)
+## 💾 4. ວິທີ Backup ຂໍ້ມູນເທິງ Hostatom (Data Backup Procedure)
 
 ### 1. Backup ຂໍ້ມູນ Database (ຂໍ້ຄວາມ, ເມນູ, ຂ່າວ, ອໍເດີ້, ສາຂາ, ຜູ້ໃຊ້)
-- **ຜ່ານ phpMyAdmin**:
-  1. ເຂົ້າ phpMyAdmin ➔ ເລືອກ Database `laofe_db`.
+- **ຜ່ານ Hostatom phpMyAdmin**:
+  1. ເຂົ້າ Hostatom Control Panel ➔ ເປີດ **phpMyAdmin** ➔ ເລືອກ Database `hostatomuser_laofe`.
   2. ກົດເມນູ **Export** ➔ ເລືອກ **Quick Export** (Format: `SQL`).
   3. ກົດ **Go** ເພື່ອດາວໂຫຼດໄຟລ໌ `.sql` ເກັບໄວ້ໃນເຄື່ອງ.
-- **ຜ່ານ Hostinger/cPanel Automated Backup**:
-  - ໃນ hPanel ➔ **Files** ➔ **Backups** ➔ ເລືອກ **Database Backups** ➔ ດາວໂຫຼດ backup ປະຈຳອາທິດ.
+- **ຜ່ານ Hostatom Create/Restore Backups**:
+  - ໃນ DirectAdmin / cPanel Control Panel ➔ ເຂົ້າເມນູ **Create/Restore Backups** ➔ ເລືອກ **Database Backups** ➔ ກົດດາວໂຫຼດ backup.
 
 ### 2. Backup ໄຟລ໌ຮູບພາບ ແລະ ຊອດໂຄ້ດ (Files & Images)
-- ເຂົ້າ File Manager ➔ ເລືອກໂຟນເດີ `public_html` (ຫຼື `assets/images/`) ➔ ກົດ **Compress** ➔ ດາວໂຫຼດໄຟລ໌ `.zip` ເກັບໄວ້.
+- ເຂົ້າ File Manager ເທິງ Hostatom ➔ ເລືອກໂຟນເດີ `public_html` ➔ ກົດ **Compress** ➔ ດາວໂຫຼດໄຟລ໌ `.zip` ເກັບໄວ້.
+
 ---
-## 🛡️ 6. ເງື່ອນໄຂການຮັບປະກັນ (6-Month Warranty & Support Policy)
+
+## 🛡️ 5. ເງື່ອນໄຂການຮັບປະກັນ (6-Month Warranty & Support Policy)
 
 - **ໄລຍະເວລາຮັບປະກັນ**: **6 ເດືອນ** (ນັບຈາກວັນທີສົ່ງມອບ).
 - **ຂອບເຂດການຮັບປະກັນ**:
   - ແກ້ໄຂ **Bug**, ຂໍ້ຜິດພາດຂອງລະບົບ (System Errors), ຫຼື Error ທີ່ເກີດຈາກໂຄ້ດ ໂດຍບໍ່ມີຄ່າໃຊ້ຈ່າຍເພີ່ມເຕີມ.
-  - ໃຫ້ຄຳປຶກສາ ແລະ ຊ່ວຍເຫຼືອດ້ານເຕັກນິກ, ການຕັ້ງຄ່າ Domain/Hosting ແລະ ການສຳຮອງຂໍ້ມູນ.
+  - ໃຫ້ຄຳປຶກສາ ແລະ ຊ່ວຍເຫຼືອດ້ານເຕັກນິກ, ການຕັ້ງຄ່າ Domain/Hostatom Hosting ແລະ ການສຳຮອງຂໍ້ມູນ.
   - ອັບເດດຄວາມປອດໄພຂອງໂຄ້ດ ແລະ ລະບົບ.
 
 ---
