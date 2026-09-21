@@ -197,6 +197,9 @@ function verify_csrf_token() {
                 <a href="gallery_manage.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'gallery_manage.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ຈັດການ Gallery</span>
                 </a>
+                <a href="members.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'members.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
+                    <span>ຈັດການສະມາຊິກ</span>
+                </a>
                 <a href="applications.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'applications.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ໃບສະໝັກ</span>
                 </a>
@@ -232,9 +235,12 @@ function verify_csrf_token() {
                         'dashboard.php' => 'Dashboard',
                         'menu_manage.php' => 'ຈັດການເມນູອາຫານ & ເຄື່ອງດື່ມ',
                         'orders.php' => 'ຈັດການອໍເດີ້ສັ່ງຊື້',
+                        'kitchen.php' => 'ລະບົບຈໍຫ້ອງຄົວ (Kitchen Monitor)',
                         'bookings.php' => 'ຈັດການການຈອງໂຕະ',
+                        'branch_manage.php' => 'ຈັດການຂໍ້ມູນສາຂາ',
                         'news_manage.php' => 'ຈັດການບົດຄວາມ, ຂ່າວສານ & ກິດຈະກຳ',
                         'banner_manage.php' => 'ຈັດການ Hero Banners',
+                        'gallery_manage.php' => 'ຈັດການຮູບພາບ Gallery',
                         'members.php' => 'ຈັດການສະມາຊິກ (Customer Members)',
                         'applications.php' => 'ຈັດການໃບສະໝັກແຟຣນໄຊສ໌'
                     ];
