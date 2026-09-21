@@ -643,9 +643,12 @@ try {
                                     <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
                                         <?php echo $current_lang === 'lo' ? htmlspecialchars($st['name_lo']) : htmlspecialchars($st['name_en']); ?>
                                     </h3>
-                                    <a href="<?php echo htmlspecialchars($st['map']); ?>" target="_blank" class="self-start md:self-auto px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold text-xs shadow-md transition-all font-serif-lao inline-flex items-center gap-1">
-                                        <span>🗺️</span>
+                                    <a href="<?php echo htmlspecialchars($st['map']); ?>" target="_blank" class="self-start md:self-auto px-4 py-2 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-burgundy-950 font-extrabold text-xs shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 border border-amber-300/60 transition-all duration-300 hover:scale-105 active:scale-95 font-serif-lao inline-flex items-center gap-2 group">
+                                        <span class="w-5 h-5 rounded-full bg-burgundy-950/10 flex items-center justify-center shrink-0 group-hover:bg-burgundy-950/20 transition-colors">
+                                            <svg class="w-3 h-3 text-burgundy-950 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                        </span>
                                         <span><?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?></span>
+                                        <svg class="w-3 h-3 text-burgundy-950/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
                                     </a>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">

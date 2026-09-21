@@ -231,9 +231,12 @@ $branch_card_images = [
                         </div>
 
                         <div>
-                            <a href="<?php echo htmlspecialchars($branch['map_link']); ?>" target="_blank" class="w-full inline-flex items-center justify-center px-6 py-2.5 bg-burgundy-700 hover:bg-burgundy-800 text-white rounded-full text-sm font-bold transition-all duration-300 shadow-md font-serif-lao">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <?php echo t('loc_map'); ?>
+                            <a href="<?php echo htmlspecialchars($branch['map_link']); ?>" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-burgundy-700 via-burgundy-800 to-burgundy-900 hover:from-burgundy-600 hover:to-burgundy-800 text-amber-200 border border-amber-400/30 rounded-full text-sm font-extrabold transition-all duration-300 shadow-lg shadow-burgundy-950/20 hover:scale-[1.02] active:scale-95 font-serif-lao group">
+                                <span class="w-5 h-5 rounded-full bg-amber-400/20 group-hover:bg-amber-400 group-hover:text-burgundy-950 text-amber-300 flex items-center justify-center shrink-0 transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </span>
+                                <span><?php echo t('loc_map'); ?></span>
+                                <svg class="w-3.5 h-3.5 text-amber-400/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
                             </a>
                         </div>
                     </div>
