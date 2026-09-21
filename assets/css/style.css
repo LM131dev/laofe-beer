@@ -48,6 +48,43 @@ input, button, select, textarea, label {
     font-family: 'Noto Serif Lao', serif !important;
 }
 
+/* Lao Typography Optimization - Fix Character Overlap & Line Height */
+html, body {
+    line-height: 1.6 !important;
+    letter-spacing: 0.01em !important;
+}
+
+/* Ensure Lao tone marks and upper vowels do not touch adjacent lines or overlap */
+h1, h2, h3, h4, h5, h6,
+.text-xs, .text-sm, .text-base, .text-lg, .text-xl, .text-2xl, 
+.text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl,
+.font-serif-lao, .font-sans-lao {
+    letter-spacing: normal !important;
+    word-spacing: 0.02em;
+}
+
+/* Override tight line height classes for Lao text to prevent vertical squishing */
+.leading-none {
+    line-height: 1.35 !important;
+}
+
+.leading-tight, .leading-snug {
+    line-height: 1.45 !important;
+}
+
+/* Give headings generous vertical breathing room for upper tone marks */
+h1 {
+    line-height: 1.35 !important;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+h2, h3 {
+    line-height: 1.4 !important;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
 /* 3 Core Design Pillars Styling: Wood, Coffee, Beer */
 .wood-gradient-bg {
     background: linear-gradient(135deg, #261205 0%, #4E2B13 50%, #673D1E 100%);

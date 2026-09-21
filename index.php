@@ -90,7 +90,7 @@ try {
                             <span class="inline-block px-4 py-1.5 bg-white/90 text-burgundy-900 rounded-full text-xs font-extrabold uppercase tracking-widest shadow-lg font-serif-lao">
                                 <?php echo $current_lang === 'lo' ? 'ກາເຟ ແລະ ບາ ແບບລາວປະຍຸກ' : 'Lao-Adapted Coffee & Bar'; ?>
                             </span>
-                            <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight font-serif-lao text-white drop-shadow-md sm:whitespace-nowrap">
+                            <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-snug font-serif-lao text-white drop-shadow-md">
                                 <?php echo t('hero_title'); ?>
                             </h1>
                             <p class="text-lg md:text-2xl text-gray-200 max-w-2xl mx-auto font-light leading-relaxed font-serif-lao drop-shadow">
@@ -117,7 +117,7 @@ try {
                             <span class="inline-block px-4 py-1.5 bg-white/90 text-burgundy-900 rounded-full text-xs font-extrabold uppercase tracking-widest shadow-lg font-serif-lao">
                                 <?php echo $current_lang === 'lo' ? 'ແນວຄິດການພັກຜ່ອນຍາມຄ່ຳຄືນ' : 'Premium Nightlife Concept'; ?>
                             </span>
-                            <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight font-serif-lao text-white drop-shadow-md sm:whitespace-nowrap">
+                            <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-snug font-serif-lao text-white drop-shadow-md">
                                 <?php echo $current_lang === 'lo' ? 'ກາງເວັນກາເຟ · ກາງຄືນເບຍສົດ' : 'Coffee By Day · Beer By Night'; ?>
                             </h1>
                             <p class="text-lg md:text-2xl text-gray-200 max-w-2xl mx-auto font-light leading-relaxed font-serif-lao drop-shadow">
