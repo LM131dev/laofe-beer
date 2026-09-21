@@ -643,8 +643,8 @@ try {
                                     <h3 class="text-2xl md:text-4xl font-black text-white font-serif-lao tracking-wider uppercase">
                                         <?php echo $current_lang === 'lo' ? htmlspecialchars($st['name_lo']) : htmlspecialchars($st['name_en']); ?>
                                     </h3>
-                                    <a href="<?php echo htmlspecialchars($st['map']); ?>" target="_blank" class="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-white/95 hover:bg-white p-2 shadow-xl border border-white/50 transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shrink-0 group" title="<?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?>">
-                                        <img src="assets/images/google_maps_icon.png" alt="Google Maps" class="w-full h-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform">
+                                    <a href="<?php echo htmlspecialchars($st['map']); ?>" target="_blank" class="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-white hover:bg-gray-50 p-2.5 shadow-xl shadow-black/30 border border-white transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shrink-0 group" title="<?php echo $current_lang === 'lo' ? 'ແຜນທີ່ Google Maps' : 'Google Maps'; ?>">
+                                        <img src="assets/images/google_maps_icon.png" alt="Google Maps" class="w-full h-full object-contain rounded-md group-hover:scale-105 transition-transform">
                                     </a>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs md:text-sm text-amber-200 font-serif-lao">
