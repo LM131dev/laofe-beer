@@ -5,7 +5,29 @@ require_once __DIR__ . '/header.php';
 $success = '';
 $error = '';
 
-// 1. ຈັດການການລຶບເມນູ (DELETE via POST + CSRF)
+// 1. ຈັດການນຳເຂົ້າເມນູເລີ່ມຕົ້ນ (SEED via POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'seed') {
+    if (!verify_csrf_token()) {
+        $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
+    } else {
+        try {
+            $pdo->exec("INSERT INTO menus (name_lo, name_en, category, price, description_lo, description_en, image_path, is_popular) VALUES
+            ('ລາວເຟ ໂຄໂຄນັດ ລາເຕ້', 'LaoFe Coconut Latte', 'coffee', 35000, 'ກາເຟເອສເປຣສໂຊທີ່ເຂັ້ມຂຸ້ນ ຜສົມຜະສານກັບນ້ຳໝາກພ້າວສົດ ແລະ ນ້ຳນົມໝາກພ້າວສູດພິເສດ ຫວານມັນ ຫອມລະມຸນ.', 'A rich espresso shot layered with fresh coconut water and our signature coconut cream, delivering a smooth, refreshing, and tropical taste.', 'assets/images/coffee.png', 1),
+            ('ເອສເປຣສໂຊ ເຢັນ', 'Iced Espresso', 'coffee', 28000, 'ກາເຟເອສເປຣສໂຊລົດຊາດເຂັ້ມຂຸ້ນ ແບບສະບັບຄວາມເຂັ້ມທີ່ລົງຕົວ ຕື່ນຕົວຕະຫຼອດວັນ.', 'Classic double shot espresso served chilled, bringing out the bold and rich chocolatey notes.', 'assets/images/coffee.png', 0),
+            ('ຊານົມເຜືອກລາວປະຍຸກ', 'Lao Taro Milk Tea', 'drinks', 30000, 'ຊານົມຕົ້ມສົດໆ ຜສົມເນື້ອເຜືອກແທ້ຈາກທ້ອງຖິ່ນ ຫວານພໍດີ ຫອມກິ່ນໃບຊາ.', 'Freshly brewed milk tea blended with local organic taro paste, smooth and flavorful.', 'assets/images/coffee.png', 0),
+            ('ນ້ຳໝາກມ່ວງປັ່ນສະໝຸນໄພ', 'Mango Herbal Smoothie', 'drinks', 32000, 'ນ້ຳໝາກມ່ວງສົດປັ່ນ ຜສົມໃບສະຫລະແໜ່ (Mint) ແລະ ນ້ຳເຜິ້ງປ່າ ປອດສານພິດ.', 'Fresh mango blend infused with organic wild honey and wild mint leaves, refreshing and nutritious.', 'assets/images/coffee.png', 0),
+            ('ເບຍລາວຄຣາບພຣີມ່ຽມ', 'Premium Lao Craft Beer', 'bar', 45000, 'ເບຍສົດຄຣາບຄຸນນະພາບສູງ ໝັກຈາກເຂົ້າຫອມລາວແທ້ໆ ໃຫ້ລົດຊາດທີ່ນຸ້ມນວນ ແລະ ກິ່ນຫອມອັນເປັນເອກະລັກ.', 'High-quality draft craft beer brewed locally with authentic Lao jasmine rice, offering a smooth finish and a unique aroma.', 'assets/images/beer_drink.png', 1),
+            ('ຄັອກເທວສະໝຸນໄພ ວັງວຽງ', 'Vangvieng Herbal Cocktail', 'bar', 50000, 'ຄັອກເທວສູດພິເສດ ທີ່ໃຊ້ເຫຼົ້າທ້ອງຖິ່ນຜສົມກັບນ້ຳຕະໄຄ້, ໃບໝາກຂາມ ແລະ ນ້ຳໝາກນາວ.', 'A refreshing local spirit cocktail mixed with fresh lemongrass infusion, lime, and local botanicals.', 'assets/images/beer_drink.png', 0),
+            ('ລາບໝູຄຣິສປີລາວປະຍຸກ', 'Crispy Lao Fusion Larb', 'food', 55000, 'ລາບໝູສະໝຸນໄພລາວແບບດັ້ງເດີມ ແຕ່ເສີບພ້ອມໝູກອບ ແລະ ຜັກສົດອໍການິກ ຈັດຈານຢ່າງທັນສະໄໝ.', 'Traditional minced pork salad with Lao herbs, served crispy style with organic fresh vegetables, beautifully plated for a modern experience.', 'assets/images/our_story.png', 1),
+            ('ຕຳໝາກຫຸ່ງພຣີມ່ຽມ ເສີບພ້ອມໄກ່ປິ້ງ', 'Premium Papaya Salad with Grilled Chicken', 'food', 60000, 'ຕຳໝາກຫຸ່ງລົດຊາດຈັດຈ້ານແບບດັ້ງເດີມ ເສີບຄູ່ກັບໄກ່ປິ້ງສະໝຸນໄພຮ້ອນໆ ແລະ ເຂົ້າໜຽວນຸ້ມ.', 'Spicy traditional papaya salad served with hot grilled herbal chicken and sticky rice.', 'assets/images/our_story.png', 0)");
+            $success = 'ນຳເຂົ້າເມນູເລີ່ມຕົ້ນ 8 ລາຍການ ຮຽບຮ້ອຍແລ້ວ!';
+        } catch (\Exception $e) {
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການນຳເຂົ້າຂໍ້ມູນ: ' . $e->getMessage();
+        }
+    }
+}
+
+// 2. ຈັດການການລຶບເມນູ (DELETE via POST + CSRF)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     if (!verify_csrf_token()) {
         $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
@@ -29,8 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// 2. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂເມນູ (CREATE / UPDATE via POST + CSRF)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || $_POST['action'] !== 'delete')) {
+// 3. ຈັດການເພີ່ມ ຫຼື ແກ້ໄຂເມນູ (CREATE / UPDATE via POST + CSRF)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (!isset($_POST['action']) || (!in_array($_POST['action'], ['delete', 'seed'])))) {
     if (!verify_csrf_token()) {
         $error = 'CSRF token ບໍ່ຖືກຕ້ອງ!';
     } else {
@@ -294,7 +316,18 @@ if (isset($_GET['edit'])) {
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="px-4 py-12 text-center text-gray-400 font-light">ຍັງບໍ່ມີເມນູອາຫານ ຫຼື ເຄື່ອງດື່ມໃນຖານຂໍ້ມູນ</td>
+                                <td colspan="5" class="px-4 py-12 text-center text-gray-500 font-serif-lao space-y-3">
+                                    <div class="text-base font-bold text-gray-700">ຍັງບໍ່ມີເມນູອາຫານ ຫຼື ເຄື່ອງດື່ມໃນຖານຂໍ້ມູນ (0 ລາຍການ)</div>
+                                    <p class="text-xs text-gray-400 max-w-md mx-auto">ທ່ານສາມາດເພີ່ມເມນູໃໝ່ຈາກຟອມດ້ານຊ້າຍ ຫຼື ກົດປຸ່ມດ້ານລຸ່ມນີ້ເພື່ອດຶງເມນູເລີ່ມຕົ້ນ 8 ລາຍການ ເຂົ້າຖານຂໍ້ມູນໄດ້ທັນທີ:</p>
+                                    <form action="menu_manage.php" method="POST" class="pt-2">
+                                        <input type="hidden" name="action" value="seed">
+                                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                        <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-burgundy-700 hover:bg-burgundy-800 text-white font-bold rounded-xl text-xs shadow-md transition-all">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                            <span>📥 ກົດນຳເຂົ້າເມນູເລີ່ມຕົ້ນ (8 ລາຍການ) ເຂົ້າຖານຂໍ້ມູນ</span>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
