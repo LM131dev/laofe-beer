@@ -11,33 +11,21 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true
 }
 
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/auth_lockout.php';
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    // Rate Limiting (5 failed attempts max per 15 minutes)
-    $max_attempts = 5;
-    $lockout_time = 900; // 15 mins
-    if (!isset($_SESSION['admin_login_attempts'])) {
-        $_SESSION['admin_login_attempts'] = 0;
-        $_SESSION['admin_last_attempt'] = time();
-    }
-
-    if ($_SESSION['admin_login_attempts'] >= $max_attempts) {
-        $time_left = $lockout_time - (time() - $_SESSION['admin_last_attempt']);
-        if ($time_left > 0) {
-            $mins = ceil($time_left / 60);
-            $error = "ທ່ານລອງເຂົ້າສູ່ລະບົບຜິດຫຼາຍເກີນໄປ ($max_attempts ຄັ້ງ). ກະລຸນາລໍຖ້າ $mins ນາທີ ແລ້ວລອງໃໝ່.";
-        } else {
-            $_SESSION['admin_login_attempts'] = 0;
-        }
-    }
-
-    if (empty($error)) {
-        if (empty($username) || empty($password)) {
-            $error = 'ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບຖ້ວນ';
+    if (empty($username) || empty($password)) {
+        $error = 'ກະລຸນາກອກ ຊື່ຜູ້ໃຊ້ ແລະ ລະຫັດຜ່ານ ໃຫ້ຄົບຖ້ວນ!';
+    } else {
+        // 1. Check if account is locked out (Tier 1: 15m, Tier 2: 1h, Tier 3: 24h/Admin unlock)
+        $lock_check = check_user_lockout($pdo, $username, 'lo');
+        if ($lock_check['locked']) {
+            $error = $lock_check['message'];
         } else {
             try {
                 $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
@@ -49,13 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['admin_logged_in'] = true;
                     $_SESSION['admin_user'] = $user['username'];
                     $_SESSION['admin_role'] = $user['role'];
-                    $_SESSION['admin_login_attempts'] = 0; // Reset counter
+                    
+                    // Reset failed login attempts & lockout state
+                    reset_user_lockout($pdo, $user['id']);
+
                     header("Location: dashboard.php");
                     exit;
                 } else {
-                    $_SESSION['admin_login_attempts']++;
-                    $_SESSION['admin_last_attempt'] = time();
-                    $error = 'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!';
+                    // Record failed attempt and trigger lockout if reached 3 attempts
+                    $error = record_failed_login_attempt($pdo, $username, 'lo');
                 }
             } catch (\Exception $e) {
                 error_log("Admin login error: " . $e->getMessage());

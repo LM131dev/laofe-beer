@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS users (
     role VARCHAR(20) DEFAULT 'admin', -- 'admin', 'customer'
     points INT DEFAULT 0,
     tier VARCHAR(50) DEFAULT 'Member',
+    failed_attempts INT DEFAULT 0,
+    lockout_tier INT DEFAULT 0,
+    locked_until DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

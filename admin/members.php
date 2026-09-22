@@ -58,6 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
+
+        // 4. ປົດລ໋ອກບັນຊີສະມາຊິກ (Unlock Account)
+        if ($action === 'unlock_member') {
+            $member_id = intval($_POST['member_id'] ?? 0);
+            if ($member_id > 0) {
+                require_once __DIR__ . '/../includes/auth_lockout.php';
+                admin_unlock_user($pdo, $member_id);
+                $success = 'ປົດລ໋ອກບັນຊີສະມາຊິກ ຮຽບຮ້ອຍແລ້ວ! ຜູ້ໃຊ້ສາມາດເຂົ້າສູ່ລະບົບໄດ້ຕາມປົກຕິ.';
+            }
+        }
     }
 }
 
@@ -248,22 +258,40 @@ $vip_count = $stmt_vip->fetchColumn();
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php
-                                        $t = $m['tier'] ?: 'Member';
-                                        $badge = 'bg-gray-100 text-gray-700';
-                                        if ($t === 'Silver') $badge = 'bg-slate-100 text-slate-700 border border-slate-300';
-                                        if ($t === 'Gold') $badge = 'bg-amber-100 text-amber-800 border border-amber-300 font-bold';
-                                        if ($t === 'VIP') $badge = 'bg-purple-100 text-purple-800 border border-purple-300 font-bold animate-pulse';
-                                    ?>
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo $badge; ?>">
-                                        <?php echo htmlspecialchars($t); ?>
-                                    </span>
+                                    <div class="flex flex-col gap-1 items-start">
+                                        <?php
+                                            $t = $m['tier'] ?: 'Member';
+                                            $badge = 'bg-gray-100 text-gray-700';
+                                            if ($t === 'Silver') $badge = 'bg-slate-100 text-slate-700 border border-slate-300';
+                                            if ($t === 'Gold') $badge = 'bg-amber-100 text-amber-800 border border-amber-300 font-bold';
+                                            if ($t === 'VIP') $badge = 'bg-purple-100 text-purple-800 border border-purple-300 font-bold animate-pulse';
+                                        ?>
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo $badge; ?>">
+                                            <?php echo htmlspecialchars($t); ?>
+                                        </span>
+                                        <?php if (!empty($m['locked_until']) && strtotime($m['locked_until']) > time()): ?>
+                                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-red-100 text-red-700 border border-red-300 flex items-center gap-1 shadow-sm">
+                                                <span>🔒 ຖືກລ໋ອກ (Tier <?php echo htmlspecialchars($m['lockout_tier'] ?? 1); ?>)</span>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 text-xs text-gray-400">
                                     <?php echo date('d/m/Y H:i', strtotime($m['created_at'])); ?>
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
+                                        <?php if (!empty($m['locked_until']) && strtotime($m['locked_until']) > time()): ?>
+                                            <!-- Unlock Member Button -->
+                                            <form method="POST" action="members.php" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປົດລ໋ອກບັນຊີສະມາຊິກນີ້?');">
+                                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+                                                <input type="hidden" name="action" value="unlock_member">
+                                                <input type="hidden" name="member_id" value="<?php echo $m['id']; ?>">
+                                                <button type="submit" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+                                                    🔓 ປົດລ໋ອກ
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
                                         <!-- Edit Modal Trigger -->
                                         <button onclick="openEditModal(<?php echo htmlspecialchars(json_encode($m)); ?>)" class="px-3 py-1.5 bg-burgundy-50 hover:bg-burgundy-700 text-burgundy-700 hover:text-white rounded-lg text-xs font-bold transition-all border border-burgundy-200">
                                             ແກ້ໄຂ
