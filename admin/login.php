@@ -11,8 +11,6 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true
 }
 
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../includes/auth_lockout.php';
-
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,37 +18,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     if (empty($username) || empty($password)) {
-        $error = 'ກະລຸນາກອກ ຊື່ຜູ້ໃຊ້ ແລະ ລະຫັດຜ່ານ ໃຫ້ຄົບຖ້ວນ!';
+        $error = 'ກະລຸນາກອກຂໍ້ມູນໃຫ້ຄົບຖ້ວນ';
     } else {
-        // 1. Check if account is locked out (Tier 1: 15m, Tier 2: 1h, Tier 3: 24h/Admin unlock)
-        $lock_check = check_user_lockout($pdo, $username, 'lo');
-        if ($lock_check['locked']) {
-            $error = $lock_check['message'];
-        } else {
-            try {
-                $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-                $stmt->execute([$username]);
-                $user = $stmt->fetch();
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch();
 
-                if ($user && password_verify($password, $user['password']) && in_array($user['role'], ['admin', 'staff'])) {
-                    session_regenerate_id(true);
-                    $_SESSION['admin_logged_in'] = true;
-                    $_SESSION['admin_user'] = $user['username'];
-                    $_SESSION['admin_role'] = $user['role'];
-                    
-                    // Reset failed login attempts & lockout state
-                    reset_user_lockout($pdo, $user['id']);
+            if (!$user || !in_array($user['role'], ['admin', 'staff'])) {
+                $error = 'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!';
+            } else {
+                // Check Lockout Status
+                $now = time();
+                $lockout_until = !empty($user['lockout_until']) ? strtotime($user['lockout_until']) : 0;
+                $is_locked = intval($user['is_locked'] ?? 0);
+                $stage = intval($user['lockout_stage'] ?? 0);
 
-                    header("Location: dashboard.php");
-                    exit;
-                } else {
-                    // Record failed attempt and trigger lockout if reached 3 attempts
-                    $error = record_failed_login_attempt($pdo, $username, 'lo');
+                if ($is_locked == 1 || $stage >= 3) {
+                    if ($lockout_until > 0 && $now < $lockout_until) {
+                        $time_left = $lockout_until - $now;
+                        $hours = ceil($time_left / 3600);
+                        $error = "ບັນຊີຂອງທ່ານຖືກລັອກ ຍ້ອນປ້ອນລະຫັດຜິດຫຼາຍຄັ້ງ (3 ຂັ້ນ). ກະລຸນາລໍຖ້າ $hours ຊົ່ວໂມງ ຫຼື ຕິດຕໍ່ Super Admin ເພື່ອປົດລັອກ.";
+                    } elseif ($is_locked == 1 && $lockout_until == 0) {
+                        $error = "ບັນຊີ Admin ຂອງທ່ານຖືກລັອກໂດຍລະບົບ. ກະລຸນາຕິດຕໍ່ Super Admin ເພື່ອປົດລັອກ.";
+                    }
+                } elseif ($lockout_until > $now) {
+                    $time_left = $lockout_until - $now;
+                    $mins = ceil($time_left / 60);
+                    if ($stage == 2) {
+                        $error = "ທ່ານປ້ອນລະຫັດຜິດ 3 ຄັ້ງໃນຂັ້ນທີ 2. ບັນຊີຖືກລັອກຊົ່ວຄາວ 1 ຊົ່ວໂມງ (ລໍຖ້າອີກ $mins ນາທີ).";
+                    } else {
+                        $error = "ທ່ານປ້ອນລະຫັດຜິດ 3 ຄັ້ງ. ບັນຊີຖືກລັອກຊົ່ວຄາວ 15 ນາທີ (ລໍຖ້າອີກ $mins ນາທີ).";
+                    }
                 }
-            } catch (\Exception $e) {
-                error_log("Admin login error: " . $e->getMessage());
-                $error = 'ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່ລະບົບ. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ.';
+
+                if (empty($error)) {
+                    if (password_verify($password, $user['password'])) {
+                        // Success: Reset lockout status & counter
+                        $stmt_reset = $pdo->prepare("UPDATE users SET failed_attempts = 0, lockout_stage = 0, lockout_until = NULL, is_locked = 0 WHERE id = ?");
+                        $stmt_reset->execute([$user['id']]);
+
+                        session_regenerate_id(true);
+                        $_SESSION['admin_logged_in'] = true;
+                        $_SESSION['admin_user'] = $user['username'];
+                        $_SESSION['admin_role'] = $user['role'];
+
+                        header("Location: dashboard.php");
+                        exit;
+                    } else {
+                        // Password Incorrect -> Update Failed Attempts & Lockout Stages
+                        $attempts = intval($user['failed_attempts'] ?? 0) + 1;
+                        $stage = intval($user['lockout_stage'] ?? 0);
+                        $new_lockout_until = null;
+                        $new_is_locked = 0;
+
+                        if ($attempts >= 3) {
+                            $stage = min(3, $stage + 1);
+                            $attempts = 0; // Reset attempt count for current stage
+
+                            if ($stage == 1) {
+                                $new_lockout_until = date('Y-m-d H:i:s', time() + 900); // 15 mins
+                                $error = "ທ່ານປ້ອນລະຫັດຜິດ 3 ຄັ້ງ! ບັນຊີຖືກລັອກຊົ່ວຄາວ 15 ນາທີ.";
+                            } elseif ($stage == 2) {
+                                $new_lockout_until = date('Y-m-d H:i:s', time() + 3600); // 1 hour
+                                $error = "ທ່ານປ້ອນລະຫັດຜິດອີກ 3 ຄັ້ງ (ຂັ້ນທີ 2)! ບັນຊີຖືກລັອກຊົ່ວຄາວ 1 ຊົ່ວໂມງ.";
+                            } elseif ($stage >= 3) {
+                                $new_lockout_until = date('Y-m-d H:i:s', time() + 86400); // 24 hours (next day)
+                                $new_is_locked = 1;
+                                $error = "ທ່ານປ້ອນລະຫັດຜິດກວ່ານີ້ 3 ຄັ້ງ (ຂັ້ນທີ 3)! ບັນຊີຖືກລັອກຈົນຮອດມື້ອື່ນ ຫຼື ຈົນກວ່າ Admin ຈະປົດລັອກ.";
+                            }
+                        } else {
+                            $left = 3 - $attempts;
+                            $error = "ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ! (ປ້ອນຜິດໄດ້ອີກ $left ຄັ້ງ ກ່ອນຖືກລັອກ)";
+                        }
+
+                        $stmt_up = $pdo->prepare("UPDATE users SET failed_attempts = ?, lockout_stage = ?, lockout_until = ?, is_locked = ? WHERE id = ?");
+                        $stmt_up->execute([$attempts, $stage, $new_lockout_until, $new_is_locked, $user['id']]);
+                    }
+                }
             }
+        } catch (\Exception $e) {
+            error_log("Admin login error: " . $e->getMessage());
+            $error = 'ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່ລະບົບ. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ.';
         }
     }
 }

@@ -49,6 +49,19 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
+
+    // Auto-migrate new lockout columns if missing
+    try {
+        $check_col = $pdo->query("SHOW COLUMNS FROM users LIKE 'failed_attempts'");
+        if ($check_col && $check_col->rowCount() == 0) {
+            $pdo->exec("ALTER TABLE users 
+                ADD COLUMN failed_attempts INT DEFAULT 0,
+                ADD COLUMN lockout_stage INT DEFAULT 0,
+                ADD COLUMN lockout_until DATETIME NULL,
+                ADD COLUMN is_locked TINYINT(1) DEFAULT 0");
+        }
+    } catch (\Exception $e) {}
+
 } catch (\PDOException $e) {
     error_log("Database Connection Error: " . $e->getMessage());
     die("

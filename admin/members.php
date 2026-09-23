@@ -59,13 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // 4. ປົດລ໋ອກບັນຊີສະມາຊິກ (Unlock Account)
+        // 4. ປົດລັອກບັນຊີ (Unlock Account)
         if ($action === 'unlock_member') {
             $member_id = intval($_POST['member_id'] ?? 0);
             if ($member_id > 0) {
-                require_once __DIR__ . '/../includes/auth_lockout.php';
-                admin_unlock_user($pdo, $member_id);
-                $success = 'ປົດລ໋ອກບັນຊີສະມາຊິກ ຮຽບຮ້ອຍແລ້ວ! ຜູ້ໃຊ້ສາມາດເຂົ້າສູ່ລະບົບໄດ້ຕາມປົກຕິ.';
+                try {
+                    $stmt = $pdo->prepare("UPDATE users SET failed_attempts = 0, lockout_stage = 0, lockout_until = NULL, is_locked = 0 WHERE id = ?");
+                    $stmt->execute([$member_id]);
+                    $success = 'ປົດລັອກບັນຊີສະມາຊິກ ຮຽບຮ້ອຍແລ້ວ!';
+                } catch (\PDOException $e) {
+                    $error = 'ເກີດຂໍ້ຜິດພາດ: ' . $e->getMessage();
+                }
             }
         }
     }
@@ -265,13 +269,34 @@ $vip_count = $stmt_vip->fetchColumn();
                                             if ($t === 'Silver') $badge = 'bg-slate-100 text-slate-700 border border-slate-300';
                                             if ($t === 'Gold') $badge = 'bg-amber-100 text-amber-800 border border-amber-300 font-bold';
                                             if ($t === 'VIP') $badge = 'bg-purple-100 text-purple-800 border border-purple-300 font-bold animate-pulse';
+
+                                            $now_ts = time();
+                                            $until_ts = !empty($m['lockout_until']) ? strtotime($m['lockout_until']) : 0;
+                                            $is_mem_locked = false;
+                                            $lock_label = '';
+
+                                            if (!empty($m['is_locked']) || intval($m['lockout_stage'] ?? 0) >= 3) {
+                                                if ($until_ts > $now_ts) {
+                                                    $is_mem_locked = true;
+                                                    $rem_hours = ceil(($until_ts - $now_ts) / 3600);
+                                                    $lock_label = "🔒 ຖືກລັອກ Stage 3 ({$rem_hours}h)";
+                                                } elseif (!empty($m['is_locked'])) {
+                                                    $is_mem_locked = true;
+                                                    $lock_label = "🔒 ຖືກລັອກ (Admin)";
+                                                }
+                                            } elseif ($until_ts > $now_ts) {
+                                                $is_mem_locked = true;
+                                                $rem_mins = ceil(($until_ts - $now_ts) / 60);
+                                                $stg = intval($m['lockout_stage']);
+                                                $lock_label = "🔒 ຖືກລັອກ Stage {$stg} ({$rem_mins}m)";
+                                            }
                                         ?>
                                         <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo $badge; ?>">
                                             <?php echo htmlspecialchars($t); ?>
                                         </span>
-                                        <?php if (!empty($m['locked_until']) && strtotime($m['locked_until']) > time()): ?>
-                                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-red-100 text-red-700 border border-red-300 flex items-center gap-1 shadow-sm">
-                                                <span>🔒 ຖືກລ໋ອກ (Tier <?php echo htmlspecialchars($m['lockout_tier'] ?? 1); ?>)</span>
+                                        <?php if ($is_mem_locked): ?>
+                                            <span class="px-2 py-0.5 rounded bg-red-100 text-red-800 border border-red-300 text-[10px] font-bold">
+                                                <?php echo htmlspecialchars($lock_label); ?>
                                             </span>
                                         <?php endif; ?>
                                     </div>
@@ -281,17 +306,19 @@ $vip_count = $stmt_vip->fetchColumn();
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <?php if (!empty($m['locked_until']) && strtotime($m['locked_until']) > time()): ?>
-                                            <!-- Unlock Member Button -->
-                                            <form method="POST" action="members.php" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປົດລ໋ອກບັນຊີສະມາຊິກນີ້?');">
+                                        <?php if ($is_mem_locked || intval($m['failed_attempts'] ?? 0) > 0 || intval($m['lockout_stage'] ?? 0) > 0): ?>
+                                            <!-- Unlock Account Button -->
+                                            <form method="POST" action="members.php" onsubmit="return confirm('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປົດລັອກບັນຊີນີ້?');">
                                                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                                                 <input type="hidden" name="action" value="unlock_member">
                                                 <input type="hidden" name="member_id" value="<?php echo $m['id']; ?>">
-                                                <button type="submit" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
-                                                    🔓 ປົດລ໋ອກ
+                                                <button type="submit" class="px-2.5 py-1.5 bg-green-50 hover:bg-green-600 text-green-700 hover:text-white rounded-lg text-xs font-bold transition-all border border-green-300 flex items-center gap-1">
+                                                    <span>🔓</span>
+                                                    <span>ປົດລັອກ</span>
                                                 </button>
                                             </form>
                                         <?php endif; ?>
+
                                         <!-- Edit Modal Trigger -->
                                         <button onclick="openEditModal(<?php echo htmlspecialchars(json_encode($m)); ?>)" class="px-3 py-1.5 bg-burgundy-50 hover:bg-burgundy-700 text-burgundy-700 hover:text-white rounded-lg text-xs font-bold transition-all border border-burgundy-200">
                                             ແກ້ໄຂ
