@@ -127,6 +127,10 @@ function verify_csrf_token() {
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 <span>ຈັດການສະມາຊິກ</span>
             </a>
+            <a href="staff.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'staff.php' ? 'bg-burgundy-700 text-white shadow-sm' : 'text-amber-400 hover:bg-white/5 hover:text-white'; ?>">
+                <svg class="w-4 h-4 mr-3 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <span>ຈັດການສິດ & ທີມງານ 🛡️</span>
+            </a>
             <a href="applications.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'applications.php' ? 'bg-burgundy-700 text-white shadow-sm' : 'text-gray-300 hover:bg-white/5 hover:text-white'; ?>">
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                 <span>ໃບສະໝັກ</span>
@@ -141,7 +145,7 @@ function verify_csrf_token() {
                 </div>
                 <div class="flex flex-col truncate">
                     <span class="text-xs font-semibold text-gray-200 truncate"><?php echo htmlspecialchars($_SESSION['admin_user']); ?></span>
-                    <span class="text-[9px] text-gray-500 font-medium">Administrator</span>
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider"><?php echo htmlspecialchars($_SESSION['admin_role'] ?? 'Admin'); ?></span>
                 </div>
             </div>
             <a href="logout.php" class="flex items-center justify-center space-x-1.5 w-full py-2 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white rounded-lg text-xs font-bold transition-all border border-red-600/20">
@@ -200,6 +204,9 @@ function verify_csrf_token() {
                 <a href="members.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'members.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ຈັດການສະມາຊິກ</span>
                 </a>
+                <a href="staff.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'staff.php' ? 'bg-burgundy-700 text-white' : 'text-amber-400 hover:bg-white/5 hover:text-white'; ?>">
+                    <span>ຈັດການສິດ & ທີມງານ 🛡️</span>
+                </a>
                 <a href="applications.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'applications.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ໃບສະໝັກ</span>
                 </a>
@@ -213,6 +220,7 @@ function verify_csrf_token() {
                     </div>
                     <div class="flex flex-col truncate">
                         <span class="text-xs font-semibold text-gray-200 truncate"><?php echo htmlspecialchars($_SESSION['admin_user']); ?></span>
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider"><?php echo htmlspecialchars($_SESSION['admin_role'] ?? 'Admin'); ?></span>
                     </div>
                 </div>
                 <a href="logout.php" class="flex items-center justify-center space-x-1.5 w-full py-2 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white rounded-lg text-xs font-bold transition-all border border-red-600/20">
@@ -242,6 +250,7 @@ function verify_csrf_token() {
                         'banner_manage.php' => 'ຈັດການ Hero Banners',
                         'gallery_manage.php' => 'ຈັດການຮູບພາບ Gallery',
                         'members.php' => 'ຈັດການສະມາຊິກ (Customer Members)',
+                        'staff.php' => 'ຈັດການສິດ & ທີມງານ (Staff & Role Management)',
                         'applications.php' => 'ຈັດການໃບສະໝັກແຟຣນໄຊສ໌'
                     ];
                     echo $pages_names[$admin_page] ?? 'ລະບົບຫຼັງບ້ານ';
