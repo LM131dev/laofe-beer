@@ -155,6 +155,10 @@ function verify_csrf_token() {
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                 <span>ໃບສະໝັກ</span>
             </a>
+            <a href="guide.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'guide.php' ? 'bg-burgundy-700 text-white shadow-sm' : 'text-emerald-400 hover:bg-white/5 hover:text-white'; ?>">
+                <svg class="w-4 h-4 mr-3 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span>ຄູ່ມືການໃຊ້ງານ 📖</span>
+            </a>
         </nav>
 
         <!-- Admin user profile & Logout Section -->
@@ -229,6 +233,9 @@ function verify_csrf_token() {
                 </a>
                 <a href="applications.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'applications.php' ? 'bg-burgundy-700 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'; ?>">
                     <span>ໃບສະໝັກ</span>
+                </a>
+                <a href="guide.php" class="flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 <?php echo $admin_page === 'guide.php' ? 'bg-burgundy-700 text-white' : 'text-emerald-400 hover:bg-white/5 hover:text-white'; ?>">
+                    <span>ຄູ່ມືການໃຊ້ງານ 📖</span>
                 </a>
             </nav>
             
