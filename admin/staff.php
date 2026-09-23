@@ -200,13 +200,17 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
     <!-- Title & Action Bar -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2">
-                <span>🛡️ ຈັດການສິດ & ທີມງານ (Staff & Roles)</span>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-burgundy-100 text-burgundy-700 flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <span>ຈັດການສິດ & ທີມງານ (Staff & Roles)</span>
             </h1>
             <p class="text-xs sm:text-sm text-gray-500 mt-1">ກຳນົດສິດການເຂົ້າເຖິງ, ເພີ່ມ/ແກ້ໄຂ ທີມງານ Admin, Manager, Staff ແລະ ປົດລັອກບັນຊີ</p>
         </div>
         <button onclick="openCreateModal()" class="px-5 py-2.5 bg-burgundy-700 hover:bg-burgundy-800 text-white font-bold rounded-xl text-xs shadow-md transition-all flex items-center gap-2">
-            <span>+ ເພີ່ມທີມງານ/ຜູ້ໃຊ້ໃໝ່</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+            <span>ເພີ່ມທີມງານ/ຜູ້ໃຊ້ໃໝ່</span>
         </button>
     </div>
 
@@ -227,7 +231,7 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-burgundy-50 text-burgundy-700 flex items-center justify-center font-bold text-xl shadow-inner">
-                👥
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             </div>
             <div>
                 <p class="text-xs text-gray-400 font-semibold uppercase">ທີມງານທັງໝົດ</p>
@@ -237,7 +241,7 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
 
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold text-xl shadow-inner">
-                👑
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             </div>
             <div>
                 <p class="text-xs text-gray-400 font-semibold uppercase">Super Admin</p>
@@ -247,7 +251,7 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
 
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-xl shadow-inner">
-                👔
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </div>
             <div>
                 <p class="text-xs text-gray-400 font-semibold uppercase">Manager</p>
@@ -257,7 +261,7 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
 
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xl shadow-inner">
-                🖥️
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </div>
             <div>
                 <p class="text-xs text-gray-400 font-semibold uppercase">Staff / ພະນັກງານ</p>
@@ -277,14 +281,15 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
             <div class="flex items-center gap-3 w-full sm:w-auto">
                 <select name="role" onchange="this.form.submit()" class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-burgundy-700">
                     <option value="">-- ທຸກສິດ (All Roles) --</option>
-                    <option value="admin" <?php echo $role_filter === 'admin' ? 'selected' : ''; ?>>Super Admin 👑</option>
-                    <option value="manager" <?php echo $role_filter === 'manager' ? 'selected' : ''; ?>>Manager 👔</option>
-                    <option value="staff" <?php echo $role_filter === 'staff' ? 'selected' : ''; ?>>Staff / ພະນັກງານ 🖥️</option>
-                    <option value="customer" <?php echo $role_filter === 'customer' ? 'selected' : ''; ?>>Customer Member 👤</option>
+                    <option value="admin" <?php echo $role_filter === 'admin' ? 'selected' : ''; ?>>Super Admin</option>
+                    <option value="manager" <?php echo $role_filter === 'manager' ? 'selected' : ''; ?>>Manager</option>
+                    <option value="staff" <?php echo $role_filter === 'staff' ? 'selected' : ''; ?>>Staff / ພະນັກງານ</option>
+                    <option value="customer" <?php echo $role_filter === 'customer' ? 'selected' : ''; ?>>Customer Member</option>
                 </select>
 
-                <button type="submit" class="px-5 py-2.5 bg-gray-900 hover:bg-black text-white text-xs font-bold rounded-xl shadow transition-all">
-                    ຄົ້ນຫາ
+                <button type="submit" class="px-5 py-2.5 bg-gray-900 hover:bg-black text-white text-xs font-bold rounded-xl shadow transition-all flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <span>ຄົ້ນຫາ</span>
                 </button>
                 <?php if (!empty($search) || !empty($role_filter)): ?>
                     <a href="staff.php" class="px-4 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold rounded-xl transition-all">
@@ -334,55 +339,67 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php
-                                        $r = $st['role'] ?: 'customer';
+                                        $r = strtolower($st['role'] ?: 'customer');
                                         $r_badge = 'bg-gray-100 text-gray-700';
-                                        $r_label = 'Customer 👤';
+                                        $r_label = 'Customer';
+                                        $r_icon = '<svg class="w-3.5 h-3.5 inline mr-1 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>';
 
                                         if ($r === 'admin') {
                                             $r_badge = 'bg-purple-100 text-purple-900 border border-purple-300 font-bold';
-                                            $r_label = 'Super Admin 👑';
+                                            $r_label = 'Super Admin';
+                                            $r_icon = '<svg class="w-3.5 h-3.5 inline mr-1 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
                                         } elseif ($r === 'manager') {
                                             $r_badge = 'bg-blue-100 text-blue-900 border border-blue-300 font-bold';
-                                            $r_label = 'Manager 👔';
+                                            $r_label = 'Manager';
+                                            $r_icon = '<svg class="w-3.5 h-3.5 inline mr-1 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>';
                                         } elseif ($r === 'staff') {
                                             $r_badge = 'bg-amber-100 text-amber-900 border border-amber-300 font-bold';
-                                            $r_label = 'Staff 🖥️';
+                                            $r_label = 'Staff';
+                                            $r_icon = '<svg class="w-3.5 h-3.5 inline mr-1 text-amber-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>';
                                         }
                                     ?>
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo $r_badge; ?>">
-                                        <?php echo htmlspecialchars($r_label); ?>
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo $r_badge; ?> inline-flex items-center">
+                                        <?php echo $r_icon; ?>
+                                        <span><?php echo htmlspecialchars($r_label); ?></span>
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-xs space-y-1">
-                                    <div class="font-medium text-gray-800">📞 <?php echo htmlspecialchars($st['phone'] ?: '-'); ?></div>
-                                    <div class="text-gray-400">✉️ <?php echo htmlspecialchars($st['email'] ?: '-'); ?></div>
+                                    <div class="font-medium text-gray-800 flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                        <span><?php echo htmlspecialchars($st['phone'] ?: '-'); ?></span>
+                                    </div>
+                                    <div class="text-gray-400 flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                        <span><?php echo htmlspecialchars($st['email'] ?: '-'); ?></span>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php
                                         $now_ts = time();
                                         $until_ts = !empty($st['lockout_until']) ? strtotime($st['lockout_until']) : 0;
                                         $is_locked = false;
-                                        $lock_msg = 'ປົກຕິ (Active)';
+                                        $lock_msg = 'Active';
 
                                         if (!empty($st['is_locked']) || intval($st['lockout_stage'] ?? 0) >= 3) {
                                             if ($until_ts > $now_ts) {
                                                 $is_locked = true;
                                                 $rem_h = ceil(($until_ts - $now_ts) / 3600);
-                                                $lock_msg = "🔒 ຖືກລັອກ Stage 3 ({$rem_h}h)";
+                                                $lock_msg = "ຖືກລັອກ Stage 3 ({$rem_h}h)";
                                             } elseif (!empty($st['is_locked'])) {
                                                 $is_locked = true;
-                                                $lock_msg = "🔒 ຖືກລັອກ (Admin)";
+                                                $lock_msg = "ຖືກລັອກ (Admin)";
                                             }
                                         } elseif ($until_ts > $now_ts) {
                                             $is_locked = true;
                                             $rem_m = ceil(($until_ts - $now_ts) / 60);
                                             $stg = intval($st['lockout_stage']);
-                                            $lock_msg = "🔒 ຖືກລັອກ Stage {$stg} ({$rem_m}m)";
+                                            $lock_msg = "ຖືກລັອກ Stage {$stg} ({$rem_m}m)";
                                         }
                                     ?>
                                     <?php if ($is_locked): ?>
-                                        <span class="px-2.5 py-1 bg-red-100 text-red-800 border border-red-300 rounded-full text-[10px] font-bold">
-                                            <?php echo htmlspecialchars($lock_msg); ?>
+                                        <span class="px-2.5 py-1 bg-red-100 text-red-800 border border-red-300 rounded-full text-[10px] font-bold inline-flex items-center gap-1">
+                                            <svg class="w-3 h-3 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                            <span><?php echo htmlspecialchars($lock_msg); ?></span>
                                         </span>
                                     <?php else: ?>
                                         <span class="px-2.5 py-1 bg-green-100 text-green-800 border border-green-200 rounded-full text-[10px] font-bold inline-flex items-center gap-1">
@@ -403,19 +420,20 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
                                                 <input type="hidden" name="action" value="unlock_staff">
                                                 <input type="hidden" name="staff_id" value="<?php echo $st['id']; ?>">
                                                 <button type="submit" title="ປົດລັອກບັນຊີ" class="px-2.5 py-1.5 bg-green-50 hover:bg-green-600 text-green-700 hover:text-white rounded-lg text-xs font-bold transition-all border border-green-300 flex items-center gap-1">
-                                                    <span>🔓</span>
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
                                                 </button>
                                             </form>
                                         <?php endif; ?>
 
                                         <!-- Edit Role Trigger -->
-                                        <button onclick="openEditModal(<?php echo htmlspecialchars(json_encode($st)); ?>)" class="px-3 py-1.5 bg-burgundy-50 hover:bg-burgundy-700 text-burgundy-700 hover:text-white rounded-lg text-xs font-bold transition-all border border-burgundy-200">
-                                            ແກ້ໄຂສິດ
+                                        <button onclick="openEditModal(<?php echo htmlspecialchars(json_encode($st)); ?>)" class="px-3 py-1.5 bg-burgundy-50 hover:bg-burgundy-700 text-burgundy-700 hover:text-white rounded-lg text-xs font-bold transition-all border border-burgundy-200 flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                            <span>ແກ້ໄຂສິດ</span>
                                         </button>
 
                                         <!-- Reset Password Trigger -->
                                         <button onclick="openResetModal(<?php echo $st['id']; ?>, '<?php echo htmlspecialchars($st['username']); ?>')" class="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-500 text-amber-800 hover:text-white rounded-lg text-xs font-bold transition-all border border-amber-300" title="Reset ລະຫັດຜ່ານ">
-                                            🔑
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 0121 9z"/></svg>
                                         </button>
 
                                         <!-- Delete Button -->
@@ -425,7 +443,7 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
                                                 <input type="hidden" name="action" value="delete_staff">
                                                 <input type="hidden" name="staff_id" value="<?php echo $st['id']; ?>">
                                                 <button type="submit" class="px-2.5 py-1.5 bg-red-50 hover:bg-red-600 text-red-600 hover:text-white rounded-lg text-xs font-bold transition-all border border-red-200" title="ລົບ">
-                                                    🗑️
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                                 </button>
                                             </form>
                                         <?php endif; ?>
@@ -449,7 +467,8 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-6 border border-gray-100 font-serif-lao animate-fade-in">
         <div class="flex justify-between items-center border-b pb-3">
             <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <span>➕ ເພີ່ມທີມງານ/ຜູ້ໃຊ້ໃໝ່</span>
+                <svg class="w-5 h-5 text-burgundy-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                <span>ເພີ່ມທີມງານ/ຜູ້ໃຊ້ໃໝ່</span>
             </h3>
             <button onclick="closeCreateModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
         </div>
@@ -471,12 +490,12 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
             <div>
                 <label class="block text-xs font-bold uppercase text-gray-700 mb-1">ກຳນົດສິດການໃຊ້ງານ (Role) *</label>
                 <select name="role" required class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-sm font-bold focus:ring-2 focus:ring-burgundy-700 focus:outline-none">
-                    <option value="staff" selected>Staff / ພະນັກງານ 🖥️</option>
-                    <option value="manager">Manager / ຜູ້ຈັດການ 👔</option>
+                    <option value="staff" selected>Staff / ພະນັກງານ</option>
+                    <option value="manager">Manager / ຜູ້ຈັດການ</option>
                     <?php if ($current_user_role === 'admin'): ?>
-                        <option value="admin">Super Admin 👑</option>
+                        <option value="admin">Super Admin</option>
                     <?php endif; ?>
-                    <option value="customer">Customer / ສະມາຊິກ 👤</option>
+                    <option value="customer">Customer / ສະມາຊິກ</option>
                 </select>
             </div>
 
@@ -513,7 +532,8 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-6 border border-gray-100 font-serif-lao animate-fade-in">
         <div class="flex justify-between items-center border-b pb-3">
             <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <span>✏️ ແກ້ໄຂສິດ ແລະ ຂໍ້ມູນທີມງານ</span>
+                <svg class="w-5 h-5 text-burgundy-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <span>ແກ້ໄຂສິດ ແລະ ຂໍ້ມູນທີມງານ</span>
             </h3>
             <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
         </div>
@@ -531,12 +551,12 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
             <div>
                 <label class="block text-xs font-bold uppercase text-gray-700 mb-1">ສິດການໃຊ້ງານ (Role) *</label>
                 <select name="role" id="edit_role" required class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-sm font-bold focus:ring-2 focus:ring-burgundy-700 focus:outline-none">
-                    <option value="staff">Staff / ພະນັກງານ 🖥️</option>
-                    <option value="manager">Manager / ຜູ້ຈັດການ 👔</option>
+                    <option value="staff">Staff / ພະນັກງານ</option>
+                    <option value="manager">Manager / ຜູ້ຈັດການ</option>
                     <?php if ($current_user_role === 'admin'): ?>
-                        <option value="admin">Super Admin 👑</option>
+                        <option value="admin">Super Admin</option>
                     <?php endif; ?>
-                    <option value="customer">Customer / ສະມາຊິກ 👤</option>
+                    <option value="customer">Customer / ສະມາຊິກ</option>
                 </select>
             </div>
 
@@ -573,7 +593,8 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
     <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-6 border border-gray-100 font-serif-lao animate-fade-in">
         <div class="flex justify-between items-center border-b pb-3">
             <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <span>🔑 Reset ລະຫັດຜ່ານ</span>
+                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 0121 9z"/></svg>
+                <span>Reset ລະຫັດຜ່ານ</span>
             </h3>
             <button onclick="closeResetModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
         </div>
@@ -604,6 +625,7 @@ $staff_members = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'staff'")-
         </form>
     </div>
 </div>
+
 
 <script>
 function openCreateModal() {
