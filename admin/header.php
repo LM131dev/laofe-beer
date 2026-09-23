@@ -13,6 +13,26 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 require_once __DIR__ . '/../config/db.php';
 $admin_page = basename($_SERVER['PHP_SELF']);
 
+// Load or refresh user role in session
+if (isset($_SESSION['admin_user'])) {
+    if (empty($_SESSION['admin_role']) || strtolower($_SESSION['admin_user']) === 'admin') {
+        try {
+            $stmt_r = $pdo->prepare("SELECT role FROM users WHERE username = ?");
+            $stmt_r->execute([$_SESSION['admin_user']]);
+            $u_role = $stmt_r->fetchColumn();
+            if ($u_role) {
+                $_SESSION['admin_role'] = strtolower($u_role);
+            } else {
+                $_SESSION['admin_role'] = 'admin';
+            }
+        } catch (\Exception $e) {
+            $_SESSION['admin_role'] = 'admin';
+        }
+    } else {
+        $_SESSION['admin_role'] = strtolower($_SESSION['admin_role']);
+    }
+}
+
 // CSRF Protection Token Initialization
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));

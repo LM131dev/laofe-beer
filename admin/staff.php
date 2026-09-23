@@ -6,7 +6,11 @@ $success = '';
 $error = '';
 
 // Check permission: Only admin and manager can access staff management
-$current_user_role = $_SESSION['admin_role'] ?? 'staff';
+$current_user_role = strtolower($_SESSION['admin_role'] ?? '');
+if (isset($_SESSION['admin_user']) && strtolower($_SESSION['admin_user']) === 'admin') {
+    $current_user_role = 'admin';
+}
+
 if (!in_array($current_user_role, ['admin', 'manager'])) {
     echo "<div class='p-8 text-center font-serif-lao'><div class='inline-block bg-red-50 border-l-4 border-red-500 p-4 rounded text-red-700 font-bold'>ທ່ານບໍ່ມີສິດໃນການເຂົ້າເຖິງໜ້າຈັດການທີມງານ ແລະ ສິດ (Requires Admin/Manager Role)</div></div>";
     echo "</main></body></html>";
