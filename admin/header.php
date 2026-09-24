@@ -278,7 +278,8 @@ function verify_csrf_token() {
                         'gallery_manage.php' => 'ຈັດການຮູບພາບ Gallery',
                         'members.php' => 'ຈັດການສະມາຊິກ (Customer Members)',
                         'staff.php' => 'ຈັດການສິດ & ທີມງານ (Staff & Role Management)',
-                        'applications.php' => 'ຈັດການໃບສະໝັກແຟຣນໄຊສ໌'
+                        'applications.php' => 'ຈັດການໃບສະໝັກແຟຣນໄຊສ໌',
+                        'guide.php' => 'ຄູ່ມືການໃຊ້ງານ (System User Manual)'
                     ];
                     echo $pages_names[$admin_page] ?? 'ລະບົບຫຼັງບ້ານ';
                 ?>
