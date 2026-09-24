@@ -318,6 +318,37 @@ require_once __DIR__ . '/header.php';
                 </p>
             </div>
         </div>
+    <!-- SECTION 5: FRANCHISE APPLICATIONS & SYSTEM SETTINGS -->
+    <div id="section-franchise" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6">
+        <div class="flex items-center gap-3.5 border-b border-gray-200 pb-5">
+            <div class="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold text-base shadow-sm">5</div>
+            <div>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">5. ໃບສະໝັກແຟຣນໄຊສ໌, ລະບົບ 2 ພາສາ & ການສຳຮອງຂໍ້ມູນ (Franchise & System Settings)</h2>
+                <p class="text-xs sm:text-sm text-gray-600 mt-0.5">ວິທີກວດສອບໃບສະໝັກ Franchise, ການສະຫຼັບພາສາ ແລະ ວິທີ Backup ຂໍ້ມູນ</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs sm:text-sm">
+            <div class="p-5 bg-gray-50 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                <h4 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span>ຈັດການໃບສະໝັກ Franchise (`admin/applications.php`)</span>
+                </h4>
+                <p class="text-gray-800 leading-relaxed">
+                    ກວດສອບໃບສະໝັກຈາກຜູ້ສົນໃຈລົງທຶນ Franchise ທີ່ສົ່ງມາຈາກໜ້າເວັບ (`franchise.php`). ທີມງານສາມາດເບິ່ງຂໍ້ມູນທີ່ຢູ່ສະເໜີ, ງົບປະມານລົງທຶນ, ເບີໂທຕິດຕໍ່ ແລະ ປ່ຽນສະຖານະ <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 font-bold rounded">Pending</span> ➔ <span class="px-2 py-0.5 bg-blue-100 text-blue-800 font-bold rounded">Contacted</span> ➔ <span class="px-2 py-0.5 bg-green-100 text-green-800 font-bold rounded">Approved</span>.
+                </p>
+            </div>
+
+            <div class="p-5 bg-gray-50 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                <h4 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                    <svg class="w-5 h-5 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                    <span>ລະບົບຮອງຮັບ 2 ພາສາ (Lao 🇱🇦 & English 🇬🇧)</span>
+                </h4>
+                <p class="text-gray-800 leading-relaxed">
+                    ໜ້າເວັບໄຊຮອງຮັບການສະຫຼັບພາສາ ລາວ ແລະ English ໄດ້ທັນທີຢູ່ Header ເທິງສຸດ. ເນື້ອຫາເມນູ, ບົດຄວາມ ແລະ Banner ຈະສະແດງຜົນຕາມພາສາທີ່ຜູ້ໃຊ້ເລືອກອັດໂນມັດ.
+                </p>
+            </div>
+        </div>
     </div>
 
 </div>
