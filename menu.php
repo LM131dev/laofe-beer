@@ -283,7 +283,7 @@ if (empty($db_menus)) {
                             <?php echo $current_lang === 'lo' ? 'ຊອຍເຟິເຊິມາພ້າວ' : 'LaoFe Signature Coconut'; ?>
                         </h3>
                         <h2 class="text-3xl sm:text-5xl md:text-6xl font-black font-serif-lao text-white tracking-wider uppercase leading-tight drop-shadow-md">
-                            EXPERIENCE BOLAVEN
+                            <?php echo $current_lang === 'lo' ? 'ສຳຜັດລົດຊາດ ບໍລະເວນ' : 'EXPERIENCE BOLAVEN'; ?>
                         </h2>
                         <p class="text-xs sm:text-sm md:text-base text-amber-100/90 font-light font-serif-lao max-w-xl">
                             <?php echo $current_lang === 'lo' ? 'ກາເຟໝາກພ້າວສູດພິເສດ ຫອມມັນກົມກ່ອມ ຈາກດອນໂບລະເວນ' : 'Try our Signature Coconut Latte'; ?>
@@ -308,7 +308,7 @@ if (empty($db_menus)) {
                             <?php echo $current_lang === 'lo' ? 'ເບຍລາວຄຣາບພຣີມ່ຽມ' : 'Lao Craft Beer'; ?>
                         </h3>
                         <h2 class="text-3xl sm:text-5xl md:text-6xl font-black font-serif-lao text-white tracking-wider uppercase leading-tight drop-shadow-md">
-                            CRAFTED FOR NIGHTS
+                            <?php echo $current_lang === 'lo' ? 'ສ້າງສັນສຳລັບຍາມຄ່ຳຄືນ' : 'CRAFTED FOR NIGHTS'; ?>
                         </h2>
                         <p class="text-xs sm:text-sm md:text-base text-amber-100/90 font-light font-serif-lao max-w-xl">
                             <?php echo $current_lang === 'lo' ? 'ເບຍສົດຄຣາບຄຸນນະພາບສູງ ໝັກຈາກເຂົ້າຫອມລາວແທ້' : 'Authentic Lao Draft Craft Beer'; ?>
@@ -333,7 +333,7 @@ if (empty($db_menus)) {
                             <?php echo $current_lang === 'lo' ? 'ລາບໝູຄຣິສປີລາວປະຍຸກ' : 'Crispy Fusion Larb'; ?>
                         </h3>
                         <h2 class="text-3xl sm:text-5xl md:text-6xl font-black font-serif-lao text-white tracking-wider uppercase leading-tight drop-shadow-md">
-                            FRESH & CRISPY LAO
+                            <?php echo $current_lang === 'lo' ? 'ລົດຊາດລາວປະຍຸກແທ້ໆ' : 'FRESH & CRISPY LAO'; ?>
                         </h2>
                         <p class="text-xs sm:text-sm md:text-base text-amber-100/90 font-light font-serif-lao max-w-xl">
                             <?php echo $current_lang === 'lo' ? 'ລາບໝູສະໝຸນໄພລາວແບບດັ້ງເດີມ ເສີບພ້ອມໝູກອບ' : 'Signature Fusion Lao Larb Dish'; ?>

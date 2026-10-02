@@ -214,7 +214,7 @@ $branch_card_images = [
                         <div class="space-y-4">
                             <div class="flex items-center justify-between gap-2">
                                 <span class="inline-block px-3 py-1 bg-burgundy-100 text-burgundy-800 text-xs font-bold rounded-full font-serif-lao">
-                                    Branch <?php echo $index; ?>
+                                    <?php echo $current_lang === 'lo' ? 'ສາຂາທີ ' . $index : 'Branch ' . $index; ?>
                                 </span>
                                 <?php
                                 $now_hm = date('H:i');
