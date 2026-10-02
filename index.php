@@ -185,7 +185,7 @@ try {
                     </h3>
                     <p class="text-sm text-gray-600 font-light leading-relaxed font-serif-lao">
                         <?php echo $current_lang === 'lo'
-                            ? 'ດີຊາຍຮ້ານທີ່ເນັ້ນງານໄມ້ເນື້ອແຂງ ຜສານຄວາມອົບອຸ່ນຂອງທຳມະຊາດ ເຮັດໃຫ້ທຸກໆມຸມເປັນບ່ອນພັກຜ່ອນທີ່ຜ່ອນຄາຍ ແລະ ທັນສະໄໝ.'
+                            ? 'ດີຊາຍຮ້ານທີ່ເນັ້ນງານໄມ້ເນື້ອແຂງ ປະສານຄວາມອົບອຸ່ນຂອງທຳມະຊາດ ເຮັດໃຫ້ທຸກໆມຸມເປັນບ່ອນພັກຜ່ອນທີ່ຜ່ອນຄາຍ ແລະ ທັນສະໄໝ.'
                             : 'Crafted with warm solid timber and natural wood textures, creating an inviting lounge ambiance day and night.'; ?>
                     </p>
                 </div>

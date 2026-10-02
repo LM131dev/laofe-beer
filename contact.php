@@ -293,9 +293,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="rounded-3xl overflow-hidden shadow-xl border border-gray-200 h-[450px] relative">
             <iframe 
                 src="https://maps.google.com/maps?q=17.966801,102.606311&hl=<?php echo $current_lang; ?>&z=17&output=embed" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
+                class="w-full h-full border-0" 
                 allowfullscreen="" 
                 loading="lazy" 
                 referrerpolicy="no-referrer-when-downgrade"
