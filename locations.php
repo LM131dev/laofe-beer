@@ -212,9 +212,31 @@ $branch_card_images = [
                     <!-- Branch Content -->
                     <div class="md:w-1/2 p-8 flex flex-col justify-between space-y-6 bg-[#FAF7F2]">
                         <div class="space-y-4">
-                            <span class="inline-block px-3 py-1 bg-burgundy-100 text-burgundy-800 text-xs font-bold rounded-full font-serif-lao">
-                                Branch <?php echo $index; ?>
-                            </span>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="inline-block px-3 py-1 bg-burgundy-100 text-burgundy-800 text-xs font-bold rounded-full font-serif-lao">
+                                    Branch <?php echo $index; ?>
+                                </span>
+                                <?php
+                                $now_hm = date('H:i');
+                                $b_open = true;
+                                $h_str = td($branch, 'hours');
+                                if (preg_match('/(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})/', $h_str, $m)) {
+                                    $op = $m[1]; $cl = $m[2];
+                                    $b_open = ($cl < $op) ? ($now_hm >= $op || $now_hm <= $cl) : ($now_hm >= $op && $now_hm <= $cl);
+                                }
+                                ?>
+                                <?php if ($b_open): ?>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-extrabold rounded-full font-serif-lao shadow-sm">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        <span><?php echo $current_lang === 'lo' ? '🟢 ເປີດບໍລິການຢູ່' : '🟢 OPEN NOW'; ?></span>
+                                    </span>
+                                <?php else: ?>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 text-[11px] font-extrabold rounded-full font-serif-lao shadow-sm">
+                                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                                        <span><?php echo $current_lang === 'lo' ? '🔴 ປິດບໍລິການ' : '🔴 CLOSED NOW'; ?></span>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
                             <h3 class="text-2xl font-bold text-[#2C1810] font-serif-lao"><?php echo htmlspecialchars(td($branch, 'name')); ?></h3>
                             <p class="text-sm text-[#6E584E] font-light leading-relaxed font-serif-lao"><?php echo htmlspecialchars(td($branch, 'address')); ?></p>
                             

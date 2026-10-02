@@ -678,6 +678,147 @@ try {
     </div>
 </section>
 
+<!-- SECTION: Customer Reviews & Testimonials (ສຽງຕອບຮັບຈາກລູກຄ້າ) -->
+<section class="py-20 bg-gradient-to-b from-[#FFFDF2] to-[#FAF7EC] px-6 md:px-12 border-t border-amber-500/10">
+    <div class="max-w-7xl mx-auto space-y-12">
+        <div class="text-center space-y-3">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 font-serif-lao">
+                ⭐ 4.9 / 5.0 (500+ Reviews)
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-burgundy-900 font-serif-lao">
+                <?php echo $current_lang === 'lo' ? 'ສຽງຕອບຮັບຈາກລູກຄ້າຂອງ LaoFe & Beer' : 'What Our Customers Say'; ?>
+            </h2>
+            <p class="text-sm text-gray-600 font-light font-serif-lao max-w-2xl mx-auto">
+                <?php echo $current_lang === 'lo' ? 'ຄວາມປະທັບໃຈຈາກລູກຄ້າປະຈຳ ແລະ ນັກທ່ອງທ່ຽວ ທີ່ໄດ້ມາສຳຜັດລົດຊາດ ແລະ ບັນຍາກາດຂອງພວກເຮົາ' : 'Real reviews and feedback from coffee lovers & lounge guests nationwide'; ?>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Review Card 1 -->
+            <div class="bg-white p-8 rounded-3xl shadow-xl border border-amber-500/15 space-y-4 hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center space-x-1 text-amber-500 text-lg">
+                    ★★★★★
+                </div>
+                <p class="text-sm text-gray-700 leading-relaxed font-serif-lao italic">
+                    <?php echo $current_lang === 'lo'
+                        ? '"ກາເຟອາຣາບິກ້າບໍລະເວນຂົ້ວສົດລົດຊາດເຂັ້ມຂຸ້ນດີຫຼາຍ ດີຊາຍຮ້ານໄມ້ເນື້ອແຂງງາມ ແລະ ຊິລຫຼາຍ! ເໝາະສຳລັບນັ່ງເຮັດວຽກຍາມກາງເວັນ ແລະ ນັ່ງຊິລຍາມຄ່ຳ."'
+                        : '"The Bolaven Arabica coffee is freshly roasted and rich! Beautiful solid timber ambiance. Perfect for daytime work and evening relaxation."'; ?>
+                </p>
+                <div class="pt-4 border-t border-gray-100 flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-burgundy-700 text-gold-300 flex items-center justify-center font-bold text-sm shadow-md">
+                        S
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-900 font-serif-lao"><?php echo $current_lang === 'lo' ? 'ທ່ານ ສົມໄຊ' : 'Somchai V.'; ?></h4>
+                        <span class="text-xs text-gray-400 font-serif-lao"><?php echo $current_lang === 'lo' ? 'ລູກຄ້າປະຈຳ ສາຂານ້ຳພຸ' : 'Regular at Nam Phou Branch'; ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="bg-white p-8 rounded-3xl shadow-xl border border-amber-500/15 space-y-4 hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center space-x-1 text-amber-500 text-lg">
+                    ★★★★★
+                </div>
+                <p class="text-sm text-gray-700 leading-relaxed font-serif-lao italic">
+                    <?php echo $current_lang === 'lo'
+                        ? '"ເບຍຄຣາບດຶງສົດເຢັນໆ ຈາກແທັບ ພ້ອມຄັອກເທວສະໝຸນໄພລາວສູດພິເສດ. ພະນັກງານບໍລິການດີ ແລະ ເປັນກັນເອງຫຼາຍ!"'
+                        : '"Ice-cold draft craft beer straight from the tap with special Lao herbal cocktails. Amazing friendly service!"'; ?>
+                </p>
+                <div class="pt-4 border-t border-gray-100 flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                        J
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-900 font-serif-lao">Jessica M.</h4>
+                        <span class="text-xs text-gray-400 font-serif-lao"><?php echo $current_lang === 'lo' ? 'ນັກທ່ອງທ່ຽວ ສາຂາວັງວຽງ' : 'Tourist at Vang Vieng Branch'; ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="bg-white p-8 rounded-3xl shadow-xl border border-amber-500/15 space-y-4 hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center space-x-1 text-amber-500 text-lg">
+                    ★★★★★
+                </div>
+                <p class="text-sm text-gray-700 leading-relaxed font-serif-lao italic">
+                    <?php echo $current_lang === 'lo'
+                        ? '"ຮ້ານຕິດແຄມນ້ຳຂອງ ຫຼວງພະບາງ ວິວພະອາທິດ ຕົກດິນງາມສຸດໆ. ເມນູອາຫານລາວປະຍຸກ ແລະ ກາເຟ 10/10 ແນະນຳເລີຍ!"'
+                        : '"Stunning sunset view over the Mekong in Luang Prabang. Lao-adapted menu and coffee are 10/10. Highly recommended!"'; ?>
+                </p>
+                <div class="pt-4 border-t border-gray-100 flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-burgundy-900 text-gold-400 flex items-center justify-center font-bold text-sm shadow-md">
+                        B
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-900 font-serif-lao"><?php echo $current_lang === 'lo' ? 'ທ່ານ ບຸນເດດ' : 'Boundeth K.'; ?></h4>
+                        <span class="text-xs text-gray-400 font-serif-lao"><?php echo $current_lang === 'lo' ? 'ລູກຄ້າ ສາຂາຫຼວງພະບາງ' : 'Luang Prabang Branch Guest'; ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION: #LaoFeBeer Moments Customer Gallery -->
+<section class="py-20 bg-burgundy-950 text-white px-6 md:px-12 border-t border-amber-500/20 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto space-y-12 relative z-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="space-y-3">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-gold-300 border border-amber-500/30 font-serif-lao">
+                    📸 Customer Social Gallery
+                </span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white font-serif-lao">
+                    #LaoFeBeer Moments
+                </h2>
+                <p class="text-sm text-gray-400 font-light font-serif-lao max-w-xl">
+                    <?php echo $current_lang === 'lo'
+                        ? 'ແຊຣ໌ຊ່ວງເວລາອັນແສນພິເສດຂອງທ່ານ ພ້ອມ Tag ຫາເຮົາເທິງ Instagram & TikTok @laofe_beer'
+                        : 'Share your favorite moments with us by tagging @laofe_beer on Instagram & TikTok'; ?>
+                </p>
+            </div>
+            <a href="https://www.instagram.com/laofe_beer?stkn=OG4wNGh0YmoxNWsw&utm_source=qr" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-burgundy-950 rounded-2xl font-bold text-sm hover:scale-105 transition-transform duration-300 shadow-lg font-serif-lao shrink-0">
+                <span>Follow @laofe_beer</span>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div class="relative group rounded-2xl overflow-hidden aspect-square bg-burgundy-900 border border-amber-500/20 shadow-lg">
+                <img src="assets/images/branch_namphou.png" alt="LaoFe Atmosphere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                    <span class="text-xs text-gold-300 font-bold font-serif-lao">📍 ສາຂາ ນ້ຳພຸ</span>
+                    <p class="text-[11px] text-gray-300 font-light">"ກາເຟອາຣາບິກ້າຂົ້ວສົດ ☕"</p>
+                </div>
+            </div>
+
+            <div class="relative group rounded-2xl overflow-hidden aspect-square bg-burgundy-900 border border-amber-500/20 shadow-lg">
+                <img src="assets/images/branch_luangprabang.png" alt="LaoFe Atmosphere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                    <span class="text-xs text-gold-300 font-bold font-serif-lao">📍 ສາຂາ ຫຼວງພະບາງ</span>
+                    <p class="text-[11px] text-gray-300 font-light">"ບັນຍາກາດແຄມນ້ຳຂອງ 🌅"</p>
+                </div>
+            </div>
+
+            <div class="relative group rounded-2xl overflow-hidden aspect-square bg-burgundy-900 border border-amber-500/20 shadow-lg">
+                <img src="assets/images/branch_pakse.png" alt="LaoFe Atmosphere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                    <span class="text-xs text-gold-300 font-bold font-serif-lao">📍 ສາຂາ ປາກເຊ</span>
+                    <p class="text-[11px] text-gray-300 font-light">"ເບຍຄຣາຟດຶງສົດ 🍺"</p>
+                </div>
+            </div>
+
+            <div class="relative group rounded-2xl overflow-hidden aspect-square bg-burgundy-900 border border-amber-500/20 shadow-lg">
+                <img src="assets/images/branch_vangvieng.png" alt="LaoFe Atmosphere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                    <span class="text-xs text-gold-300 font-bold font-serif-lao">📍 ສາຂາ ວັງວຽງ</span>
+                    <p class="text-[11px] text-gray-300 font-light">"ວິວພູຜາແຄມຊອງ ⛰️"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Include Swiper Init & Barista Tab Switcher JS -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {

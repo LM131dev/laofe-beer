@@ -23,9 +23,14 @@ if (isset($_GET['lang'])) {
     exit;
 }
 
-// ພາສາເລີ່ມຕົ້ນແມ່ນ ພາສາລາວ 'lo'
+// ພາສາເລີ່ມຕົ້ນ (Auto-detect browser language if session unset)
 if (!isset($_SESSION['lang'])) {
-    $_SESSION['lang'] = 'lo';
+    $browser_lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '';
+    if (!empty($browser_lang) && (strpos(strtolower($browser_lang), 'en') === 0 || strpos(strtolower($browser_lang), 'en-') !== false)) {
+        $_SESSION['lang'] = 'en';
+    } else {
+        $_SESSION['lang'] = 'lo';
+    }
 }
 
 $current_lang = $_SESSION['lang'];

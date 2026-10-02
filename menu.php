@@ -390,6 +390,14 @@ if (empty($db_menus)) {
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
             </button>
         </div>
+        <!-- Interactive Menu Search Input Bar -->
+        <div class="max-w-md mx-auto mb-4 px-2">
+            <div class="relative">
+                <input type="text" id="menu-search-input" onkeyup="filterMenuSearch()" placeholder="<?php echo $current_lang === 'lo' ? '🔍 ຄົ້ນຫາເມນູກາເຟ, ເບຍ, ອາຫານ...' : '🔍 Search coffee, beer, food...'; ?>" class="w-full pl-10 pr-4 py-2.5 bg-white border border-amber-500/20 rounded-full text-xs sm:text-sm font-serif-lao shadow-sm focus:outline-none focus:border-burgundy-700 focus:ring-2 focus:ring-burgundy-700/20 transition-all">
+                <svg class="w-4 h-4 text-amber-700/60 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+            </div>
+        </div>
+
         <!-- 5 Category Line-Art Icon Tiles (Matching Reference Screenshot 100%) -->
         <div class="flex items-center justify-center gap-3 sm:gap-5 overflow-x-auto pb-4 pt-2 no-scrollbar px-2">
             <!-- Tile 1: ທັງໝົດ (All) -->
@@ -725,6 +733,19 @@ function changeQty(delta) {
     if (currentQty < 1) currentQty = 1;
     qtyInput.value = currentQty;
     qtyDisplay.innerText = currentQty;
+}
+
+function filterMenuSearch() {
+    var query = (document.getElementById('menu-search-input')?.value || '').toLowerCase().trim();
+    var cards = document.querySelectorAll('#menu-grid-container > div, .menu-card-item');
+    cards.forEach(function(card) {
+        var text = card.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 }
 </script>
 
